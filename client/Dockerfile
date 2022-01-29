@@ -6,12 +6,20 @@ WORKDIR /app
 COPY package*.json ./
 RUN yarn install --frozen-lockfile
 
+
+
+
+
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN yarn build
+
+
+
+
 
 # Production image, copy all the files and run next
 FROM node:16-alpine AS runner
@@ -23,30 +31,19 @@ RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
 # You only need to copy next.config.js if you are NOT using the default configuration
-# COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/public ./public
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY --from=builder /app/package.json ./package.json
 
-# Automatically leverage output traces to reduce image size 
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Automatically leverage output traces to reduce image size
+COPY --from=builder --chown=nextjs:nodejs /app/src ./src
+COPY --from=builder --chown=nextjs:nodejs /app/.env ./.env
 
 USER nextjs
 
 EXPOSE 3000
-
 ENV PORT 3000
-
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry.
-# ENV NEXT_TELEMETRY_DISABLED 1
-
-CMD ["node", "server.js"]
-
 
 # Show current folder structure in logs
 RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
 
-CMD [ "npm",  "start" ]
+CMD [ "node",  "./dist/index.js" ]
