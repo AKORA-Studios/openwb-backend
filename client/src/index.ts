@@ -13,7 +13,7 @@ fastify.get('/', async (request, reply) => {
 
 fastify.listen(config.PORT, (err, address) => {
     if (err) throw err;
-    // Server is now listening on ${address}
+    console.log(`Server is now listening on ${address}`);
 });
 
 run();

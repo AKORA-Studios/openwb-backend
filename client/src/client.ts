@@ -37,7 +37,7 @@ export async function run() {
 
     try {
         await client.publish('wow/so/cool', 'It works!');
-        client.end();
+        //client.end();
     } catch (e) {
         console.log('MQTT Error', e);
     }

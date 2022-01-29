@@ -36,6 +36,8 @@ COPY --from=builder /app/package.json ./package.json
 
 # Automatically leverage output traces to reduce image size
 COPY --from=builder --chown=nextjs:nodejs /app/src ./src
+COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 # COPY --from=builder --chown=nextjs:nodejs /app/.env ./.env
 
 USER nextjs
@@ -44,6 +46,6 @@ EXPOSE 3000
 ENV PORT 3000
 
 # Show current folder structure in logs
-# RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
+#RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
 
 CMD [ "node",  "./dist/index.js" ]
