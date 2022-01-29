@@ -1,4 +1,5 @@
 import config from './config';
+import { run } from './client';
 import Fastify from 'fastify';
 
 const fastify = Fastify({
@@ -14,3 +15,5 @@ fastify.listen(config.PORT, (err, address) => {
     if (err) throw err;
     // Server is now listening on ${address}
 });
+
+run();

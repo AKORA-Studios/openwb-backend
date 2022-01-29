@@ -44,6 +44,6 @@ EXPOSE 3000
 ENV PORT 3000
 
 # Show current folder structure in logs
-RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
+# RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
 
 CMD [ "node",  "./dist/index.js" ]
