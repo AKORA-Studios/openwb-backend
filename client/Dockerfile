@@ -36,7 +36,7 @@ COPY --from=builder /app/package.json ./package.json
 
 # Automatically leverage output traces to reduce image size
 COPY --from=builder --chown=nextjs:nodejs /app/src ./src
-COPY --from=builder --chown=nextjs:nodejs /app/.env ./.env
+# COPY --from=builder --chown=nextjs:nodejs /app/.env ./.env
 
 USER nextjs
 

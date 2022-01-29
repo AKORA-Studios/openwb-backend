@@ -13,4 +13,9 @@ services:
       - broker_log:/mosquitto/log
 
 volumes:
-  
+  broker_config:
+    name: broker_config
+  broker_data:
+    name: broker_data
+  broker_log:
+    name: broker_log
