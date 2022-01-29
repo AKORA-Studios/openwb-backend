@@ -1,0 +1,13 @@
+services:
+  client:
+    build: ./client
+  broker:
+    build: ./broker
+    volumes:
+      - volumeName:containerPath:ro
+      - broker_config:/mosquitto/config
+      - broker_data:/mosquitto/data
+      - broker_log:/mosquitto/log
+
+volumes:
+  
