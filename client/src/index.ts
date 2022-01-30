@@ -1,11 +1,13 @@
 import config from './config';
-import mqttListener from './openWB/client';
 import Fastify from 'fastify';
-import { Units } from 'openWB/topics';
+import { Units, mqttListener, ready as openWBClientReady } from './openWB';
+import { connectMongoDB } from './db';
 
 const fastify = Fastify({
     logger: true,
 });
+
+console.log(config);
 
 mqttListener.publish('openWB/set/Lademodus', Units.ChargeMode.SofortLaden);
 
@@ -14,7 +16,13 @@ fastify.get('/', async (request, reply) => {
     return { hello: 'world' };
 });
 
-fastify.listen(config.PORT, '0.0.0.0', (err, address) => {
-    if (err) throw err;
-    console.log(`Server is now listening on ${address}`);
-});
+async function start() {
+    await connectMongoDB();
+    await openWBClientReady;
+    fastify.listen(config.PORT, '0.0.0.0', (err, address) => {
+        if (err) throw err;
+        console.log(`Server is now listening on ${address}`);
+    });
+}
+
+start();

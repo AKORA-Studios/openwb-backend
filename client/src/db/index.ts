@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 mongoose.set('debug', true);
 
-export default async function connectMongoDB() {
+export async function connectMongoDB() {
     try {
         await mongoose.connect(config.MONGODB_URL, {
             auth: {
@@ -18,3 +18,5 @@ export default async function connectMongoDB() {
         process.exit(1);
     }
 }
+
+export default connectMongoDB;

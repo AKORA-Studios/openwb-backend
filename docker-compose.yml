@@ -18,6 +18,7 @@ services:
       - ./client/.env
   mongoDB:
     image: mongo
+    container_name: mqtt_db
     networks:
       - mqtt_net
     volumes:

@@ -3,8 +3,6 @@ import config from '../config';
 import { TopicListener } from './topicListener';
 import { topicMap } from './topics';
 
-console.log(config);
-
 const mqqtOptions: IClientOptions = {};
 if (config.MQTT_USER && config.MQTT_PASSWORD) {
     mqqtOptions.username = config.MQTT_USER;
@@ -12,7 +10,7 @@ if (config.MQTT_USER && config.MQTT_PASSWORD) {
 }
 
 const client = connect(config.MQTT_URL, mqqtOptions);
-const mqttListener = new TopicListener(client);
+export const mqttListener = new TopicListener(client);
 
 export let ready: Promise<boolean> | boolean = new Promise((r) =>
     client.on('connect', async () => {
