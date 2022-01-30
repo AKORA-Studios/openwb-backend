@@ -1,5 +1,5 @@
 import config from './config';
-import { run } from './client';
+import './mqtt/client';
 import Fastify from 'fastify';
 
 const fastify = Fastify({
@@ -15,5 +15,3 @@ fastify.listen(config.PORT, '0.0.0.0', (err, address) => {
     if (err) throw err;
     console.log(`Server is now listening on ${address}`);
 });
-
-run();

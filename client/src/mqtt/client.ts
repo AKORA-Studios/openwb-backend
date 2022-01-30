@@ -1,5 +1,5 @@
 import { connect, IClientOptions } from 'async-mqtt';
-import config from './config';
+import config from '../config';
 
 console.log(config);
 
@@ -12,9 +12,15 @@ if (config.MQTT_USER && config.MQTT_PASSWORD) {
 const client = connect(config.MQTT_URL, mqqtOptions);
 
 export let ready: Promise<boolean> | boolean = new Promise((r) =>
-    client.on('connect', () => {
+    client.on('connect', async () => {
         console.log('MQTT Client connected');
         r(true);
+        let sub = await client.subscribe('#')
+        console.log('Topics:', sub.map(s => s.topic));
+
+        client.on('message', (topic, payload, packet) => {
+
+        })
     })
 );
 
@@ -33,16 +39,5 @@ client.on('end', () => {
     console.log('Destroyed client');
     //process.exit(1);
 });
-
-export async function run() {
-    await ready;
-
-    try {
-        await client.publish('wow/so/cool', 'It works!');
-        //client.end();
-    } catch (e) {
-        console.log('MQTT Error', e);
-    }
-}
 
 export default client;
