@@ -1,10 +1,13 @@
 import config from './config';
-import './mqtt/client';
+import mqttListener from './mqtt/client';
 import Fastify from 'fastify';
+import { Units } from 'mqtt/topics';
 
 const fastify = Fastify({
     logger: true,
 });
+
+mqttListener.publish('openWB/set/Lademodus', Units.ChargeMode.SofortLaden);
 
 fastify.get('/', async (request, reply) => {
     reply.type('application/json').code(200);

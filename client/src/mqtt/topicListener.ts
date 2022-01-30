@@ -1,14 +1,30 @@
+import { AsyncMqttClient } from 'async-mqtt';
 import EventEmitter from 'events';
-import { topics } from './topics';
+import { topicMap, topics } from './topics';
 
 type SubscribeEvents = topics.LESEND;
-type PubishEvents = topics.SCHREIBEND;
+type PublishEvents = topics.SCHREIBEND;
 
 export class TopicListener extends EventEmitter {
-    public publish<K extends keyof PubishEvents>(
+    protected client: AsyncMqttClient;
+    constructor(client: AsyncMqttClient) {
+        super();
+        this.client = client;
+    }
+    public publish<K extends keyof PublishEvents>(
         event: K,
-        message: PubishEvents[K]
-    ) {}
+        message: PublishEvents[K]
+    ): Promise<void> {
+        //@ts-ignore
+        let type = typeof topicMap.SCHREIBEND[event];
+
+        return this.client.publish(event, message.toString());
+    }
+
+    public destroy(): Promise<void> {
+        this.removeAllListeners();
+        return this.client.end();
+    }
 }
 
 export declare interface TopicListener {
@@ -53,8 +69,10 @@ export declare interface TopicListener {
         event?: Exclude<S, keyof SubscribeEvents>
     ): this;
 
-    publish<K extends keyof PubishEvents>(
+    publish<K extends keyof PublishEvents>(
         event: K,
-        message: PubishEvents[K]
-    ): void;
+        message: PublishEvents[K]
+    ): Promise<void>;
+
+    destroy(): Promise<void>;
 }

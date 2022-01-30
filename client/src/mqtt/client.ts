@@ -1,6 +1,7 @@
 import { connect, IClientOptions } from 'async-mqtt';
 import config from '../config';
 import { TopicListener } from './topicListener';
+import { topicMap } from './topics';
 
 console.log(config);
 
@@ -11,7 +12,7 @@ if (config.MQTT_USER && config.MQTT_PASSWORD) {
 }
 
 const client = connect(config.MQTT_URL, mqqtOptions);
-const mqttListener = new TopicListener();
+const mqttListener = new TopicListener(client);
 
 export let ready: Promise<boolean> | boolean = new Promise((r) =>
     client.on('connect', async () => {
@@ -24,7 +25,19 @@ export let ready: Promise<boolean> | boolean = new Promise((r) =>
         );
 
         client.on('message', (topic, payload, packet) => {
-            mqttListener.emit(topic as any, payload);
+            //@ts-ignore
+            let type = typeof topicMap.SCHREIBEND[topic],
+                val: any;
+            switch (type) {
+                case 'number':
+                    val = Number(payload);
+                    break;
+                case 'string':
+                    val = payload.toString();
+                    break;
+            }
+
+            mqttListener.emit(topic as any, val);
         });
     })
 );
@@ -45,4 +58,4 @@ client.on('end', () => {
     //process.exit(1);
 });
 
-export default client;
+export default mqttListener;
