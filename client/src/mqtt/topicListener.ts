@@ -4,6 +4,13 @@ import { topics } from './topics';
 type SubscribeEvents = topics.LESEND;
 type PubishEvents = topics.SCHREIBEND;
 
+export class TopicListener extends EventEmitter {
+    public publish<K extends keyof PubishEvents>(
+        event: K,
+        message: PubishEvents[K]
+    ) {}
+}
+
 export declare interface TopicListener {
     on<K extends keyof SubscribeEvents>(
         event: K,
@@ -49,7 +56,5 @@ export declare interface TopicListener {
     publish<K extends keyof PubishEvents>(
         event: K,
         message: PubishEvents[K]
-    ): boolean;
+    ): void;
 }
-
-export class TopicListener extends EventEmitter {}

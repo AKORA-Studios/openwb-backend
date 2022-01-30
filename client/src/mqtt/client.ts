@@ -1,5 +1,6 @@
 import { connect, IClientOptions } from 'async-mqtt';
 import config from '../config';
+import { TopicListener } from './topicListener';
 
 console.log(config);
 
@@ -10,17 +11,21 @@ if (config.MQTT_USER && config.MQTT_PASSWORD) {
 }
 
 const client = connect(config.MQTT_URL, mqqtOptions);
+const mqttListener = new TopicListener();
 
 export let ready: Promise<boolean> | boolean = new Promise((r) =>
     client.on('connect', async () => {
         console.log('MQTT Client connected');
         r(true);
-        let sub = await client.subscribe('#')
-        console.log('Topics:', sub.map(s => s.topic));
+        let sub = await client.subscribe('#');
+        console.log(
+            'Topics:',
+            sub.map((s) => s.topic)
+        );
 
         client.on('message', (topic, payload, packet) => {
-
-        })
+            mqttListener.emit(topic as any, payload);
+        });
     })
 );
 
