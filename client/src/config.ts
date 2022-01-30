@@ -8,4 +8,5 @@ export default {
     MQTT_USER: process.env.MQTT_USER,
     MQTT_PASSWORD: process.env.MQTT_PASSWORD,
     PORT: process.env.PORT ?? 3000,
+    ADDRESS: process.env.NODE_ENV ? '0.0.0.0' : '127.0.0.1',
 };

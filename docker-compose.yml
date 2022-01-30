@@ -2,6 +2,8 @@ services:
   client:
     build: ./client
     container_name: mqtt_client
+    networks:
+      - mqtt_net
     ports:
       - 3000:3000
     depends_on:
@@ -15,19 +17,19 @@ services:
   broker:
     build: ./broker
     container_name: mqtt_broker
+    networks:
+      - mqtt_net
     ports:
       - 1883:1883
       - 9001:9001
     env_file:
       - ./broker/.env
     volumes:
-      - broker_config:/mosquitto/config
       - broker_data:/mosquitto/data
       - broker_log:/mosquitto/log
-
+networks:
+  mqtt_net:
 volumes:
-  broker_config:
-    name: broker_config
   broker_data:
     name: broker_data
   broker_log:
