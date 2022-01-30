@@ -8,12 +8,23 @@ services:
       - 3000:3000
     depends_on:
       - broker
-    links:
-      - broker
+      - mongo
     environment:
       - MQTT_URL=mqtt://broker
+      - MONGODB_URL=mongodb://mongoDB:27017/
+      - MONGODB_ADMIN_USERNAME=root
+      - MONGODB_ADMIN_PASSWORD=yoUrsAfePa5sWorD09374!#+~123
     env_file:
       - ./client/.env
+  mongoDB:
+    image: mongo
+    networks:
+      - mqtt_net
+    volumes:
+      - database:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: yoUrsAfePa5sWorD09374!#+~123
   broker:
     build: ./broker
     container_name: mqtt_broker
@@ -34,3 +45,5 @@ volumes:
     name: broker_data
   broker_log:
     name: broker_log
+  database: 
+    name: mongoDB

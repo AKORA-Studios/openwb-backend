@@ -1,5 +1,5 @@
 import { prop, pre, post, getModelForClass } from '@typegoose/typegoose';
-import { Units } from '../mqtt/topics';
+import { Units } from '../openWB/topics';
 
 class Ladepunkt {
     @prop({ required: true })

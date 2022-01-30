@@ -1,7 +1,7 @@
 import config from './config';
-import mqttListener from './mqtt/client';
+import mqttListener from './openWB/client';
 import Fastify from 'fastify';
-import { Units } from 'mqtt/topics';
+import { Units } from 'openWB/topics';
 
 const fastify = Fastify({
     logger: true,
