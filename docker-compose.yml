@@ -4,6 +4,12 @@ services:
     container_name: mqtt_client
     ports:
       - 3000:3000
+    depends_on:
+      - broker
+    links:
+      - broker
+    environment:
+      - MQTT_URL=mqtt://broker
     env_file:
       - ./client/.env
   broker:

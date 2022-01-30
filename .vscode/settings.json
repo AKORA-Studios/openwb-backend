@@ -8,5 +8,6 @@
         "**/Thumbs.db": true,
         "**/maps": true,
         "**/dist": true,
-    }
+    },
+    "git.ignoreLimitWarning": true
 }

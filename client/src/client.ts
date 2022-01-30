@@ -1,6 +1,8 @@
 import { connect, IClientOptions } from 'async-mqtt';
 import config from './config';
 
+console.log(config);
+
 const mqqtOptions: IClientOptions = {};
 if (config.MQTT_USER && config.MQTT_PASSWORD) {
     mqqtOptions.username = config.MQTT_USER;
@@ -29,7 +31,7 @@ client.on('disconnect', (e) => console.log('MQTT disconnected:', e));
 client.on('error', (e) => console.log('MQTT error:', e));
 client.on('end', () => {
     console.log('Destroyed client');
-    process.exit(1);
+    //process.exit(1);
 });
 
 export async function run() {
