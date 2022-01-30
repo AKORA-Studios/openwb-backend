@@ -35,14 +35,14 @@ export namespace Units {
 }
 
 
-export type topics = {
-    LESEND: {
+export namespace topics {
+    export interface LESEND {
         'openWB/lp/1/TimeRemaining': Units.seconds; //verbleibende Zeit für Lademenge (Untermodus Sofort laden)
         'openWB/lp/1/%Soc': Units.SoC; //Aktueller SoC
         'openWB/lp/1/kWhDailyCharged': Units.kWh; //Heute geladene kWh
         'openWB/lp/1/ADirectModeAmps': Units.Ampere; //Sofort laden Soll Stromstärke
         'openWB/lp/1/PercentDirectChargeModeSoc': number; //Bis zu wieviel % im Sofort Laden Untermodus SoC geladen wird
-        'openWB/lp/1/strChargePointName': 'Ioniq'; //Name des Ladepunktes
+        'openWB/lp/1/strChargePointName': string; //Name des Ladepunktes
         'openWB/lp/1/boolChargeAtNight': Units.bool; //Nachtladen aktiv 1 / 0
         'openWB/lp/1/kWhDirectModeToChargekWh': Units.kWh; //Zu ladende kWh im Sofortladen Untermodus Lademenge
         'openWB/lp/1/boolDirectChargeMode_none_kwh_soc': Units.bool | 2; //Sofort Laden Untermodus, 0 = nein, 1 = kWH (Lademenge, 2= bis xx%SoC)
@@ -110,7 +110,7 @@ export type topics = {
         'openWB/lp/1/kWhChargedSincePlugged': Units.kWh; //Geladene kWh seit letztem anstecken
         'openWB/global/ChargeMode': Units.ChargeMode; //Lademodus, 0 = Sofort Laden (Direct), 1 = Min und PV, 2 = Nur PV, 3 = Stop, 4 = Standby
     };
-    SCHREIBEND: {
+    export interface SCHREIBEND {
         'openWB/set/Lademodus': Units.ChargeMode; //0 = Sofort Laden (Direct), 1 = Min und PV, 2 = Nur PV, 3 = Stop, 4 = Standby
         'openWB/set/lp1/DirectChargeSubMode': Units.ChargeSubMode; //Setzt den Sofort Laden (Direct) Untermodus, Int 0 = Aus, 1 = kWh Laden, 2 = SoC Laden
         'openWB/set/lp2/DirectChargeSubMode': Units.ChargeSubMode; //Setzt den Sofort Laden (Direct) Untermodus, Int 0 = Aus, 1 = kWh Laden, 2 = SoC Laden
