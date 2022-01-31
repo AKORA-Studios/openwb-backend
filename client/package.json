@@ -22,7 +22,7 @@
         "async-mqtt": "^2.6.2",
         "dotenv": "^14.3.2",
         "fastify": "^3.27.0",
-        "mongoose": "^6.1.8",
+        "mongoose": "^6.1.9",
         "mqtt": "^4.3.4"
     }
 }

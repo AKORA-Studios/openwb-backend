@@ -23,6 +23,13 @@ export let ready: Promise<boolean> | boolean = new Promise((r) =>
         );
 
         client.on('message', (topic, payload, packet) => {
+            console.log(
+                'MQQT -',
+                topic,
+                '-',
+                JSON.stringify(payload.toString())
+            );
+
             //@ts-ignore
             let type = typeof topicMap.SCHREIBEND[topic],
                 val: any;
