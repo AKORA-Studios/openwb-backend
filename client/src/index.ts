@@ -16,8 +16,6 @@ server.get('/', async (request, reply) => {
     return { hello: 'world' };
 });
 
-server.use;
-
 //fastify.all('/api');
 
 async function start() {
