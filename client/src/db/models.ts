@@ -1,7 +1,8 @@
-import { prop, pre, post, getModelForClass } from '@typegoose/typegoose';
+import { prop, getModelForClass } from '@typegoose/typegoose';
+import { Document } from 'mongoose';
 import { Units } from '../openWB/topics';
 
-class Ladepunkt {
+class LadepunktClass {
     @prop({ required: true })
     public ADirectModeAmps!: Units.Ampere; //Sofort laden Soll Stromstärke
 
@@ -51,8 +52,17 @@ class Ladepunkt {
     public ChargeMode!: Units.ChargeMode; //Lademodus, 0 = Sofort Laden (Direct), 1 = Min und PV, 2 = Nur PV, 3 = Stop, 4 = Standby
 }
 
-const LadepunktModel = getModelForClass(Ladepunkt);
+export const LadepunktModel = getModelForClass(LadepunktClass);
+export let Ladepunkt: Document & LadepunktClass;
+export async function onReady() {
+    //@ts-ignore
+    Ladepunkt = await LadepunktModel.findOne();
+    if (!Ladepunkt) {
+        Ladepunkt = new LadepunktModel();
+        await Ladepunkt.save();
+    }
 
-const doc = new LadepunktModel({});
-
-doc.save(); // this should output "We have a kitten here."
+    console.log('Single Ladepunkt instance:');
+    console.log(Ladepunkt.toJSON());
+}
+export default LadepunktModel;

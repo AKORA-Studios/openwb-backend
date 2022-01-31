@@ -1,16 +1,15 @@
 import config from './config';
-import Fastify, { fastify } from 'fastify';
-import { Units, mqttListener, ready as openWBClientReady } from './openWB';
+import Fastify from 'fastify';
+import { mqttListener, ready as openWBClientReady } from './openWB';
 import { connectMongoDB } from './db';
 import { connection as DBConnection } from 'mongoose';
+import './db/bridge';
 
 const server = Fastify({
     logger: true,
 });
 
 console.log(config);
-
-mqttListener.publish('openWB/set/Lademodus', Units.ChargeMode.SofortLaden);
 
 server.get('/', async (request, reply) => {
     reply.type('application/json').code(200);

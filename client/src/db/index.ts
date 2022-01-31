@@ -1,5 +1,6 @@
 import config from '../config';
 import mongoose from 'mongoose';
+import { onReady } from './models';
 
 mongoose.set('debug', true);
 
@@ -11,6 +12,7 @@ export async function connectMongoDB() {
                 password: config.MONGODB_ADMIN_PASSWORD,
             },
         });
+        await onReady();
         console.log('Connected to MongoDB at', config.MONGODB_URL);
     } catch (e) {
         console.log('Error while connecting to MongoDB at', config.MONGODB_URL);

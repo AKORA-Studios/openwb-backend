@@ -2,7 +2,12 @@ import { AsyncMqttClient } from 'async-mqtt';
 import EventEmitter from 'events';
 import { topicMap, topics } from './topics';
 
-type SubscribeEvents = topics.LESEND;
+type SubscribeEvents = topics.LESEND & {
+    all: {
+        topic: string;
+        value: any;
+    };
+};
 type PublishEvents = topics.SCHREIBEND;
 
 export class TopicListener extends EventEmitter {
