@@ -22,8 +22,6 @@ services:
     image: mongo
     container_name: mqtt_db
     restart: on-failure
-    expose:
-      - 27017
     networks:
       - mqtt_net
     volumes:
