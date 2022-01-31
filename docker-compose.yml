@@ -43,8 +43,10 @@ networks:
   mqtt_net:
 volumes:
   broker_data:
+    external: true
     name: broker_data
   broker_log:
     name: broker_log
   database: 
+    external: true
     name: mongoDB
