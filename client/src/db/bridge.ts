@@ -1,4 +1,4 @@
-import { mqttListener } from 'openWB';
+import { mqttListener } from '../openWB';
 import { Ladepunkt } from './models';
 
 mqttListener.on('all', async ({ topic, value }) => {
