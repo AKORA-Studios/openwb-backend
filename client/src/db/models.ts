@@ -53,7 +53,6 @@ class Ladepunkt {
 
 const LadepunktModel = getModelForClass(Ladepunkt);
 
-const doc = new LadepunktModel({
-    
-});
+const doc = new LadepunktModel({});
+
 doc.save(); // this should output "We have a kitten here."

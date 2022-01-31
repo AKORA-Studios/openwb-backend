@@ -1,0 +1,1 @@
+import { RouteHandler } from 'fastify';
