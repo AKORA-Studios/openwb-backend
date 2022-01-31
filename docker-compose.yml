@@ -1,7 +1,9 @@
+version: '3.4'
 services:
   client:
     build: ./client
     container_name: mqtt_client
+    restart: unless-stopped
     networks:
       - mqtt_net
     ports:
@@ -19,6 +21,9 @@ services:
   mongoDB:
     image: mongo
     container_name: mqtt_db
+    restart: on-failure
+    expose:
+      - 27017
     networks:
       - mqtt_net
     volumes:
@@ -29,6 +34,7 @@ services:
   broker:
     build: ./broker
     container_name: mqtt_broker
+    restart: on-failure
     networks:
       - mqtt_net
     ports:
