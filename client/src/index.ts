@@ -1,7 +1,8 @@
 import config from './config';
-import Fastify from 'fastify';
+import Fastify, { fastify } from 'fastify';
 import { Units, mqttListener, ready as openWBClientReady } from './openWB';
 import { connectMongoDB } from './db';
+import { connection as DBConnection } from 'mongoose';
 
 const server = Fastify({
     logger: true,
@@ -29,3 +30,15 @@ async function start() {
 }
 
 start();
+
+process.on('SIGTERM', () => {
+    console.info('SIGTERM signal received.');
+    console.log('Closing http server.');
+    server.close(async () => {
+        console.log('Http server closed.');
+        await DBConnection.close();
+        console.log('DB Connection closed.');
+        await mqttListener.destroy();
+        console.log('MQQT Connection closed.');
+    });
+});
