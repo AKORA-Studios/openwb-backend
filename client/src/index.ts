@@ -40,5 +40,6 @@ process.on('SIGTERM', () => {
         console.log('DB Connection closed.');
         await mqttListener.destroy();
         console.log('MQQT Connection closed.');
+        process.exit(0);
     });
 });
