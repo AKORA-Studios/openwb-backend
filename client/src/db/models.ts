@@ -60,6 +60,18 @@ export async function onReady() {
     if (!Ladepunkt) {
         Ladepunkt = new LadepunktModel({
             AConfigured: 0,
+            ADirectModeAmps: 0,
+            APhase1: 0,
+            APhase2: 0,
+            APhase3: 0,
+            VPhase1: 0,
+            VPhase2: 0,
+            VPhase3: 0,
+            ChargeMode: 0,
+            PercentDirectChargeModeSoc: 0,
+            boolChargeAtNight: 0,
+            boolDirectModeChargekWh: 0,
+            boolPlugStat: 0,
         });
         await Ladepunkt.save();
     }
