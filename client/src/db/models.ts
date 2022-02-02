@@ -72,6 +72,9 @@ export async function onReady() {
             boolChargeAtNight: 0,
             boolDirectModeChargekWh: 0,
             boolPlugStat: 0,
+            W: 0,
+            kWhCounter: 0,
+            strChargePointName: '',
         });
         await Ladepunkt.save();
     }
