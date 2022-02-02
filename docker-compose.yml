@@ -14,10 +14,8 @@ services:
     environment:
       - MQTT_URL=mqtt://broker
       - MONGODB_URL=mongodb://mongoDB:27017/
-      - MONGODB_ADMIN_USERNAME=root
-      - MONGODB_ADMIN_PASSWORD=yoUrsAfePa5sWorD09374!#+~123
     env_file:
-      - ./client/.env
+      - ./.env
   mongoDB:
     image: mongo
     container_name: mqtt_db
@@ -26,9 +24,8 @@ services:
       - mqtt_net
     volumes:
       - database:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: yoUrsAfePa5sWorD09374!#+~123
+    env_file:
+      - ./.env
   broker:
     build: ./broker
     container_name: mqtt_broker
@@ -39,7 +36,7 @@ services:
       - 1883:1883
       - 8883:8883
     env_file:
-      - ./broker/.env
+      - ./.env
     volumes:
       - broker_data:/mosquitto/data
       - broker_log:/mosquitto/log

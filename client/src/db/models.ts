@@ -58,7 +58,9 @@ export async function onReady() {
     //@ts-ignore
     Ladepunkt = await LadepunktModel.findOne();
     if (!Ladepunkt) {
-        Ladepunkt = new LadepunktModel();
+        Ladepunkt = new LadepunktModel({
+            AConfigured: 0,
+        });
         await Ladepunkt.save();
     }
 

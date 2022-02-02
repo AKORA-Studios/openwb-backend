@@ -8,8 +8,8 @@ export default {
     MQTT_USER: process.env.MQTT_USER,
     MQTT_PASSWORD: process.env.MQTT_PASSWORD,
     MONGODB_URL: process.env.MONGODB_URL ?? 'mongodb://localhost:27017/',
-    MONGODB_ADMIN_USERNAME: process.env.MONGODB_ADMIN_USERNAME,
-    MONGODB_ADMIN_PASSWORD: process.env.MONGODB_ADMIN_PASSWORD,
+    MONGODB_ADMIN_USERNAME: process.env.MONGO_INITDB_ROOT_PASSWORD,
+    MONGODB_ADMIN_PASSWORD: process.env.MONGO_INITDB_ROOT_PASSWORD,
     PORT: process.env.PORT ?? 3000,
     ADDRESS: process.env.NODE_ENV ? '0.0.0.0' : '127.0.0.1',
 };
