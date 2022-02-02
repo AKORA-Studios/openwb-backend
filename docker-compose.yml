@@ -12,7 +12,7 @@ services:
       - broker
       - mongoDB
     environment:
-      - MQTT_URL=mqtt://broker
+      - MQTT_UURL=mqtt://broker
       - MONGODB_URL=mongodb://mongoDB:27017/
     env_file:
       - ./.env
