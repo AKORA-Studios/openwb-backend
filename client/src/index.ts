@@ -3,7 +3,7 @@ import Fastify from 'fastify';
 import { mqttListener, ready as openWBClientReady } from './openWB';
 import { connectMongoDB } from './db';
 import { connection as DBConnection } from 'mongoose';
-import './db/bridge';
+//import './db/bridge';
 
 const server = Fastify({
     logger: true,
