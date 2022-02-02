@@ -5,7 +5,7 @@ config();
 
 export default {
     MQTT_URL: process.env.MQTT_URL ?? 'mqtt://localhost:1883',
-    MQTT_USER: process.env.MQTT_USER,
+    MQTT_USERNAME: process.env.MQTT_USERNAME,
     MQTT_PASSWORD: process.env.MQTT_PASSWORD,
     MONGODB_URL: process.env.MONGODB_URL ?? 'mongodb://localhost:27017/',
     MONGODB_ADMIN_USERNAME: process.env.MONGO_INITDB_ROOT_USERNAME,
