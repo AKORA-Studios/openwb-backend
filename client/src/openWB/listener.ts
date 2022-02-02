@@ -1,17 +1,17 @@
-import mqttListener, { client } from './client';
+import mqttListener, { mqqtClient } from './client';
 import { topicMap } from './topics';
 
 export let ready: Promise<boolean> | boolean = new Promise((r) =>
-    client.on('connect', async () => {
+    mqqtClient.on('connect', async () => {
         console.log('MQTT Client connected');
         r(true);
-        let sub = await client.subscribe('#');
+        let sub = await mqqtClient.subscribe('#');
         console.log(
             'Topics:',
             sub.map((s) => s.topic)
         );
 
-        client.on('message', (topic, payload, packet) => {
+        mqqtClient.on('message', (topic, payload, packet) => {
             console.log(
                 'MQQT -',
                 topic,
@@ -39,16 +39,16 @@ export let ready: Promise<boolean> | boolean = new Promise((r) =>
 
 // Limit to 10 reconnections
 let count = 0;
-client.on('reconnect', () => {
+mqqtClient.on('reconnect', () => {
     count++;
     console.count('Reconnecting...');
-    if (count === 5) client.end();
+    if (count === 5) mqqtClient.end();
 });
 
 // Handling error events
-client.on('disconnect', (e) => console.log('MQTT disconnected:', e));
-client.on('error', (e) => console.log('MQTT error:', e));
-client.on('end', () => {
+mqqtClient.on('disconnect', (e) => console.log('MQTT disconnected:', e));
+mqqtClient.on('error', (e) => console.log('MQTT error:', e));
+mqqtClient.on('end', () => {
     console.log('Destroyed client');
     //process.exit(1);
 });

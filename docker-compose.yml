@@ -12,8 +12,8 @@ services:
       - broker
       - mongoDB
     environment:
-      - MQTT_UURL=mqtt://broker
       - MONGODB_URL=mongodb://mongoDB:27017/
+      - REDIS_URL=redis://redisDB:6379
     env_file:
       - ./.env
   mongoDB:
@@ -26,28 +26,15 @@ services:
       - database:/data/db
     env_file:
       - ./.env
-  broker:
-    build: ./broker
-    container_name: mqtt_broker
+  redisDB:
+    image: redis
+    container_name: mqtt_redis
     restart: on-failure
     networks:
       - mqtt_net
-    ports:
-      - 1883:1883
-      - 8883:8883
-    env_file:
-      - ./.env
-    volumes:
-      - broker_data:/mosquitto/data
-      - broker_log:/mosquitto/log
 networks:
   mqtt_net:
 volumes:
-  broker_data:
-    external: true
-    name: broker_data
-  broker_log:
-    name: broker_log
   database: 
     external: true
     name: mongoDB

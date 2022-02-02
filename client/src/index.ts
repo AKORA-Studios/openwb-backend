@@ -1,8 +1,8 @@
 import config from './config';
 import Fastify from 'fastify';
-import { mqttListener, ready as openWBClientReady } from './openWB';
-import { connectMongoDB } from './db';
-import { connection as DBConnection } from 'mongoose';
+import { connectMQTTClient, disconnectMQTTClient } from './openWB';
+import { connectMongoDB, disconnectMongoDB } from './db/mongo';
+import { connectRedisDB, disconnectRedisDB } from './db/redis';
 //import './db/bridge';
 
 const server = Fastify({
@@ -19,26 +19,31 @@ server.get('/', async (request, reply) => {
 //fastify.all('/api');
 
 async function start() {
-    await connectMongoDB();
-    await openWBClientReady;
-    server.listen(config.PORT, '0.0.0.0', (err, address) => {
-        if (err) throw err;
-        console.log(`Server is now listening on ${address}`);
-        console.log(server.printRoutes({ commonPrefix: false }));
-    });
+    try {
+        await connectMongoDB();
+        await connectRedisDB();
+        await connectMQTTClient();
+        server.listen(config.PORT, '0.0.0.0', (err, address) => {
+            if (err) throw err;
+            console.log(`Server is now listening on ${address}`);
+            console.log(server.printRoutes({ commonPrefix: false }));
+        });
+    } catch (e) {
+        console.log('Error while connecting');
+        console.log(e);
+        process.exit(1);
+    }
 }
-
 start();
 
-process.on('SIGTERM', () => {
+process.on('SIGTERM', async () => {
     console.info('SIGTERM signal received.');
     console.log('Closing http server.');
     server.close(async () => {
         console.log('Http server closed.');
-        await DBConnection.close();
-        console.log('DB Connection closed.');
-        await mqttListener.destroy();
-        console.log('MQQT Connection closed.');
+        await disconnectMongoDB();
+        await disconnectRedisDB();
+        await disconnectMQTTClient();
         process.exit(0);
     });
 });

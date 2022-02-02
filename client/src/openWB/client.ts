@@ -8,7 +8,25 @@ if (config.MQTT_USERNAME && config.MQTT_PASSWORD) {
     mqqtOptions.password = config.MQTT_PASSWORD;
 }
 
-export const client = connect(config.MQTT_URL, mqqtOptions);
-export const mqttListener = new TopicListener(client);
+export const mqqtClient = connect(config.MQTT_URL, mqqtOptions);
+export const mqttListener = new TopicListener(mqqtClient);
+
+export const mqqtReady: Promise<boolean> = new Promise((r) =>
+    mqqtClient.on('connect', () => r(true))
+);
+
+export async function connectMQTTClient() {
+    await mqqtReady;
+    console.log('Connected to MQQT Broker', config.MQTT_URL);
+}
+
+export function disconnectMQTTClient() {
+    return new Promise((res, rej) => {
+        mqqtClient.on('end', () => {
+            console.log('Disconnected from MQQT Broker');
+            res(null);
+        });
+    });
+}
 
 export default mqttListener;

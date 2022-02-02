@@ -1,6 +1,7 @@
 import { prop, getModelForClass } from '@typegoose/typegoose';
 import { Document } from 'mongoose';
 import { Units } from '../openWB/topics';
+import { mongoReady } from './mongo';
 
 class LadepunktClass {
     @prop({ required: true })
@@ -54,7 +55,7 @@ class LadepunktClass {
 
 export const LadepunktModel = getModelForClass(LadepunktClass);
 export let Ladepunkt: Document & LadepunktClass;
-export async function onReady() {
+mongoReady.then(async () => {
     //@ts-ignore
     Ladepunkt = await LadepunktModel.findOne();
     if (!Ladepunkt) {
@@ -81,5 +82,6 @@ export async function onReady() {
 
     console.log('Single Ladepunkt instance:');
     console.log(Ladepunkt.toJSON());
-}
+});
+
 export default LadepunktModel;
