@@ -74,7 +74,7 @@ export async function onReady() {
             boolPlugStat: 0,
             W: 0,
             kWhCounter: 0,
-            strChargePointName: '',
+            strChargePointName: 'Test',
         });
         await Ladepunkt.save();
     }
