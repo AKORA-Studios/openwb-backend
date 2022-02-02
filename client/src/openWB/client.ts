@@ -43,7 +43,7 @@ export let ready: Promise<boolean> | boolean = new Promise((r) =>
             }
 
             mqttListener.emit(topic as any, val);
-            mqttListener.emit('all', val);
+            mqttListener.emit('all', { topic, value: val });
         });
     })
 );
