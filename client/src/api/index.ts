@@ -4,7 +4,7 @@ import getLadepunkt from './getLadepunkt';
 import getVerbrauch from './getVerbrauch';
 
 export const api: FastifyPluginCallback = function (server, opts, done) {
-    server.get('/ladepunkt', async (request, reply) => {
+    server.get('/ladepunkte', async (request, reply) => {
         reply.type('application/json').code(200);
         return await getLadepunkt();
     });
