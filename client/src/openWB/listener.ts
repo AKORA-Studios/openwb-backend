@@ -1,3 +1,4 @@
+import { setKey } from '../db/redis';
 import mqttListener, { mqqtClient } from './client';
 import { topicMap } from './topics';
 
@@ -10,7 +11,8 @@ export let ready: Promise<boolean> | boolean = new Promise((r) =>
             sub.map((s) => s.topic)
         );
 
-        mqqtClient.on('message', (topic, payload, packet) => {
+        mqqtClient.on('message', async (topicRaw, payload, packet) => {
+            let topic = topicRaw.split('/').slice(1).join('/');
             console.log(
                 'MQQT -',
                 topic,
@@ -32,6 +34,8 @@ export let ready: Promise<boolean> | boolean = new Promise((r) =>
 
             mqttListener.emit(topic as any, val);
             mqttListener.emit('all', { topic, value: val });
+
+            await setKey(topic, val);
         });
     })
 );
