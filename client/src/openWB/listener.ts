@@ -1,6 +1,5 @@
 import { setKey } from '../db/redis';
 import mqttListener, { mqqtClient } from './client';
-import { topicMap } from './topics';
 
 export let ready: Promise<boolean> | boolean = new Promise((r) =>
     mqqtClient.on('connect', async () => {

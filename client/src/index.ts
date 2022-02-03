@@ -1,6 +1,6 @@
 import config from './config';
 import Fastify from 'fastify';
-import { connectMQTTClient, disconnectMQTTClient } from './openWB';
+import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectMongoDB, disconnectMongoDB } from './db/mongo';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
 import api from './api';
