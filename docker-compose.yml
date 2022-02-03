@@ -9,7 +9,6 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - broker
       - mongoDB
     environment:
       - MONGODB_URL=mongodb://mongoDB:27017/
