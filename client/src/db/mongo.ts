@@ -24,9 +24,7 @@ export async function connectMongoDB() {
         //console.log('Error while connecting to MongoDB at', config.MONGODB_URL);
         //console.log(e);
         promiseReject();
-        throw new Error('MongoDB unable to connect to ' + config.MONGODB_URL, {
-            cause: e,
-        });
+        throw new Error('MongoDB unable to connect to ' + config.MONGODB_URL); //, {cause: e});
     }
 }
 

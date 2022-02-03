@@ -10,13 +10,19 @@ redisClient.on('error', (err) => {
     process.exit(1);
 });
 
+export function getKey(key: string) {
+    return redisClient.get(key);
+}
+
+export async function setKey(key: string, value: any) {
+    return redisClient.set(key, value);
+}
+
 export async function connectRedisDB() {
     try {
         await redisClient.connect();
     } catch (e: any) {
-        throw new Error('RedisDB unable to connect to ' + config.REDISDB_URL, {
-            cause: e,
-        });
+        throw new Error('RedisDB unable to connect to ' + config.REDISDB_URL); //, {cause: e});
     }
     console.log('Connected to RedisDB at', config.REDISDB_URL);
 }
