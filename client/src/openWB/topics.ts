@@ -156,10 +156,8 @@ export const topicMap = {
         'openWB/boolDisplayDailyCharged': 1, //Gibt an ob „Heute geladen“ angezeigt werden soll
         'openWB/boolEvuSmoothedActive': 0, //Gibt an ob die EVU Glättung aktiv ist
         'openWB/boolDisplayHouseBatteryPriority': 0, //Gibt an ob die EV / Speicher bevorrangung im UI angezeigt werden soll
-        'openWB/graph/lastlivevalues':
-            '19:35:56,5949,1588,0,0,1588,1588,-7,1,14,24,4368,358,0', //Daten für den Live Graph, gibt nur die neusten Daten wieder. Aufbau: Time,EVU,LadeleistungGesamt,PV,Ladeleistung LP2,Ladeleistung LP3, Speicherleistung, SpeicherSoC, SoC Lp1, SoC lp2, Hausverbrauch, Verbraucher' :1, Verbraucher 2
-        'openWB/graph/alllivevalues':
-            '18:36:06,667,0,21,0,0,0,-142,3,25,53,830,358,0', //Daten für den Live Graph, meist letzte Stunde
+        'openWB/graph/lastlivevalues': '19:35:56,5949,1588,0,0,1588,1588,-7,1,14,24,4368,358,0', //Daten für den Live Graph, gibt nur die neusten Daten wieder. Aufbau: Time,EVU,LadeleistungGesamt,PV,Ladeleistung LP2,Ladeleistung LP3, Speicherleistung, SpeicherSoC, SoC Lp1, SoC lp2, Hausverbrauch, Verbraucher' :1, Verbraucher 2
+        'openWB/graph/alllivevalues': '18:36:06,667,0,21,0,0,0,-142,3,25,53,830,358,0', //Daten für den Live Graph, meist letzte Stunde
         'openWB/Verbraucher/WNr1': 0, //Verbrauch 1 Leistung in Watt
         'openWB/Verbraucher/WhImportedNr1': 0, //Bezugszähler in Wh
         'openWB/Verbraucher/WhExportedNr1': 0, //Exportzähler in Wh
