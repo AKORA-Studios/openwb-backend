@@ -12,25 +12,15 @@ export let ready: Promise<boolean> | boolean = new Promise((r) =>
         );
 
         mqqtClient.on('message', async (topicRaw, payload, packet) => {
-            let topic = topicRaw.split('/').slice(1).join('/');
-            console.log(
-                'MQQT -',
-                topic,
-                '-',
-                JSON.stringify(payload.toString())
-            );
+            let topic = topicRaw.split('/').slice(1).join('/'),
+                str = payload.toString();
 
-            //@ts-ignore
-            let type = typeof topicMap.SCHREIBEND[topic],
-                val: any;
-            switch (type) {
-                case 'number':
-                    val = Number(payload);
-                    break;
-                case 'string':
-                    val = payload.toString();
-                    break;
-            }
+            let isNumber = !isNaN(Number(str)),
+                val: any = str;
+
+            if (isNumber) val = Number(Number(str));
+
+            console.log('MQQT -', topic, '-', JSON.stringify(val));
 
             mqttListener.emit(topic as any, val);
             mqttListener.emit('all', { topic, value: val });

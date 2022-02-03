@@ -30,6 +30,8 @@ services:
     image: redis
     container_name: mqtt_redis
     restart: on-failure
+    ports:
+      - 6379:6379
     networks:
       - mqtt_net
 networks:

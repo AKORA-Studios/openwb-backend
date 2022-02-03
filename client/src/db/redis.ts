@@ -10,8 +10,15 @@ redisClient.on('error', (err) => {
     process.exit(1);
 });
 
-export function getKey(key: string) {
-    return redisClient.get(key);
+export async function getKey(key: string) {
+    let str = await redisClient.get(key);
+
+    let isNumber = !isNaN(Number(str)),
+        val: any = str;
+
+    if (isNumber) val = Number(Number(str));
+
+    return val;
 }
 
 export async function setKey(key: string, value: any) {
