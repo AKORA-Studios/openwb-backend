@@ -1,4 +1,4 @@
-import redisClient, { getKey } from './redis';
+import { getKey } from '../db/redis';
 
 export async function getVerbrauch() {
     return {

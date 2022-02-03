@@ -3,9 +3,7 @@ import Fastify from 'fastify';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB';
 import { connectMongoDB, disconnectMongoDB } from './db/mongo';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
-import getLadepunkt from './db/getLadepunkt';
-import getVerbrauch from './db/getVerbrauch';
-//import './db/bridge';
+import api from './api';
 
 const server = Fastify({
     logger: true,
@@ -18,15 +16,7 @@ server.get('/', async (request, reply) => {
     return { hello: 'world' };
 });
 
-server.get('/ladepunkt', async (request, reply) => {
-    reply.type('application/json').code(200);
-    return await getLadepunkt();
-});
-
-server.get('/verbrauch', async (request, reply) => {
-    reply.type('application/json').code(200);
-    return await getVerbrauch();
-});
+server.register(api, { prefix: '/api' });
 
 //fastify.all('/api');
 
