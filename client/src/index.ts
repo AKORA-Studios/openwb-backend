@@ -4,6 +4,7 @@ import { connectMQTTClient, disconnectMQTTClient } from './openWB';
 import { connectMongoDB, disconnectMongoDB } from './db/mongo';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
 import getLadepunkt from './db/getLadepunkt';
+import getVerbrauch from './db/getVerbrauch';
 //import './db/bridge';
 
 const server = Fastify({
@@ -20,6 +21,11 @@ server.get('/', async (request, reply) => {
 server.get('/ladepunkt', async (request, reply) => {
     reply.type('application/json').code(200);
     return await getLadepunkt();
+});
+
+server.get('/verbrauch', async (request, reply) => {
+    reply.type('application/json').code(200);
+    return await getVerbrauch();
 });
 
 //fastify.all('/api');
