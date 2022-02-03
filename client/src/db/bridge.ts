@@ -1,7 +1,10 @@
 import { mqttListener } from '../openWB';
 import { Ladepunkt } from './models';
+import { setKey } from './redis';
 
 mqttListener.on('all', async ({ topic, value }) => {
+    await setKey(topic, value);
+
     const end = topic.split('/').reverse()[0];
     //@ts-ignore
     if (Ladepunkt[end]) {

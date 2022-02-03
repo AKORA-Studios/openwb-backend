@@ -3,7 +3,6 @@ import { topicMap } from './topics';
 
 export let ready: Promise<boolean> | boolean = new Promise((r) =>
     mqqtClient.on('connect', async () => {
-        console.log('MQTT Client connected');
         r(true);
         let sub = await mqqtClient.subscribe('#');
         console.log(

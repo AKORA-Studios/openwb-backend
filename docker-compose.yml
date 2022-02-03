@@ -13,7 +13,7 @@ services:
       - mongoDB
     environment:
       - MONGODB_URL=mongodb://mongoDB:27017/
-      - REDIS_URL=redis://redisDB:6379
+      - REDISDB_URL=redis://redisDB:6379
     env_file:
       - ./.env
   mongoDB:

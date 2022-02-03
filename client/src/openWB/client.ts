@@ -17,7 +17,7 @@ export const mqqtReady: Promise<boolean> = new Promise((r) =>
 
 export async function connectMQTTClient() {
     await mqqtReady;
-    console.log('Connected to MQQT Broker', config.MQTT_URL);
+    console.log('Connected to MQQT Broker at', config.MQTT_URL);
 }
 
 export function disconnectMQTTClient() {
