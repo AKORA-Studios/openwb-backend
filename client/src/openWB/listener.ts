@@ -21,10 +21,10 @@ export let ready: Promise<boolean> | boolean = new Promise((r) =>
 
             console.log('MQQT -', topic, '-', JSON.stringify(val));
 
+            await setKey(topic, val);
+
             mqttListener.emit(topic as any, val);
             mqttListener.emit('all', { topic, value: val });
-
-            await setKey(topic, val);
         });
     })
 );
