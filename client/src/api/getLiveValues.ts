@@ -1,8 +1,8 @@
 import { getKey } from '../db/redis';
 
 export async function getLiveValues() {
-    let str = await getKey('openWB/graph/alllivevalues');
-    if (!str) str = await getKey('openWB/graph/lastlivevalues');
+    let str = await getKey('openWB/graph/lastlivevalues');
+    if (!str) str = await getKey('openWB/graph/alllivevalues');
     if (!str) return null;
 
     const arr = str.split(',');

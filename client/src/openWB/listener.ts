@@ -19,7 +19,7 @@ export let ready: Promise<boolean> | boolean = new Promise((r) =>
 
             if (isNumber) val = Number(Number(str));
 
-            console.log('MQQT -', topic, '-', JSON.stringify(val));
+            if (topic.endsWith('values')) console.log('MQQT -', topic, '-', JSON.stringify(val));
 
             await setKey(topic, val);
 
