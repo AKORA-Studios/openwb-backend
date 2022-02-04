@@ -24,3 +24,6 @@ export async function disconnectMQTTClient() {
 }
 
 export default mqttListener;
+
+//Do stuff when ready
+import './listener';

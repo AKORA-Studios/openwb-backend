@@ -1,33 +1,30 @@
 import { setKey } from '../db/redis';
-import mqttListener, { mqqtClient } from './client';
+import mqttListener, { mqqtClient, mqqtReady } from './client';
 
-export let ready: Promise<boolean> | boolean = new Promise((r) =>
-    mqqtClient.on('connect', async () => {
-        r(true);
-        let sub = await mqqtClient.subscribe('#');
-        console.log(
-            'Topics:',
-            sub.map((s) => s.topic)
-        );
+mqqtReady.then(async () => {
+    let sub = await mqqtClient.subscribe('#');
+    console.log(
+        'Topics:',
+        sub.map((s) => s.topic)
+    );
 
-        mqqtClient.on('message', async (topicRaw, payload, packet) => {
-            let topic = topicRaw.split('/').slice(1).join('/'),
-                str = payload.toString();
+    mqqtClient.on('message', async (topicRaw, payload, packet) => {
+        let topic = topicRaw.split('/').slice(1).join('/'),
+            str = payload.toString();
 
-            let isNumber = !isNaN(Number(str)),
-                val: any = str;
+        let isNumber = !isNaN(Number(str)),
+            val: any = str;
 
-            if (isNumber) val = Number(Number(str));
+        if (isNumber) val = Number(Number(str));
 
-            console.log('MQQT -', topic, '-', JSON.stringify(val));
+        //console.log('MQQT -', topic, '-', JSON.stringify(val));
 
-            await setKey(topic, val);
+        await setKey(topic, val);
 
-            mqttListener.emit(topic as any, val);
-            mqttListener.emit('all', { topic, value: val });
-        });
-    })
-);
+        mqttListener.emit(topic as any, val);
+        mqttListener.emit('all', { topic, value: val });
+    });
+});
 
 // Limit to 10 reconnections
 let count = 0;
