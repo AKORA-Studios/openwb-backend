@@ -10,18 +10,18 @@ export async function getLiveValues() {
 
     return {
         time: DateTime.fromISO(arr[0]).toISO(),
-        evu: arr[1],
-        ladeleistungGesamt: arr[2],
-        PV: arr[3],
-        LadeleistungLP2: arr[4],
-        LadeleistungLP3: arr[5],
-        Speicherleistung: arr[6],
-        SpeicherSoC: arr[7],
-        SoCLp1: arr[8],
-        SoCLp2: arr[9],
-        Hausverbrauch: arr[10],
-        VB1: arr[11],
-        VB2: arr[12],
+        evu: arr[1] as number,
+        ladeleistungGesamt: arr[2] as number,
+        PV: arr[3] as number,
+        LadeleistungLP2: arr[4] as number,
+        LadeleistungLP3: arr[5] as number,
+        Speicherleistung: arr[6] as number,
+        SpeicherSoC: arr[7] as number,
+        SoCLp1: arr[8] as number,
+        SoCLp2: arr[9] as number,
+        Hausverbrauch: arr[10] as number,
+        VB1: arr[11] as number,
+        VB2: arr[12] as number,
     };
 }
 
