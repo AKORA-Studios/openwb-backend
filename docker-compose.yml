@@ -45,9 +45,14 @@ services:
       - 6379:6379
     networks:
       - mqtt_net
+    volumes:
+      - redisDB:/data
 networks:
   mqtt_net:
 volumes:
   influxDB: 
     external: true
     name: influx
+  redisDB: 
+    external: true
+    name: redis
