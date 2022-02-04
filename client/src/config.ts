@@ -10,7 +10,7 @@ export default {
     INFLUX_URL: process.env.INFLUX_URL!,
     INFLUX_ORG: process.env.DOCKER_INFLUXDB_INIT_ORG!,
     INFLUX_BUCKET: process.env.DOCKER_INFLUXDB_INIT_BUCKET!,
-    INFLUX_TOKEN: process.env.INFLUXDB_TOKEN!,
+    INFLUX_TOKEN: process.env.DOCKER_INFLUXDB_INIT_ADMIN_TOKEN!,
     REDISDB_URL: process.env.REDISDB_URL ?? 'redis://localhost:6379',
     PORT: process.env.PORT ?? 3000,
     ADDRESS: process.env.NODE_ENV ? '0.0.0.0' : '127.0.0.1',
