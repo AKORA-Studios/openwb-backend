@@ -9,7 +9,8 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - mongoDB
+      - influxDB
+      - redisDB
     environment:
       INFLUX_URL: http://influxDB:8086
       REDISDB_URL: redis://redisDB:6379
