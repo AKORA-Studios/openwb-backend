@@ -1,12 +1,26 @@
 import config from '../config';
-import { InfluxDB, WriteApi } from '@influxdata/influxdb-client';
+import { ClientOptions, InfluxDB, WriteApi } from '@influxdata/influxdb-client';
 
-export const influxDB = new InfluxDB({ url: config.INFLUX_URL, token: config.INFLUX_TOKEN });
+const username = config.INFLUXDB_ADMIN_USER;
+const password = config.INFLUXDB_ADMIN_PASSWORD;
+const token = `${username}:${password}`;
+
+const database = 'graph';
+const retentionPolicy = 'autogen';
+
+const bucket = `${database}/${retentionPolicy}` ?? config.INFLUX_BUCKET;
+
+const clientOptions: ClientOptions = {
+    url: config.INFLUX_URL,
+    token,
+};
+
+export const influxDB = new InfluxDB(clientOptions);
 export let influxApi: WriteApi;
 
 export async function connectInfluxDB() {
     try {
-        influxApi = influxDB.getWriteApi(config.INFLUX_ORG, config.INFLUX_BUCKET);
+        influxApi = influxDB.getWriteApi('', bucket);
 
         console.log('Connected to InfluxDB at', config.INFLUX_URL);
     } catch (e: any) {
