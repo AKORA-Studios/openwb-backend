@@ -1,7 +1,7 @@
 import config from '../config';
 import { InfluxDB, WriteApi } from '@influxdata/influxdb-client';
 
-export const influxDB = new InfluxDB({ url: config.INFLUX_URL });
+export const influxDB = new InfluxDB({ url: config.INFLUX_URL, token: config.INFLUX_TOKEN });
 export let influxApi: WriteApi;
 
 export async function connectInfluxDB() {
