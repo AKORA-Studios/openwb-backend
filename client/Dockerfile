@@ -13,10 +13,10 @@ RUN npm ci -q
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 RUN npm i -g typescript
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN yarn build
+RUN tsc
 
 
 
@@ -44,6 +44,9 @@ COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3000
 ENV PORT 3000
+
+RUN mkdir /app/test
+VOLUME [ "/app/test" ]
 
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"

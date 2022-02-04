@@ -14,15 +14,16 @@
     "author": "A-K-O-R-A",
     "license": "ISC",
     "devDependencies": {
-        "@types/node": "^17.0.14",
+        "@types/luxon": "^2.0.9",
+        "@types/node": "^16.11.22",
         "typescript": "^4.5.5"
     },
     "dependencies": {
-        "@typegoose/typegoose": "^9.5.0",
+        "@influxdata/influxdb-client": "^1.22.0",
         "async-mqtt": "^2.6.2",
         "dotenv": "^14.3.2",
         "fastify": "^3.27.0",
-        "mongoose": "^6.1.9",
+        "luxon": "^2.3.0",
         "mqtt": "^4.3.4",
         "redis": "^4.0.3"
     }

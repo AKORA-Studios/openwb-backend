@@ -2,3 +2,4 @@
 **/maps
 **/node_modules
 **/*.env
+**/test

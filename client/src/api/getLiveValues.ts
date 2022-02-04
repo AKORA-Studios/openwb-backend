@@ -1,13 +1,13 @@
+import { DateTime } from 'luxon';
 import { getKey } from '../db/redis';
 
 export async function getLiveValues() {
-    let str = await getKey('openWB/graph/lastlivevalues');
-    if (!str) str = await getKey('openWB/graph/alllivevalues');
-    if (!str) return null;
+    let str = await getKey('openWB/system/lastlivevalues');
+    if (!str) str = await getKey('openWB/system/alllivevalues');
+    let arr = str.split(',').map((s: any) => (isNaN(Number(s)) ? s : Number(s)));
 
-    const arr = str.split(',');
     return {
-        Time: arr[0],
+        Time: DateTime.fromISO(arr[0]).toISO(),
         EVU: arr[1],
         LadeleistungGesamt: arr[2],
         PV: arr[3],

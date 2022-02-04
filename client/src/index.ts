@@ -1,7 +1,7 @@
 import config from './config';
 import Fastify from 'fastify';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
-import { connectMongoDB, disconnectMongoDB } from './db/mongo';
+import { connectInfluxDB, disconnectInfluxDB } from './db/influx';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
 import api from './api';
 
@@ -22,7 +22,7 @@ server.register(api, { prefix: '/api' });
 
 async function start() {
     try {
-        await connectMongoDB();
+        await connectInfluxDB();
         await connectRedisDB();
         await connectMQTTClient();
         server.listen(config.PORT, '0.0.0.0', (err, address) => {
@@ -43,7 +43,7 @@ process.on('SIGTERM', async () => {
     console.log('Closing http server.');
     server.close(async () => {
         console.log('Http server closed.');
-        await disconnectMongoDB();
+        await disconnectInfluxDB();
         await disconnectRedisDB();
         await disconnectMQTTClient();
         process.exit(0);
