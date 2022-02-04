@@ -20,9 +20,19 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
         return await getGlobals();
     });
 
-    server.get('/livevalues', async (request, reply) => {
-        reply.type('application/json').code(200);
-        return await getLiveValues();
+    server.get('/values', async (request, reply) => {
+        let values = await getLiveValues();
+        reply.type('application/json');
+        if (values) {
+            reply.code(200);
+            return values;
+        } else {
+            reply.code(404);
+            return {
+                code: 404,
+                message: 'too early',
+            };
+        }
     });
 
     done();
