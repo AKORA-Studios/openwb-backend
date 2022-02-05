@@ -18,22 +18,6 @@ services:
       - ./test:/app/test
     env_file:
       - ./.env
-  influxDB:
-    image: influxdb:1.8-alpine
-    container_name: influx_db
-    restart: on-failure
-    ports:
-      - 8086:8086
-    networks:
-      - mqtt_net
-    volumes:
-      - influxDB:/var/lib/influxdb2
-    environment:
-      DOCKER_INFLUXDB_INIT_MODE: setup
-      DOCKER_INFLUXDB_INIT_RETENTION_BRUH: The duration the system's initial bucket should retain data. If not set, the initial bucket will retain data forever.
-      INFLUXD_HTTP_BIND_ADDRESS: 0.0.0.0:8086
-    env_file:
-      - ./.env
   redisDB:
     image: redis
     container_name: mqtt_redis
@@ -47,9 +31,6 @@ services:
 networks:
   mqtt_net:
 volumes:
-  influxDB: 
-    external: true
-    name: influx
   redisDB: 
     external: true
     name: redis
