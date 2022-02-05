@@ -1,13 +1,29 @@
-import { Point } from '@influxdata/influxdb-client';
+//import { Point } from '@influxdata/influxdb-client';
+import { getManager } from 'typeorm';
 import getLiveValues from '../api/getLiveValues';
 import mqttListener from '../openWB/client';
-import { influxApi, queryApi } from './influx';
+import openWB from './entity';
 
-mqttListener.on('openWB/graph/alllivevalues', async (str) => {
+mqttListener.on('openWB/system/lastlivevalues', async (str) => {
     const values = await getLiveValues();
     if (!values) return;
 
-    const point = new Point('graph_point')
+    const point = new openWB();
+    for (let key in values) {
+        if (key === 'time') {
+            point['time'] = new Date();
+            continue;
+        }
+        //@ts-ignore
+        point[key] = values[key];
+    }
+
+    await getManager().save(point);
+
+    //console.log('Wrote values for:', point.time.toTimeString(), '/', point.time.toLocaleTimeString('de'));
+
+    /*
+    const pointasdsad = new Point('graph_point')
         .tag('test', 'ABC')
         .floatField('time', values.time)
         .floatField('evu', values.evu)
@@ -23,7 +39,8 @@ mqttListener.on('openWB/graph/alllivevalues', async (str) => {
         .floatField('VB1', values.VB1)
         .floatField('VB2', values.VB2);
 
-    influxApi.writePoint(point);
+    influxApi.writePoint(pointasdsad);
+    */
 
     //19:35:56,5949,1588,0,0,1588,1588,-7,1,14,24,4368,358,0';
     //Daten für den Live Graph, gibt nur die neusten Daten wieder. Aufbau:

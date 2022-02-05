@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Connection, createConnection } from 'typeorm';
-import openWB from './entity';
+import openWBGraph from './entity';
 import config from '../config';
 
 export let mariaClient: Connection;
@@ -14,14 +14,14 @@ export async function connectMariaDB() {
             username: config.MARIADB_USERNAME,
             password: config.MARIADB_PASSWORD,
             database: 'hausdb',
-            entities: [openWB],
+            entities: [openWBGraph],
             synchronize: true,
-            logging: 'all',
+            logging: false,
         });
     } catch (e: any) {
-        throw new Error('MariaDB unable to connect to ' + config.REDISDB_URL); //, {cause: e});
+        throw new Error('MariaDB unable to connect to ' + config.MARIADB_URL); //, {cause: e});
     }
-    console.log('Connected to MariaDB at', config.REDISDB_URL);
+    console.log('Connected to MariaDB at', config.MARIADB_URL);
 }
 
 export async function disconnectMariaDB() {

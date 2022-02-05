@@ -17,7 +17,7 @@ mqqtReady.then(async () => {
 
         if (isNumber) val = Number(Number(str));
 
-        //console.log('MQQT -', topic, '-', JSON.stringify(val));
+        // if (topic.includes('lastlivevalues')) console.log('MQQT -', topic, '-', JSON.stringify(val));
 
         await setKey(topic, val);
 

@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime, Zone } from 'luxon';
 import { getKey } from '../db/redis';
 
 export async function getLiveValues() {
@@ -9,7 +9,7 @@ export async function getLiveValues() {
     let arr = str.split(',').map((s: any) => (isNaN(Number(s)) ? s : Number(s)));
 
     return {
-        time: DateTime.fromISO(arr[0]).toISO(),
+        time: DateTime.fromISO(arr[0]).toJSDate(),
         evu: arr[1] as number,
         ladeleistungGesamt: arr[2] as number,
         PV: arr[3] as number,

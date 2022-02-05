@@ -3,8 +3,8 @@ import Fastify from 'fastify';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectInfluxDB, disconnectInfluxDB } from './db/influx';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
-import api from './api';
 import { connectMariaDB, disconnectMariaDB } from './db/mariadb';
+import api from './api';
 
 const server = Fastify({
     logger: true,
