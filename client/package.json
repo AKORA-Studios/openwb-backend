@@ -25,6 +25,9 @@
         "fastify": "^3.27.0",
         "luxon": "^2.3.0",
         "mqtt": "^4.3.4",
-        "redis": "^4.0.3"
+        "mysql": "^2.18.1",
+        "redis": "^4.0.3",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "^0.2.41"
     }
 }

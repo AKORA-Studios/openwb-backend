@@ -4,6 +4,7 @@ import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectInfluxDB, disconnectInfluxDB } from './db/influx';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
 import api from './api';
+import { connectMariaDB, disconnectMariaDB } from './db/mariadb';
 
 const server = Fastify({
     logger: true,
@@ -23,6 +24,7 @@ server.register(api, { prefix: '/api' });
 async function start() {
     try {
         await connectInfluxDB();
+        await connectMariaDB();
         await connectRedisDB();
         await connectMQTTClient();
         server.listen(config.PORT, '0.0.0.0', (err, address) => {
@@ -44,6 +46,7 @@ process.on('SIGTERM', async () => {
     server.close(async () => {
         console.log('Http server closed.');
         await disconnectInfluxDB();
+        await disconnectMariaDB();
         await disconnectRedisDB();
         await disconnectMQTTClient();
         process.exit(0);

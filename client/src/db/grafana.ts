@@ -1,7 +1,7 @@
 import { Point } from '@influxdata/influxdb-client';
 import getLiveValues from '../api/getLiveValues';
 import mqttListener from '../openWB/client';
-import { influxApi } from './influx';
+import { influxApi, queryApi } from './influx';
 
 mqttListener.on('openWB/graph/alllivevalues', async (str) => {
     const values = await getLiveValues();
