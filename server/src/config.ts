@@ -16,5 +16,7 @@ export default {
     REDISDB_URL: process.env.REDISDB_URL ?? 'redis://localhost:6379',
 
     PORT: process.env.PORT ?? 3000,
-    ADDRESS: process.env.NODE_ENV ? '0.0.0.0' : '127.0.0.1',
+    ADDRESS: process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1',
+
+    NODE_ENV: process.env.NODE_ENV,
 };
