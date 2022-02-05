@@ -9,7 +9,6 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - influxDB
       - redisDB
     environment:
       INFLUX_URL: http://influxDB:8086
@@ -21,7 +20,7 @@ services:
   redisDB:
     image: redis
     container_name: openwb_redis
-    restart: on-failure
+    restart: always
     ports:
       - 6379:6379
     networks:
