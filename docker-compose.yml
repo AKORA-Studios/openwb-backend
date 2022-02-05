@@ -1,11 +1,11 @@
 version: '3.4'
 services:
-  client:
-    build: ./client
-    container_name: mqtt_client
+  server:
+    build: ./server
+    container_name: openwb_server
     restart: unless-stopped
     networks:
-      - mqtt_net
+      - internal
     ports:
       - 3000:3000
     depends_on:
@@ -20,16 +20,16 @@ services:
       - ./.env
   redisDB:
     image: redis
-    container_name: mqtt_redis
+    container_name: openwb_redis
     restart: on-failure
     ports:
       - 6379:6379
     networks:
-      - mqtt_net
+      - internal
     volumes:
       - redisDB:/data
 networks:
-  mqtt_net:
+ internal:
 volumes:
   redisDB: 
     external: true
