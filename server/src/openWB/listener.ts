@@ -32,7 +32,7 @@ let count = 0;
 mqqtClient.on('reconnect', () => {
     count++;
     console.count('Reconnecting...');
-    //if (count === 5) stop();
+    if (count === 5) stop();
 });
 
 // Handling error events
