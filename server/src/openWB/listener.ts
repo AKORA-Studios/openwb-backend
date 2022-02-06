@@ -1,3 +1,4 @@
+import { stop } from '..';
 import { setKey } from '../db/redis';
 import mqttListener, { mqqtClient, mqqtReady } from './client';
 
@@ -31,7 +32,7 @@ let count = 0;
 mqqtClient.on('reconnect', () => {
     count++;
     console.count('Reconnecting...');
-    if (count === 5) mqqtClient.end();
+    //if (count === 5) stop();
 });
 
 // Handling error events

@@ -38,8 +38,7 @@ async function start() {
 }
 start();
 
-process.on('SIGTERM', async () => {
-    console.info('SIGTERM signal received.');
+export function stop() {
     console.log('Closing http server.');
     server.close(async () => {
         console.log('Http server closed.');
@@ -48,4 +47,9 @@ process.on('SIGTERM', async () => {
         await disconnectRedisDB();
         process.exit(0);
     });
+}
+
+process.on('SIGTERM', async () => {
+    console.info('SIGTERM signal received.');
+    stop();
 });
