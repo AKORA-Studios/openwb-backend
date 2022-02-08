@@ -1,0 +1,25 @@
+{
+    "include": [
+        "src"
+    ],
+    "compilerOptions": {
+        "target": "ESNext", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+        // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+        "module": "commonjs", /* Specify what module code is generated. */
+        "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
+        "resolveJsonModule": true,
+        "moduleResolution": "Node",
+        "outDir": "dist",
+        "mapRoot": "maps",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
+        /* Type Checking */
+        "strict": true, /* Enable all strict type-checking options. */
+        "strictPropertyInitialization": false,
+        "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    }
+}
