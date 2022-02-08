@@ -3,12 +3,13 @@
         "src"
     ],
     "compilerOptions": {
-        "target": "ESNext", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+        "target": "ES2020", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
         // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
-        "module": "commonjs", /* Specify what module code is generated. */
-        "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
-        "resolveJsonModule": true,
+        "module": "ES2020", /* Specify what module code is generated. */
         "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
         "outDir": "dist",
         "mapRoot": "maps",
         "declaration": true,

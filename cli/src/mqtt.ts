@@ -1,7 +1,7 @@
 import { AsyncClient, connect, IClientOptions } from 'async-mqtt';
 import EventEmitter from 'events';
 
-export function connectMQTTClient(url: string, mqttOptions: IClientOptions) {
+export function connectMQTTClient(url: string, mqttOptions: IClientOptions): Promise<AsyncClient> {
     return new Promise((res, rej) => {
         let mqttClient = connect(url, mqttOptions);
         mqttClient.on('connect', () => {
@@ -12,7 +12,7 @@ export function connectMQTTClient(url: string, mqttOptions: IClientOptions) {
 }
 
 export async function subsribe(client: AsyncClient, filter?: string) {
-    if (client.options.username) filter = client.options.username + '/' + filter; //Add default prefix
+    //if (client.options.username) filter = client.options.username + '/' + filter; //Add default prefix
 
     const emitter = new EventEmitter();
     await client.subscribe('#');
