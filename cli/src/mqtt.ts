@@ -19,7 +19,7 @@ export async function subsribe(client: AsyncClient, filter?: string) {
     client.on('message', (topic, payload) => {
         let str = topic.split('/').slice(1).join('/');
         if (filter && !filter.includes('#')) {
-            if (!str.includes(filter)) return;
+            if (!str.toLowerCase().includes(filter.toLocaleLowerCase())) return;
         }
 
         emitter.emit('message', str, payload.toString());
