@@ -40,6 +40,7 @@ export function register() {
                     this.set(await getKey(key!));
                 }
             },
+            registers: [registery],
         });
     }
 }
