@@ -13,7 +13,7 @@ scrape_configs:
     - job_name: 'openwb-rfid'
       # Override the global default and scrape targets from this job every 5 seconds.
       #scrape_interval: 5s
-      metrics_path: '/api/rfid'
+      metrics_path: '/api/metrics'
       static_configs:
           - targets: ['192.168.1.28:3000']
     - job_name: 'nextcloud'

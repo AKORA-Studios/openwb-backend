@@ -4,6 +4,7 @@ import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
 import { connectMariaDB, disconnectMariaDB } from './db/mariadb';
 import api from './api';
+import { register } from './api/metrics';
 
 const server = Fastify({
     logger: true,
@@ -25,6 +26,7 @@ async function start() {
         await connectRedisDB();
         await connectMariaDB();
         await connectMQTTClient();
+        await register();
         server.listen(config.PORT, '0.0.0.0', (err, address) => {
             if (err) throw err;
             console.log(`Server is now listening on ${address}`);
