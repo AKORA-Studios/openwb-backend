@@ -7,7 +7,9 @@ import api from './api';
 import { register } from './api/metrics';
 
 const server = Fastify({
-    logger: true,
+    logger: {
+        level: 'error',
+    },
 });
 
 console.log(config);
