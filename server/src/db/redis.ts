@@ -15,9 +15,9 @@ export async function getKey(key: string) {
     let str = await redisClient.get(key);
 
     let isNumber = !isNaN(Number(str)),
-        val: any = str;
+        val: string | number | null = str;
 
-    if (isNumber) val = Number(Number(str));
+    if (isNumber) val = Number(str);
 
     return val;
 }

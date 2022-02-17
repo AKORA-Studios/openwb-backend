@@ -16,13 +16,15 @@ export async function subsribe(client: AsyncClient, filter?: string) {
 
     const emitter = new EventEmitter();
     await client.subscribe('#');
+    let counter = 0;
     client.on('message', (topic, payload) => {
+        counter++;
         let str = topic.split('/').slice(1).join('/');
         if (filter && !filter.includes('#')) {
             if (!str.toLowerCase().includes(filter.toLocaleLowerCase())) return;
         }
 
-        emitter.emit('message', str, payload.toString());
+        emitter.emit('message', str, payload.toString(), counter);
     });
 
     return emitter;

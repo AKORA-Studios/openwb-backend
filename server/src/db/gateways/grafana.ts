@@ -1,8 +1,8 @@
 import { getManager } from 'typeorm';
-import getLiveValues from '../api/getLiveValues';
-import config from '../config';
-import mqttListener from '../openWB/client';
-import openWB from './typeorm/entity';
+import getLiveValues from '../../api/getLiveValues';
+import config from '../../config';
+import mqttListener from '../../openWB/client';
+import openWB from '../typeorm/entity';
 
 mqttListener.on('openWB/system/lastlivevalues', async (str) => {
     const values = await getLiveValues();

@@ -53,8 +53,9 @@ async function cli() {
                 emitter = await subsribe(client, opts.filter);
             spinner.success({ text: 'Connected to: ' + opts.url });
 
-            emitter.on('message', (topic: string, str) => {
+            emitter.on('message', (topic: string, str, counter: number) => {
                 console.log(
+                    chalk.grey((counter + '').padStart(5)),
                     chalk.white('Received:'),
                     chalk.green(topic.padEnd(56)),
                     chalk.white('-'),

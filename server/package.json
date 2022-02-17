@@ -28,6 +28,7 @@
         "prom-client": "^14.0.1",
         "redis": "^4.0.3",
         "reflect-metadata": "^0.1.13",
+        "sequelize": "^6.16.1",
         "typeorm": "^0.2.41"
     }
 }
