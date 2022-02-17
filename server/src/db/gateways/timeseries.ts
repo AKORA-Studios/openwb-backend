@@ -53,12 +53,12 @@ export async function initModel() {
         if (typeof val === 'number') dtype = DataTypes.FLOAT;
 
         if (key === 'openWB/system/lastRfId') {
-            schema['openWB/system/lastRfId'] = DataTypes.STRING;
-            schema['openWB/system/lastRfIdDate'] = DataTypes.DATE;
+            schema['openWB_system_lastRfId'] = DataTypes.STRING;
+            schema['openWB_system_lastRfIdDate'] = DataTypes.DATE;
         } else if (key === 'openWB/system/Timestamp') {
             schema['wb_timestamp'] = DataTypes.DATE;
         } else {
-            schema[key] = dtype;
+            schema[key.replaceAll('/', '_')] = dtype;
         }
     }
 
@@ -78,12 +78,12 @@ export async function savePoint() {
 
         if (key === 'openWB/system/lastRfId') {
             const arr = (val + '').split(',');
-            data['openWB/system/lastRfId'] = carID[arr[0] as any];
-            data['openWB/system/lastRfIdDate'] = new Date(Number(arr[1]) * 1000);
+            data['openWB_system_lastRfId'] = carID[arr[0] as any];
+            data['openWB_system_lastRfIdDate'] = new Date(Number(arr[1]) * 1000);
         } else if (key === 'openWB/system/Timestamp') {
             data['wb_timestamp'] = new Date((val as number) * 1000);
         } else {
-            data[key] = val;
+            data[key.replaceAll('/', '_')] = val;
         }
     }
 
