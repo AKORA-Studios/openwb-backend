@@ -10,7 +10,7 @@ enum carID {
 }
 
 export async function getRFID() {
-    let value = await getKey('openWB/lp/1/lastRfId');
+    let value = (await getKey('openWB/lp/1/lastRfId')) as string;
     if (!value)
         return {
             enabled: true,
@@ -19,7 +19,7 @@ export async function getRFID() {
         };
 
     let [lastID, millies] = value.split(','),
-        tagName = carID[lastID];
+        tagName = carID[lastID as any];
     return {
         enabled: (await getKey('openWB/global/rfidConfigured')) !== '0',
         tagName,

@@ -37,7 +37,7 @@ export function register() {
                 if (func) {
                     this.set(await func());
                 } else {
-                    this.set(await getKey(key!));
+                    this.set((await getKey(key!)) as number);
                 }
             },
             registers: [registery],

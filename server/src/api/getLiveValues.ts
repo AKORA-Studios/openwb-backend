@@ -2,8 +2,8 @@ import { DateTime, Zone } from 'luxon';
 import { getKey } from '../db/redis';
 
 export async function getLiveValues() {
-    let str = await getKey('openWB/system/lastlivevalues');
-    if (!str) str = await getKey('openWB/system/alllivevalues');
+    let str = (await getKey('openWB/system/lastlivevalues')) as string;
+    if (!str) str = (await getKey('openWB/system/alllivevalues')) as string;
     if (!str) return null;
 
     let arr = str.split(',').map((s: any) => (isNaN(Number(s)) ? s : Number(s)));
