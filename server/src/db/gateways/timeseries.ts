@@ -90,5 +90,4 @@ export async function savePoint() {
     await writeFile('/app/test/last_point.txt', JSON.stringify(data, null, 4));
 
     const point = await Timeseries.create(data);
-    console.log(point.toJSON());
 }
