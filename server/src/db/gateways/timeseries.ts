@@ -1,5 +1,6 @@
 import { writeFile } from 'fs/promises';
 import { Sequelize, Model, DataTypes, DataType } from 'sequelize';
+import { carID } from '../../api/getRFID';
 import config from '../../config';
 import redisClient, { getKey } from '../redis';
 
@@ -50,15 +51,14 @@ export async function initModel() {
         let val = await getKey(key);
         let dtype: DataType = DataTypes.STRING;
         if (typeof val === 'number') dtype = DataTypes.FLOAT;
-        schema[key] = dtype;
 
         if (key === 'openWB/system/lastRfId') {
-            schema['openWB/system/lastRfId'] = DataTypes.INTEGER;
+            schema['openWB/system/lastRfId'] = DataTypes.STRING;
             schema['openWB/system/lastRfIdDate'] = DataTypes.DATE;
-        }
-
-        if (key === 'openWB/system/Timestamp') {
+        } else if (key === 'openWB/system/Timestamp') {
             schema['wb_timestamp'] = DataTypes.DATE;
+        } else {
+            schema[key] = dtype;
         }
     }
 
@@ -75,16 +75,15 @@ export async function savePoint() {
 
     for (let key of keys) {
         let val = await getKey(key);
-        data[key] = val;
 
         if (key === 'openWB/system/lastRfId') {
             const arr = (val + '').split(',');
-            data['openWB/system/lastRfId'] = Number(arr[0]);
+            data['openWB/system/lastRfId'] = carID[arr[0] as any];
             data['openWB/system/lastRfIdDate'] = new Date(Number(arr[1]) * 1000);
-        }
-
-        if (key === 'openWB/system/Timestamp') {
+        } else if (key === 'openWB/system/Timestamp') {
             data['wb_timestamp'] = new Date((val as number) * 1000);
+        } else {
+            data[key] = val;
         }
     }
 

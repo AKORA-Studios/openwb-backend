@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { getKey } from '../db/redis';
 
-enum carID {
+export enum carID {
     A = 3038948522,
     B = 3038331354,
     C = 3041372218,
