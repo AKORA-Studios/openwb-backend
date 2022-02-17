@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Connection, createConnection } from 'typeorm';
 import openWBGraph from './entity';
-import config from '../config';
+import config from '../../config';
 
 export let mariaClient: Connection;
 
