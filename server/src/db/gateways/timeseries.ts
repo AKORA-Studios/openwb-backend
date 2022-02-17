@@ -21,7 +21,7 @@ export async function connectTimeSeries() {
         await initModel();
         setInterval(async () => {
             await savePoint();
-        }, 1000 * 60 * 5);
+        }, 1000 * 60 * 1); //Every minute
     } catch (e: any) {
         throw new Error('(TSDB) MariaDB unable to connect to ' + config.MARIADB_URL); //, {cause: e});
     }
