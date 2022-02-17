@@ -10,6 +10,7 @@ const sequelize = new Sequelize({
     database: 'hausdb',
     username: config.MARIADB_USERNAME,
     password: config.MARIADB_PASSWORD,
+    logging: false,
 });
 
 //Connecting
