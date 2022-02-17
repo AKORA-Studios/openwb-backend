@@ -1,3 +1,4 @@
+import { writeFile } from 'fs/promises';
 import { Sequelize, Model, DataTypes, DataType } from 'sequelize';
 import config from '../../config';
 import redisClient, { getKey } from '../redis';
@@ -85,6 +86,8 @@ export async function savePoint() {
             data['wb_timestamp'] = new Date((val as number) * 1000);
         }
     }
+
+    await writeFile('/app/test/last_point.txt', JSON.stringify(data, null, 4));
 
     const point = await Timeseries.create(data);
     console.log(point.toJSON());
