@@ -68,6 +68,7 @@ export async function initModel() {
 
         if (key === 'openWB/system/lastRfId') {
             schema['openWB_system_lastRfId'] = DataTypes.STRING;
+            schema['openWB_system_lastRfIdCode'] = DataTypes.INTEGER;
             schema['openWB_system_lastRfIdDate'] = DataTypes.DATE;
         } else if (key === 'openWB/system/Timestamp') {
             schema['wb_timestamp'] = DataTypes.DATE;
@@ -92,6 +93,7 @@ export async function savePoint() {
         if (key === 'openWB/system/lastRfId') {
             const arr = (val + '').split(',');
             data['openWB_system_lastRfId'] = carID[arr[0] as any];
+            data['openWB_system_lastRfIdCode'] = carID[arr[0] as any].charCodeAt(0) - 65;
             data['openWB_system_lastRfIdDate'] = new Date(Number(arr[1]) * 1000);
         } else if (key === 'openWB/system/Timestamp') {
             data['wb_timestamp'] = new Date((val as number) * 1000);
