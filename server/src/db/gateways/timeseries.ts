@@ -14,6 +14,9 @@ const sequelize = new Sequelize({
     logging: false,
 });
 
+/** All important keys that need to be stored in the DB */
+let keys: string[] = [];
+
 //Connecting
 export async function connectTimeSeries() {
     try {
@@ -42,9 +45,20 @@ export async function disconnectTimeSeries() {
 //Basic Model
 class Timeseries extends Model {}
 
+/** Sort out all unimportant keys */
+function filterKeys(arr: string[]): string[] {
+    return arr
+        .filter((s) => !s.includes('SmartHome'))
+        .filter((s) => !s.includes('config'))
+        .filter((s) => !s.includes('set'))
+        .filter((s) => !s.includes('graph'))
+        .filter((s) => !s.includes('Graph'))
+        .filter((s) => !/^openWB\/lp\/[2-8]/.test(s));
+}
+
 //Create Model and sync to database
 export async function initModel() {
-    let keys = await redisClient.keys('*');
+    keys = filterKeys(await redisClient.keys('*'));
     let schema: { [key: string]: DataType } = {};
 
     for (let key of keys) {
@@ -70,7 +84,6 @@ export async function initModel() {
 export async function savePoint() {
     await sequelize.sync();
 
-    let keys = await redisClient.keys('*');
     let data: { [key: string]: any } = {};
 
     for (let key of keys) {
@@ -89,5 +102,5 @@ export async function savePoint() {
 
     await writeFile('/app/test/last_point.txt', JSON.stringify(data, null, 4));
 
-    const point = await Timeseries.create(data);
+    await Timeseries.create(data);
 }
