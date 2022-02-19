@@ -22,6 +22,7 @@ export async function connectTimeSeries() {
     try {
         await sequelize.authenticate();
         await initModel();
+        await savePoint();
         setInterval(async () => {
             await savePoint();
         }, 1000 * 60 * 1); //Every minute
