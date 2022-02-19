@@ -37,7 +37,7 @@ mqqtClient.on('reconnect', () => {
 
 // Handling error events
 mqqtClient.on('disconnect', (e) => console.log('MQTT disconnected:', e));
-mqqtClient.on('error', (e) => console.log('MQTT error:', e));
+mqqtClient.on('error', (e) => console.log('MQTT error: ' + e));
 mqqtClient.on('end', () => {
     console.log('Destroyed client');
     //process.exit(1);
