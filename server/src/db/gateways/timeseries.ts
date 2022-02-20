@@ -27,6 +27,7 @@ export async function connectTimeSeries() {
             await savePoint();
         }, 1000 * 60 * 1); //Every minute
     } catch (e: any) {
+        console.error(e);
         throw new Error('(TSDB) MariaDB unable to connect to ' + config.MARIADB_URL); //, {cause: e});
     }
     console.log('(TSDB) Connected to MariaDB at', config.MARIADB_URL);

@@ -19,6 +19,7 @@ export async function connectMariaDB() {
             logging: false,
         });
     } catch (e: any) {
+        console.error(e);
         throw new Error('MariaDB unable to connect to ' + config.MARIADB_URL); //, {cause: e});
     }
     console.log('Connected to MariaDB at', config.MARIADB_URL);
