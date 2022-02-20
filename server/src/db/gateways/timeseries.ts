@@ -93,9 +93,12 @@ export async function savePoint() {
         let val = await getKey(key);
 
         if (key === 'openWB/system/lastRfId') {
-            const arr = (val + '').split(',');
-            data['openWB_system_lastRfId'] = carID[arr[0] as any];
-            data['openWB_system_lastRfIdCode'] = carID[arr[0] as any].charCodeAt(0) - 65;
+            const arr = (val + '').split(','),
+                name = carID[arr[0] as any] ?? '@',
+                code = name?.charCodeAt(0) - 65,
+                date = arr[1] ? new Date(Number(arr[1]) * 1000) : null;
+            data['openWB_system_lastRfId'] = name;
+            data['openWB_system_lastRfIdCode'] = code;
             data['openWB_system_lastRfIdDate'] = new Date(Number(arr[1]) * 1000);
         } else if (key === 'openWB/system/Timestamp') {
             data['wb_timestamp'] = new Date((val as number) * 1000);
