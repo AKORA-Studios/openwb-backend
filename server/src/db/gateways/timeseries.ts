@@ -96,10 +96,10 @@ export async function savePoint() {
             const arr = (val + '').split(','),
                 name = carID[arr[0] as any] ?? '@',
                 code = name?.charCodeAt(0) - 65,
-                date = arr[1] ? new Date(Number(arr[1]) * 1000) : null;
+                date = arr[1] ? new Date(Number(arr[1]) * 1000) : new Date();
             data['openWB_system_lastRfId'] = name;
             data['openWB_system_lastRfIdCode'] = code;
-            data['openWB_system_lastRfIdDate'] = new Date(Number(arr[1]) * 1000);
+            data['openWB_system_lastRfIdDate'] = date;
         } else if (key === 'openWB/system/Timestamp') {
             data['wb_timestamp'] = new Date((val as number) * 1000);
         } else {
