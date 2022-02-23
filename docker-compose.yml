@@ -28,16 +28,6 @@ services:
       - internal
     volumes:
       - redisDB:/data
-  mosquitto:
-    container_name: openwb_mosquitto
-    image: eclipse-mosquitto:2.0-openssl
-    volumes:
-      - ./broker:/mosquitto/config/
-    ports:
-      - '8883:8883'
-    networks:
-      - default
-    restart: unless-stopped
 networks:
  internal:
 volumes:
