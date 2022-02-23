@@ -2,7 +2,9 @@ import { FastifyPluginCallback } from 'fastify';
 import getGlobals from './getGlobals';
 import getLadepunkt from './getLadepunkt';
 import getLiveValues from './getLiveValues';
+import getRFID from './getRFID';
 import getVerbrauch from './getVerbrauch';
+import getMetrics from './metrics';
 
 export const api: FastifyPluginCallback = function (server, opts, done) {
     server.get('/ladepunkt', async (request, reply) => {
@@ -20,6 +22,11 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
         return await getGlobals();
     });
 
+    server.get('/rfid', async (request, reply) => {
+        reply.type('application/json').code(200);
+        return await getRFID();
+    });
+
     server.get('/values', async (request, reply) => {
         let values = await getLiveValues();
         reply.type('application/json');
@@ -33,6 +40,11 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
                 message: 'too early',
             };
         }
+    });
+
+    server.get('/metrics', async (request, reply) => {
+        reply.type('text/plain').code(200);
+        return await getMetrics();
     });
 
     done();

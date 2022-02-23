@@ -27,4 +27,4 @@ export default mqttListener;
 
 //Do stuff when ready
 import './listener';
-import '../db/grafana';
+import '../db/gateways/grafana';
