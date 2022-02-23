@@ -30,6 +30,7 @@ export async function connectRedisDB() {
     try {
         await redisClient.connect();
     } catch (e: any) {
+        console.error(e);
         throw new Error('RedisDB unable to connect to ' + config.REDISDB_URL); //, {cause: e});
     }
     console.log('Connected to RedisDB at', config.REDISDB_URL);

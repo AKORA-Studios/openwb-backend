@@ -9,7 +9,6 @@ RUN npm ci -q
 
 
 
-
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
 WORKDIR /app
@@ -28,17 +27,18 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+RUN addgroup -g 1001 -S nodejs\
+    && adduser -S nextjs -u 1001 
+#    && chsh -s /usr/sbin/nologin root
 
 # You only need to copy next.config.js if you are NOT using the default configuration
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder /app/package.json ./package.json
+COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 
 # Automatically leverage output traces to reduce image size
 COPY --from=builder /app/src ./src
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 # COPY --from=builder --chown=nextjs:nodejs /app/.env ./.env
 
 
@@ -50,5 +50,5 @@ VOLUME [ "/app/test" ]
 
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
-
+USER nextjs
 CMD [ "node",  "./dist/index.js" ]
