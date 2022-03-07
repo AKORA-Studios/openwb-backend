@@ -2,8 +2,6 @@ openWB/evu/APhase1
 openWB/evu/APhase2
 openWB/evu/APhase3
 openWB/evu/ASchieflast
-openWB/evu/DailyYieldExportKwh
-openWB/evu/DailyYieldImportKwh
 openWB/evu/Hz
 openWB/evu/PfPhase1
 openWB/evu/PfPhase2
