@@ -74,6 +74,8 @@ export async function initModel() {
             schema['openWB_system_lastRfIdDate'] = DataTypes.DATE;
         } else if (key === 'openWB/system/Timestamp') {
             schema['wb_timestamp'] = DataTypes.DATE;
+        } else if (key === 'openWB/global/strLastmanagementActive') {
+            schema['openWB_global_strLastmanagementActive'] = DataTypes.STRING;
         } else {
             schema[key.replaceAll('/', '_')] = dtype;
         }
