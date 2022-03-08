@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import sequelize from '../gateways';
+import sequelize from '../mariadb';
 
 interface GraphValuesAttributes {
     timestamp: Date;

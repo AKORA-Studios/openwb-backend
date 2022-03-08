@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { carID } from '../../api/getRFID';
-import sequelize from '../gateways';
+import sequelize from '../mariadb';
 
 interface RFIDLogAttributes {
     timestamp: Date;

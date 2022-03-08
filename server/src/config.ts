@@ -19,4 +19,5 @@ export default {
     ADDRESS: process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1',
 
     NODE_ENV: process.env.NODE_ENV,
+    DEV: process.env.NODE_ENV === 'development',
 };

@@ -2,8 +2,7 @@ import config from './config';
 import Fastify from 'fastify';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
-//import { connectMariaDB, disconnectMariaDB } from './db/typeorm';
-//import { connectTimeSeries, disconnectTimeSeries } from './db/gateways/timeseries';
+import { connectMariaDB, disconnectMariaDB } from './db/mariadb';
 import api from './api';
 //import { register } from './api/metrics';
 
@@ -27,8 +26,7 @@ server.register(api, { prefix: '/api' });
 async function start() {
     try {
         await connectRedisDB();
-        //await connectMariaDB();
-        //await connectTimeSeries();
+        await connectMariaDB();
         await connectMQTTClient();
         //await register();
         server.listen(config.PORT, '0.0.0.0', (err, address) => {
@@ -49,8 +47,7 @@ export function stop() {
     server.close(async () => {
         console.log('Http server closed.');
         await disconnectMQTTClient();
-        //await disconnectTimeSeries();
-        //await disconnectMariaDB();
+        await disconnectMariaDB();
         await disconnectRedisDB();
         process.exit(0);
     });
