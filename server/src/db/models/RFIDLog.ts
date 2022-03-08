@@ -30,7 +30,7 @@ RFIDLog.init(
         tagName: DataTypes.STRING,
         tagID: DataTypes.INTEGER,
     },
-    { sequelize }
+    { sequelize, tableName: 'rfid_log' }
 );
 
 export default RFIDLog;

@@ -35,7 +35,7 @@ GraphValues.init(
         hausverbrauch: DataTypes.FLOAT,
         ladeleistung: DataTypes.FLOAT,
     },
-    { sequelize }
+    { sequelize, tableName: 'graph' }
 );
 
 export default GraphValues;
