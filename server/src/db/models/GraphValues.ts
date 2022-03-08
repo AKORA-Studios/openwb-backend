@@ -51,7 +51,7 @@ mqttListener.on('openWB/system/lastlivevalues', async (str) => {
     await GraphValues.create({
         timestamp: values.time,
         evu: values.evu,
-        hausverbrauch: values.Hausverbrauch,
+        hausverbrauch: values.VB1,
         ladeleistung: values.ladeleistungGesamt,
         pv: values.PV,
     });
