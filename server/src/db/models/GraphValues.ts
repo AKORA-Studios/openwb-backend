@@ -1,5 +1,9 @@
+import config from '../../config';
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
+
+import getLiveValues from '../../api/getLiveValues';
+import mqttListener from '../../openWB/client';
 
 interface GraphValuesAttributes {
     timestamp: Date;
@@ -35,3 +39,20 @@ GraphValues.init(
 );
 
 export default GraphValues;
+
+//Save Entry on changes
+mqttListener.on('openWB/system/lastlivevalues', async (str) => {
+    if (config.DEV) return;
+
+    //Get new values from redis
+    const values = await getLiveValues();
+    if (!values) return;
+
+    await GraphValues.create({
+        timestamp: values.time,
+        evu: values.evu,
+        hausverbrauch: values.Hausverbrauch,
+        ladeleistung: values.ladeleistungGesamt,
+        pv: values.PV,
+    });
+});
