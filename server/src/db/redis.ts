@@ -42,7 +42,7 @@ export async function connectRedisDB() {
         str += `${key.padEnd(55)} - ${JSON.stringify(val)}\n`;
     }
 
-    await writeFile('/app/test/test.txt', str);
+    //await writeFile('/app/test/test.txt', str);
 }
 
 export async function disconnectRedisDB() {
