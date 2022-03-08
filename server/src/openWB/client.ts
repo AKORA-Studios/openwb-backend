@@ -27,4 +27,3 @@ export default mqttListener;
 
 //Do stuff when ready
 import './listener';
-import '../db/gateways/graph';

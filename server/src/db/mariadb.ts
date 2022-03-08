@@ -1,7 +1,5 @@
 import { Sequelize } from 'sequelize';
 import config from '../config';
-import GraphValues from './models/GraphValues';
-import RFIDLog from './models/RFIDLog';
 
 export const sequelize = new Sequelize({
     host: config.MARIADB_URL,
@@ -13,6 +11,9 @@ export const sequelize = new Sequelize({
     logging: false,
 });
 export default sequelize;
+
+import GraphValues from './models/GraphValues';
+import RFIDLog from './models/RFIDLog';
 
 //Connecting
 export async function connectMariaDB() {
