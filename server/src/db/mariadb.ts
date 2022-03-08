@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 import config from '../config';
-import GraphValues from './models/graphValues';
+import GraphValues from './models/GraphValues';
 import RFIDLog from './models/RFIDLog';
 
 export const sequelize = new Sequelize({
