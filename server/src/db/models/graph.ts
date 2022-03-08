@@ -1,46 +1,37 @@
-import 'reflect-metadata';
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { DataTypes, Model, Optional } from 'sequelize';
+import sequelize from '../gateways';
 
-@Entity()
-export class openWBGraph {
-    @PrimaryColumn('timestamp')
-    time: Date;
-
-    @Column('double')
+interface GraphValuesAttributes {
+    timestamp: Date;
     evu: number;
+    pv: number;
+    hausverbrauch: number;
+    ladeleistung: number;
+}
+export interface GraphValuesInput extends GraphValuesAttributes {}
 
-    @Column('double')
-    ladeleistungGesamt: number;
+class GraphValues extends Model<GraphValuesAttributes, GraphValuesInput> implements GraphValuesAttributes {
+    public timestamp!: Date;
+    public evu!: number;
+    public pv!: number;
+    public hausverbrauch!: number;
+    public ladeleistung!: number;
 
-    @Column('double')
-    PV: number;
-
-    @Column('double')
-    LadeleistungLP2: number;
-
-    @Column('double')
-    LadeleistungLP3: number;
-
-    @Column('double')
-    Speicherleistung: number;
-
-    @Column('double')
-    SpeicherSoC: number;
-
-    @Column('double')
-    SoCLp1: number;
-
-    @Column('double')
-    SoCLp2: number;
-
-    @Column('double')
-    Hausverbrauch: number;
-
-    @Column('double')
-    VB1: number;
-
-    @Column('double')
-    VB2: number;
+    // timestamps!
+    // public readonly createdAt!: Date;
+    // public readonly updatedAt!: Date;
+    // public readonly deletedAt!: Date;
 }
 
-export default openWBGraph;
+GraphValues.init(
+    {
+        timestamp: DataTypes.DATE,
+        evu: DataTypes.FLOAT,
+        pv: DataTypes.FLOAT,
+        hausverbrauch: DataTypes.FLOAT,
+        ladeleistung: DataTypes.FLOAT,
+    },
+    { sequelize }
+);
+
+export default GraphValues;
