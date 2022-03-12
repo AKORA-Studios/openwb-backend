@@ -15,11 +15,11 @@ interface GraphValuesAttributes {
 export interface GraphValuesInput extends GraphValuesAttributes {}
 
 class GraphValues extends Model<GraphValuesAttributes, GraphValuesInput> implements GraphValuesAttributes {
-    public timestamp!: Date;
-    public evu!: number;
-    public pv!: number;
-    public hausverbrauch!: number;
-    public ladeleistung!: number;
+    declare timestamp: Date;
+    declare evu: number;
+    declare pv: number;
+    declare hausverbrauch: number;
+    declare ladeleistung: number;
 
     // timestamps!
     // public readonly createdAt!: Date;
