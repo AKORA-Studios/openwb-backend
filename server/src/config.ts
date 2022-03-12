@@ -3,8 +3,6 @@ import { config } from 'dotenv';
 //Load enviroment variables
 config();
 
-const isDev = process.env.NODE_ENV === 'development';
-
 export default {
     MQTT_URL: process.env.MQTT_URL ?? 'mqtt://localhost:1883',
     MQTT_USERNAME: process.env.MQTT_USERNAME,
@@ -18,8 +16,7 @@ export default {
     REDISDB_URL: process.env.REDISDB_URL ?? 'redis://localhost:6379',
 
     PORT: process.env.PORT ?? 3000,
-    ADDRESS: isDev ? '127.0.0.1' : '0.0.0.0',
+    ADDRESS: process.env.NODE_ENV === 'production' ? '0.0.0.0' : '127.0.0.1',
 
     NODE_ENV: process.env.NODE_ENV,
-    DEV: isDev,
 };

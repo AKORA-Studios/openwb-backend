@@ -2,9 +2,10 @@ import config from './config';
 import Fastify from 'fastify';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
-import { connectMariaDB, disconnectMariaDB } from './db/mariadb';
+import { connectMariaDB, disconnectMariaDB } from './db/typeorm';
 import api from './api';
-//import { register } from './api/metrics';
+import { register } from './api/metrics';
+import { connectTimeSeries, disconnectTimeSeries } from './db/gateways/timeseries';
 
 const server = Fastify({
     logger: {
@@ -27,8 +28,9 @@ async function start() {
     try {
         await connectRedisDB();
         await connectMariaDB();
+        await connectTimeSeries();
         await connectMQTTClient();
-        //await register();
+        await register();
         server.listen(config.PORT, '0.0.0.0', (err, address) => {
             if (err) throw err;
             console.log(`Server is now listening on ${address}`);
@@ -47,6 +49,7 @@ export function stop() {
     server.close(async () => {
         console.log('Http server closed.');
         await disconnectMQTTClient();
+        await disconnectTimeSeries();
         await disconnectMariaDB();
         await disconnectRedisDB();
         process.exit(0);
