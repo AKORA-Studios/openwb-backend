@@ -49,10 +49,10 @@ mqttListener.on('openWB/system/lastlivevalues', async (str) => {
     if (!values) return;
 
     await GraphValues.create({
-        timestamp: new Date(values.time.getTime() - 1000 * 60 * 60),
+        timestamp: new Date(values.time - 1000 * 60 * 60),
         evu: values.evu,
-        hausverbrauch: values.VB1,
-        ladeleistung: values.ladeleistungGesamt,
-        pv: values.PV,
+        hausverbrauch: values.hausverbrauch,
+        ladeleistung: values.ladeleistung,
+        pv: values.photovoltaik,
     });
 });
