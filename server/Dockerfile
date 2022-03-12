@@ -25,7 +25,7 @@ RUN tsc
 FROM node:16-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV development
+ENV NODE_ENV production
 
 RUN addgroup -g 1001 -S nodejs\
     && adduser -S nextjs -u 1001 
