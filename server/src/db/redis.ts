@@ -14,6 +14,8 @@ redisClient.on('error', (err) => {
 export async function getKey(key: string) {
     let str = await redisClient.get(key);
 
+    if (key === 'openWB/system/lastRfId') return str;
+
     let isNumber = !isNaN(Number(str)),
         val: string | number | null = str;
 
@@ -42,7 +44,7 @@ export async function connectRedisDB() {
         str += `${key.padEnd(55)} - ${JSON.stringify(val)}\n`;
     }
 
-    await writeFile('/app/test/test.txt', str);
+    //await writeFile('/app/test/test.txt', str);
 }
 
 export async function disconnectRedisDB() {
