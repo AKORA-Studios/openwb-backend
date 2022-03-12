@@ -36,7 +36,7 @@ RFIDLog.init(
 export default RFIDLog;
 
 //Save Entry on changes
-mqttListener.on('openWB/system/lastRfId ', async (str) => {
+mqttListener.on('openWB/system/lastRfId', async (str) => {
     if (config.DEV) return;
 
     //Get new values from redis
