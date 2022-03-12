@@ -28,7 +28,7 @@ RFIDLog.init(
     {
         timestamp: DataTypes.DATE,
         tagName: DataTypes.STRING,
-        tagID: DataTypes.INTEGER,
+        tagID: DataTypes.BIGINT,
     },
     { sequelize, tableName: 'rfid_log' }
 );
