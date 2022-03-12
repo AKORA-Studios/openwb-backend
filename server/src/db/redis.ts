@@ -14,6 +14,8 @@ redisClient.on('error', (err) => {
 export async function getKey(key: string) {
     let str = await redisClient.get(key);
 
+    if (key === 'openWB/system/lastRfId') return str;
+
     let isNumber = !isNaN(Number(str)),
         val: string | number | null = str;
 
