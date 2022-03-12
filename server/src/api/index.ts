@@ -24,7 +24,8 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
 
     server.get('/rfid', async (request, reply) => {
         reply.type('application/json').code(200);
-        return await getRFID();
+        const rfid = await getRFID();
+        return { ...rfid, date: rfid.date.getTime() };
     });
 
     server.get('/values', async (request, reply) => {
