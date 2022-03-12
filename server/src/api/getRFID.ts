@@ -10,8 +10,7 @@ export enum carID {
 }
 
 export async function getRFID() {
-    let value = (await getKey('openWB/lp/1/lastRfId')) as string;
-    console.log(value);
+    let value = (await getKey('openWB/system/lastRfId')) as string;
     if (!value)
         return {
             enabled: true,
