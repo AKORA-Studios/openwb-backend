@@ -3,4 +3,3 @@
 **/node_modules
 **/*.env
 **/test
-server/src/db/gateways/test.ts
