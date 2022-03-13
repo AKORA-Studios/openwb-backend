@@ -13,9 +13,10 @@ export interface RFIDLogInput extends Omit<RFIDLogAttributes, 'tagName'> {
     tagName: string;
 }
 
+type Tag = 'A' | 'B' | 'C' | 'D' | 'E';
 class RFIDLog extends Model<RFIDLogAttributes, RFIDLogInput> implements RFIDLogAttributes {
     declare timestamp: Date;
-    declare tagName: 'A' | 'B' | 'C' | 'D' | 'E';
+    declare tagName: Tag;
     declare tagID: number;
 
     // timestamps!
