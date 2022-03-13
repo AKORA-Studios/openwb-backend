@@ -6,8 +6,12 @@ export async function getLadelog() {
     const thisMonth = new Date(),
         lastMonth = new Date(thisMonth.getTime() - (1000 * 60 * 60 * 24 * 365) / 12);
 
-    const thisLog = await parseCSV(await downloadCSV(thisMonth)),
-        lastLog = await parseCSV(await downloadCSV(lastMonth));
+    const [thisCSV, lastCSV] = await Promise.all([downloadCSV(thisMonth), downloadCSV(lastMonth)]);
+    console.log(thisMonth, thisCSV);
+    console.log(lastMonth, lastCSV);
+
+    const thisLog = await parseCSV(thisCSV),
+        lastLog = await parseCSV(lastCSV);
 
     return [...lastLog, ...thisLog];
 }
