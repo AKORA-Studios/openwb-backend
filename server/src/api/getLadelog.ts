@@ -26,24 +26,28 @@ function parseCSV<TRow>(str: string): Promise<TRow[]> {
             headers: false,
         })
             .on('error', (err) => rej(err))
-            .on('data', (row) => ({
-                start: DateTime.fromFormat(row[0], 'dd.MM.yy-HH:mm').toJSDate(),
-                ende: DateTime.fromFormat(row[1], 'dd.MM.yy-HH:mm').toJSDate(),
-                km: Number(row[2]),
-                kWh: Number(row[3]),
-                kW: Number(row[4]),
-                dauer: row[5],
-                ladepunkt: row[6],
-                modus: Number(row[7]),
-                tag: carID[row[8]],
-            }))
+            .on('data', (row) => {
+                console.log(JSON.stringify(row));
+                return {
+                    start: DateTime.fromFormat(row[0], 'dd.MM.yy-HH:mm').toJSDate(),
+                    ende: DateTime.fromFormat(row[1], 'dd.MM.yy-HH:mm').toJSDate(),
+                    km: Number(row[2]),
+                    kWh: Number(row[3]),
+                    kW: Number(row[4]),
+                    dauer: row[5],
+                    ladepunkt: row[6],
+                    modus: Number(row[7]),
+                    tag: carID[row[8]],
+                };
+            })
             .on('end', () => res(arr));
     });
 }
 
 /** Returns CSV string for date example 20223 */
-function downloadCSV(date: Date): Promise<string> {
+async function downloadCSV(date: Date): Promise<string> {
     const filename = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}`;
     const url = `${config.OPENWB_URL}/openWB/web/logging/data/ladelog/${filename}.csv`;
-    return axios(url).then((r) => r.data);
+    const r = await axios(url);
+    return r.data;
 }
