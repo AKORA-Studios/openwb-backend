@@ -45,6 +45,14 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
         }
     });
 
+    server.get('/lademodus', async (req, reply) => {
+        reply.type('application/json').code(200);
+        const chargeModeInt = (await getKey('openWB/global/ChargeMode')) as number;
+        return {
+            modus: ['Sofortladen', 'Min + PV', 'PV Überschuss', 'Stop', 'Standby'][chargeModeInt],
+        };
+    });
+
     server.all('/lademodus/:modus', async (request, reply) => {
         const { modus } = request.params as { modus: string };
         const modes = ['jetzt', 'minundpv', 'pvuberschuss', 'stop', 'standby'];
@@ -61,14 +69,6 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
                     url: config.OPENWB_URL + '/openWB/web/api.php?lademodus=' + modus,
                 })
             ).data,
-        };
-    });
-
-    server.get('/lademodus', async (req, reply) => {
-        reply.type('application/json').code(200);
-        const chargeModeInt = (await getKey('openWB/global/ChargeMode')) as number;
-        return {
-            modus: ['Sofortladen', 'Min + PV', 'PV Überschuss', 'Stop', 'Standby'][chargeModeInt],
         };
     });
 
