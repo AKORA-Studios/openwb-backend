@@ -4,7 +4,7 @@ FROM node:16-alpine AS deps
 RUN apk add --no-cache libc6-compat=1.2.2-r7
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci -q
+RUN npm ci --loglevel warn
 
 
 
@@ -12,7 +12,7 @@ RUN npm ci -q
 # Rebuild the source code only when needed
 FROM node:16-alpine AS builder
 WORKDIR /app
-RUN npm i -g typescript
+RUN npm i -g --loglevel warn typescript
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN tsc
