@@ -28,5 +28,7 @@ function parseCSV<TRow>(str: string): Promise<TRow[]> {
 /** Returns CSV string for date example 20223 */
 function downloadCSV(date: Date): Promise<string> {
     const filename = `${date.getFullYear()}${date.getMonth().toString().padStart(2, '0')}`;
-    return axios(`${config.OPENWB_URL}/openWB/web/logging/data/ladelog/${filename}.csv`).then((r) => r.data);
+    return axios(`${config.OPENWB_URL}/openWB/web/logging/data/ladelog/${filename}.csv`, {
+        responseType: 'text',
+    }).then((r) => r.data);
 }
