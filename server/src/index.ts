@@ -12,7 +12,7 @@ const server = Fastify({
     },
 });
 
-console.log(config);
+//console.log(config);
 
 server.get('/', async (request, reply) => {
     reply.type('application/json').code(200);
