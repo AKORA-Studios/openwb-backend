@@ -2,6 +2,8 @@ import axios from 'axios';
 import config from '../config';
 import { parseString } from 'fast-csv';
 
+type RawRow = [string, string, string, string, string, string, string, string];
+
 export async function getLadelog() {
     const thisMonth = new Date(),
         lastMonth = new Date(thisMonth.getTime() - (1000 * 60 * 60 * 24 * 365) / 12);
@@ -10,10 +12,10 @@ export async function getLadelog() {
     console.log(thisMonth, thisCSV);
     console.log(lastMonth, lastCSV);
 
-    const thisLog = await parseCSV(thisCSV),
-        lastLog = await parseCSV(lastCSV);
+    const thisLog = await parseCSV<RawRow>(thisCSV),
+        lastLog = await parseCSV<RawRow>(lastCSV);
 
-    return [...lastLog.filter((r) => r), ...thisLog.filter((r) => r)];
+    return [...lastLog, ...thisLog].filter((r) => r.length > 0);
 }
 
 /** Parse CSV String and return as 2D Array  */
