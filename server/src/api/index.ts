@@ -49,8 +49,6 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
         const { modus } = request.params as { modus: string };
         const modes = ['jetzt', 'minundpv', 'pvuberschuss', 'stop', 'standby'];
 
-        console.log(request.params);
-
         reply.type('application/json');
         if (!modes.includes(modus)) {
             reply.status(400);
@@ -58,9 +56,11 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
         }
 
         return {
-            response: await axios({
-                url: config.OPENWB_URL + '/openWB/web/api.php?lademodus=' + modus,
-            }),
+            response: (
+                await axios({
+                    url: config.OPENWB_URL + '/openWB/web/api.php?lademodus=' + modus,
+                })
+            ).data,
         };
     });
 
