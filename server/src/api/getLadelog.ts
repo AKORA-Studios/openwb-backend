@@ -4,7 +4,17 @@ import { parseString } from 'fast-csv';
 import { carID } from './getRFID';
 import { DateTime } from 'luxon';
 
-type Row = [Date, Date, number, number, number, string, number, keyof typeof carID];
+type Row = {
+    start: Date;
+    ende: Date;
+    km: number;
+    kWh: number;
+    kW: number;
+    dauer: any;
+    ladepunkt: any;
+    modus: number;
+    tag: keyof typeof carID;
+};
 
 export async function getLadelog() {
     const thisMonth = new Date(),
@@ -12,23 +22,23 @@ export async function getLadelog() {
 
     const [thisCSV, lastCSV] = await Promise.all([downloadCSV(thisMonth), downloadCSV(lastMonth)]);
 
-    const thisLog = await parseCSV<any[]>(thisCSV),
-        lastLog = await parseCSV<any[]>(lastCSV);
+    const thisLog = await parseCSV(thisCSV),
+        lastLog = await parseCSV(lastCSV);
 
-    return [...thisLog, ...lastLog].filter((r) => r.length > 0);
+    return [...thisLog, ...lastLog];
 }
 
 /** Parse CSV String and return as 2D Array  */
-function parseCSV<TRow>(str: string): Promise<TRow[]> {
+function parseCSV(str: string): Promise<Row[]> {
     return new Promise((res, rej) => {
-        const arr: TRow[] = [];
+        const arr: Row[] = [];
         parseString(str, {
             headers: false,
         })
             .on('error', (err) => rej(err))
             .on('data', (row) => {
-                console.log(JSON.stringify(row));
-                return {
+                if (row.length === 0) return;
+                arr.push({
                     start: DateTime.fromFormat(row[0], 'dd.MM.yy-HH:mm').toJSDate(),
                     ende: DateTime.fromFormat(row[1], 'dd.MM.yy-HH:mm').toJSDate(),
                     km: Number(row[2]),
@@ -37,8 +47,8 @@ function parseCSV<TRow>(str: string): Promise<TRow[]> {
                     dauer: row[5],
                     ladepunkt: row[6],
                     modus: Number(row[7]),
-                    tag: carID[row[8]],
-                };
+                    tag: carID[row[8]] as any,
+                });
             })
             .on('end', () => res(arr));
     });
