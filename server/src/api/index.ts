@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { FastifyPluginCallback } from 'fastify';
 import config from '../config';
-import { getKey } from '../db/redis';
+import redisClient, { getKey } from '../db/redis';
 import getGlobals from './getGlobals';
 import getLadepunkt from './getLadepunkt';
 import getLiveValues from './getLiveValues';
@@ -72,12 +72,23 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
         };
     });
 
-    /*
-    server.get('/metrics', async (request, reply) => {
-        reply.type('text/plain').code(200);
-        return await getMetrics();
+    server.get('/ladestrom', async (request, reply) => {
+        reply.type('application/json').code(200);
+        return {
+            min: await getKey('openWB/config/get/pv/lp/1/minCurrent '),
+            max: await getKey('openWB/config/get/global/maxEVSECurrentAllowed'),
+        };
     });
-    */
+
+    server.get('/keys', async (request, reply) => {
+        reply.type('application/json').code(200);
+
+        let keys = (await redisClient.keys('*')).sort();
+        let obj = {} as any;
+        for (let key of keys) obj[key] = await getKey(key);
+
+        return obj;
+    });
 
     done();
 };
