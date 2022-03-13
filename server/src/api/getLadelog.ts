@@ -1,21 +1,21 @@
 import axios from 'axios';
 import config from '../config';
 import { parseString } from 'fast-csv';
+import { carID } from './getRFID';
+import { DateTime } from 'luxon';
 
-type RawRow = [string, string, string, string, string, string, string, string];
+type Row = [Date, Date, number, number, number, string, number, keyof typeof carID];
 
 export async function getLadelog() {
     const thisMonth = new Date(),
         lastMonth = new Date(thisMonth.getTime() - (1000 * 60 * 60 * 24 * 365) / 12);
 
     const [thisCSV, lastCSV] = await Promise.all([downloadCSV(thisMonth), downloadCSV(lastMonth)]);
-    console.log(thisMonth, thisCSV);
-    console.log(lastMonth, lastCSV);
 
-    const thisLog = await parseCSV<RawRow>(thisCSV),
-        lastLog = await parseCSV<RawRow>(lastCSV);
+    const thisLog = await parseCSV<any[]>(thisCSV),
+        lastLog = await parseCSV<any[]>(lastCSV);
 
-    return [...lastLog, ...thisLog].filter((r) => r.length > 0);
+    return [...thisLog, ...lastLog].filter((r) => r.length > 0);
 }
 
 /** Parse CSV String and return as 2D Array  */
@@ -26,7 +26,17 @@ function parseCSV<TRow>(str: string): Promise<TRow[]> {
             headers: false,
         })
             .on('error', (err) => rej(err))
-            .on('data', (row) => arr.push(row))
+            .on('data', (row) => ({
+                start: DateTime.fromFormat(row[0], 'dd.MM.yy-HH:mm').toJSDate(),
+                ende: DateTime.fromFormat(row[1], 'dd.MM.yy-HH:mm').toJSDate(),
+                km: Number(row[2]),
+                kWh: Number(row[3]),
+                kW: Number(row[4]),
+                dauer: row[5],
+                ladepunkt: row[6],
+                modus: Number(row[7]),
+                tag: carID[row[8]],
+            }))
             .on('end', () => res(arr));
     });
 }
@@ -35,6 +45,5 @@ function parseCSV<TRow>(str: string): Promise<TRow[]> {
 function downloadCSV(date: Date): Promise<string> {
     const filename = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}`;
     const url = `${config.OPENWB_URL}/openWB/web/logging/data/ladelog/${filename}.csv`;
-    console.log('Downloading:', url);
     return axios(url).then((r) => r.data);
 }

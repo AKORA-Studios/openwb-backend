@@ -1,4 +1,3 @@
-import { DateTime, Zone } from 'luxon';
 import { getKey } from '../db/redis';
 
 export async function getLiveValues() {
