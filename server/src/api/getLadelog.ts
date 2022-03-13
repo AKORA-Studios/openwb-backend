@@ -13,7 +13,7 @@ export async function getLadelog() {
     const thisLog = await parseCSV(thisCSV),
         lastLog = await parseCSV(lastCSV);
 
-    return [...lastLog, ...thisLog];
+    return [...lastLog.filter((r) => r), ...thisLog.filter((r) => r)];
 }
 
 /** Parse CSV String and return as 2D Array  */
