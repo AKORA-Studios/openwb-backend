@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { FastifyPluginCallback } from 'fastify';
+import config from '../config';
 import { getKey } from '../db/redis';
 import getGlobals from './getGlobals';
 import getLadepunkt from './getLadepunkt';
@@ -43,13 +45,25 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
         }
     });
 
-    server.route({
-        method: ['PUT', 'POST'],
-        url: '/lademodus/:modus',
-        handler: async (request, reply) => {
-            console.log(request.params);
-        },
+    server.all('/lademodus/:modus', async (request, reply) => {
+        const { modus } = request.params as { modus: string };
+        const modes = ['jetzt', 'minundpv', 'pvuberschuss', 'stop', 'standby'];
+
+        console.log(request.params);
+
+        reply.type('application/json');
+        if (!modes.includes(modus)) {
+            reply.status(400);
+            return { message: `${modus} is not a valid lademodus` };
+        }
+
+        return {
+            response: await axios({
+                url: config.OPENWB_URL + '/openWB/web/api.php?lademodus=' + modus,
+            }),
+        };
     });
+
     server.get('/lademodus', async (req, reply) => {
         reply.type('application/json').code(200);
         const chargeModeInt = (await getKey('openWB/global/ChargeMode')) as number;

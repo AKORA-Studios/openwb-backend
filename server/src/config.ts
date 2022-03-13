@@ -17,6 +17,8 @@ export default {
 
     REDISDB_URL: process.env.REDISDB_URL!,
 
+    OPENWB_URL: process.env.OPENWB_URL!,
+
     PORT: process.env.PORT ?? 3000,
     ADDRESS: isDev ? '127.0.0.1' : '0.0.0.0',
 
