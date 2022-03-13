@@ -5,8 +5,10 @@ import { carID } from './getRFID';
 import { DateTime } from 'luxon';
 
 type Row = {
-    start: Date;
-    ende: Date;
+    /** Date in millis */
+    start: number;
+    /** Date in millis */
+    ende: number;
     km: number;
     kWh: number;
     kW: number;
@@ -39,8 +41,8 @@ function parseCSV(str: string): Promise<Row[]> {
             .on('data', (row) => {
                 if (row.length === 0) return;
                 arr.push({
-                    start: DateTime.fromFormat(row[0], 'dd.MM.yy-HH:mm').toJSDate(),
-                    ende: DateTime.fromFormat(row[1], 'dd.MM.yy-HH:mm').toJSDate(),
+                    start: DateTime.fromFormat(row[0], 'dd.MM.yy-HH:mm').toMillis(),
+                    ende: DateTime.fromFormat(row[1], 'dd.MM.yy-HH:mm').toMillis(),
                     km: Number(row[2]),
                     kWh: Number(row[3]),
                     kW: Number(row[4]),
