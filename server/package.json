@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "async-mqtt": "^2.6.2",
+        "axios": "^0.26.1",
         "dotenv": "^14.3.2",
         "fastify": "^3.27.0",
         "luxon": "^2.3.0",

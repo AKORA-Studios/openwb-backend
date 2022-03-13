@@ -41,18 +41,20 @@ GraphValues.init(
 export default GraphValues;
 
 //Save Entry on changes
-mqttListener.on('openWB/system/lastlivevalues', async (str) => {
-    if (config.DEV) return;
+if (config.PROD) {
+    mqttListener.on('openWB/system/lastlivevalues', async (str) => {
+        if (config.DEV) return;
 
-    //Get new values from redis
-    const values = await getLiveValues();
-    if (!values) return;
+        //Get new values from redis
+        const values = await getLiveValues();
+        if (!values) return;
 
-    await GraphValues.create({
-        timestamp: new Date(values.time - 1000 * 60 * 60),
-        evu: values.evu,
-        hausverbrauch: values.hausverbrauch,
-        ladeleistung: values.ladeleistung,
-        pv: values.photovoltaik,
+        await GraphValues.create({
+            timestamp: new Date(values.time - 1000 * 60 * 60),
+            evu: values.evu,
+            hausverbrauch: values.hausverbrauch,
+            ladeleistung: values.ladeleistung,
+            pv: values.photovoltaik,
+        });
     });
-});
+}
