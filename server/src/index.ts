@@ -21,15 +21,13 @@ server.get('/', async (request, reply) => {
 
 server.register(api, { prefix: '/api' });
 
-//fastify.all('/api');
-
 async function start() {
     try {
         await connectRedisDB();
         await connectMariaDB();
         await connectMQTTClient();
         //await register();
-        server.listen(config.PORT, '0.0.0.0', (err, address) => {
+        server.listen(config.PORT, config.ADDRESS, (err, address) => {
             if (err) throw err;
             console.log(`Server is now listening on ${address}`);
             console.log(server.printRoutes({ commonPrefix: false }));

@@ -36,17 +36,19 @@ RFIDLog.init(
 export default RFIDLog;
 
 //Save Entry on changes
-mqttListener.on('openWB/system/lastRfId', async (str) => {
-    if (config.DEV) return;
+if (config.PROD) {
+    mqttListener.on('openWB/system/lastRfId', async (str) => {
+        if (config.DEV) return;
 
-    //Get new values from redis
-    const values = await getRFID();
-    if (!values) return;
-    if (!values.tagName || !values.enabled) return;
+        //Get new values from redis
+        const values = await getRFID();
+        if (!values) return;
+        if (!values.tagName || !values.enabled) return;
 
-    await RFIDLog.create({
-        timestamp: values.date,
-        tagName: values.tagName as any,
-        tagID: carID[values.tagName as any] as any,
+        await RFIDLog.create({
+            timestamp: values.date,
+            tagName: values.tagName as any,
+            tagID: carID[values.tagName as any] as any,
+        });
     });
-});
+}

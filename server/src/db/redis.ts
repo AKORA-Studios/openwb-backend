@@ -1,4 +1,3 @@
-import { writeFile } from 'fs/promises';
 import { createClient } from 'redis';
 import config from '../config';
 
@@ -36,15 +35,6 @@ export async function connectRedisDB() {
         throw new Error('RedisDB unable to connect to ' + config.REDISDB_URL); //, {cause: e});
     }
     console.log('Connected to RedisDB at', config.REDISDB_URL);
-
-    let keys = (await redisClient.keys('*')).sort();
-    let str = '';
-    for (let key of keys) {
-        let val = await getKey(key);
-        str += `${key.padEnd(55)} - ${JSON.stringify(val)}\n`;
-    }
-
-    //await writeFile('/app/test/test.txt', str);
 }
 
 export async function disconnectRedisDB() {

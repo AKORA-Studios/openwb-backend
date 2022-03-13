@@ -8,8 +8,8 @@ export async function getLiveValues() {
 
     let arr = str.split(',').map((s: any) => (isNaN(Number(s)) ? s : Number(s)));
 
-    return {
-        time: DateTime.fromISO(arr[0]).toJSDate(),
+    const mapped = {
+        time: ((await getKey('openWB/system/Timestamp')) as number) * 1000,
         evu: arr[1] as number,
         ladeleistungGesamt: arr[2] as number,
         PV: arr[3] as number,
@@ -22,6 +22,14 @@ export async function getLiveValues() {
         Hausverbrauch: arr[10] as number,
         VB1: arr[11] as number,
         VB2: arr[12] as number,
+    };
+
+    return {
+        time: mapped.time,
+        evu: mapped.evu,
+        ladeleistung: mapped.ladeleistungGesamt,
+        photovoltaik: mapped.PV,
+        hausverbrauch: mapped.VB1,
     };
 }
 
