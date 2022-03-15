@@ -41,10 +41,14 @@ GraphValues.init(
 export default GraphValues;
 
 //Save Entry on changes
-if (config.PROD) {
-    mqttListener.on('openWB/system/lastlivevalues', async (str) => {
-        if (config.DEV) return;
+const interval = 1000 * 60; //1 Minute
 
+if (config.PROD) {
+    mqttListener.on('openWB/system/lastlivevalues', async (str) => {});
+
+    //MQTT values are provided 7 times per second
+    //Using this interval instead to save values every minute instead
+    setInterval(async () => {
         //Get new values from redis
         const values = await getLiveValues();
         if (!values) return;
@@ -56,5 +60,5 @@ if (config.PROD) {
             ladeleistung: values.ladeleistung,
             pv: values.photovoltaik,
         });
-    });
+    }, interval);
 }
