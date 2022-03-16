@@ -53,6 +53,8 @@ if (config.PROD) {
         const values = await getLiveValues();
         if (!values) return;
 
+        console.log('saving  values');
+
         await GraphValues.create({
             timestamp: new Date(values.time - 1000 * 60 * 60),
             evu: values.evu,
@@ -61,4 +63,6 @@ if (config.PROD) {
             pv: values.photovoltaik,
         });
     }, interval);
+} else {
+    console.log('DEV MODE - Not saving GraphValues');
 }
