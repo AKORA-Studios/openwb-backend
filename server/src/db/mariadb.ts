@@ -22,8 +22,6 @@ export async function connectMariaDB() {
         // Sync Models with database
         await RFIDLog.sync({ alter: config.DEV });
         await GraphValues.sync({ alter: config.DEV });
-
-        setInterval(async () => {}, 1000 * 60 * 1); //Every minute
     } catch (e: any) {
         console.error(e);
         throw new Error('MariaDB unable to connect to ' + config.MARIADB_URL); //, {cause: e});
