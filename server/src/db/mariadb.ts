@@ -9,7 +9,7 @@ export const sequelize = new Sequelize({
     username: config.MARIADB_USERNAME,
     password: config.MARIADB_PASSWORD,
     logging: (sql, timing) => {
-        console.log(`Took ${timing}ms for ${sql.slice(0, 50)}...`);
+        console.log(`Took ${timing}ms for ${sql.slice(0, 100)}...`);
     },
     benchmark: true,
 });
