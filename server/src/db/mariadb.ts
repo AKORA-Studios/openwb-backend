@@ -20,7 +20,7 @@ export async function connectMariaDB() {
     try {
         await sequelize.authenticate();
         // Sync Models with database
-        await RFIDLog.sync({ alter: config.DEV });
+        await RFIDLog.sync({ alter: config.PROD });
         await GraphValues.sync({ alter: config.DEV });
     } catch (e: any) {
         console.error(e);

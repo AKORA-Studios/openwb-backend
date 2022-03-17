@@ -8,6 +8,7 @@ interface RFIDLogAttributes {
     timestamp: Date;
     tagName: keyof typeof carID;
     tagID: number;
+    tagCode: number;
 }
 export interface RFIDLogInput extends Omit<RFIDLogAttributes, 'tagName'> {
     tagName: string;
@@ -18,6 +19,7 @@ class RFIDLog extends Model<RFIDLogAttributes, RFIDLogInput> implements RFIDLogA
     declare timestamp: Date;
     declare tagName: Tag;
     declare tagID: number;
+    declare tagCode: number;
 
     // timestamps!
     // public readonly createdAt!: Date;
@@ -30,6 +32,7 @@ RFIDLog.init(
         timestamp: DataTypes.DATE,
         tagName: DataTypes.STRING,
         tagID: DataTypes.BIGINT,
+        tagCode: DataTypes.INTEGER,
     },
     { sequelize, tableName: 'rfid_log' }
 );
@@ -50,6 +53,7 @@ if (config.PROD) {
             timestamp: values.date,
             tagName: values.tagName as any,
             tagID: carID[values.tagName as any] as any,
+            tagCode: values.tagCode,
         });
     });
 } else {
