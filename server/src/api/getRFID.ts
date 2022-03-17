@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon';
 import { getKey } from '../db/redis';
 
 export enum carID {
@@ -25,7 +24,7 @@ export async function getRFID() {
         enabled: (await getKey('openWB/global/rfidConfigured')) !== '0',
         tagName,
         tagCode: tagName.charCodeAt(0) - 65,
-        date: DateTime.fromMillis(Number(millies) * 1000).toJSDate(),
+        date: new Date(Number(millies) * 1000),
     };
 }
 

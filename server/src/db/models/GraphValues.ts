@@ -54,13 +54,12 @@ if (config.PROD) {
         if (!values) return;
 
         await GraphValues.create({
-            timestamp: new Date(values.time - 1000 * 60 * 60),
+            timestamp: new Date(values.time),
             evu: values.evu,
             hausverbrauch: values.hausverbrauch,
             ladeleistung: values.ladeleistung,
             pv: values.photovoltaik,
         });
-        console.log('Saved Graph values');
     }, interval);
 } else {
     console.log('DEV MODE - Not saving GraphValues');
