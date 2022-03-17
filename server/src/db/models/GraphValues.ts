@@ -60,6 +60,7 @@ if (config.PROD) {
             ladeleistung: values.ladeleistung,
             pv: values.photovoltaik,
         });
+        console.log('Saved Graph values');
     }, interval);
 } else {
     console.log('DEV MODE - Not saving GraphValues');

@@ -55,6 +55,7 @@ if (config.PROD) {
             tagID: carID[values.tagName as any] as any,
             tagCode: values.tagCode,
         });
+        console.log('Saved RFID Log');
     });
 } else {
     console.log('DEV MODE - Not saving RFIDLog');
