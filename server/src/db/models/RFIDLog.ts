@@ -41,8 +41,13 @@ export default RFIDLog;
 
 //Save Entry on changes
 if (config.PROD) {
+    let first = true;
     mqttListener.on('openWB/system/lastRfId', async (str) => {
         if (config.DEV) return;
+        if (first) {
+            first = false;
+            return;
+        }
 
         //Get new values from redis
         const values = await getRFID();
