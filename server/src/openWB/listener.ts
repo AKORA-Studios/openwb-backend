@@ -32,12 +32,20 @@ let count = 0;
 mqqtClient.on('reconnect', () => {
     count++;
     console.count('Reconnecting...');
+
+    console.log(mqqtClient.connected);
+    setTimeout(() => {
+        console.log(mqqtClient.connected);
+    }, 1000);
     if (count === 5) stop();
 });
 
 // Handling error events
 mqqtClient.on('disconnect', (e) => console.log('MQTT disconnected:', e));
-mqqtClient.on('error', (e) => console.log('MQTT error: ' + e));
+mqqtClient.on('error', (e) => {
+    console.log('MQTT error: ' + e);
+    mqqtClient.reconnect(); //Reconnect to try resolving the issue
+});
 mqqtClient.on('end', () => {
     console.log('Destroyed client');
     //process.exit(1);

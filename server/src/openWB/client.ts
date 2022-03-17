@@ -2,7 +2,9 @@ import { connect, IClientOptions } from 'async-mqtt';
 import config from '../config';
 import { TopicListener } from './topicListener';
 
-const mqqtOptions: IClientOptions = {};
+const mqqtOptions: IClientOptions = {
+    reconnectPeriod: 1000, //Intervall between attemps to reconnect
+};
 if (config.MQTT_USERNAME && config.MQTT_PASSWORD) {
     mqqtOptions.username = config.MQTT_USERNAME;
     mqqtOptions.password = config.MQTT_PASSWORD;
