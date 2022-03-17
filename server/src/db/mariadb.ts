@@ -8,7 +8,10 @@ export const sequelize = new Sequelize({
     database: 'openwb',
     username: config.MARIADB_USERNAME,
     password: config.MARIADB_PASSWORD,
-    logging: false,
+    logging: (sql, timing) => {
+        console.log(`Took ${timing}ms for ${sql.slice(0, 20)}...`);
+    },
+    benchmark: true,
 });
 export default sequelize;
 
@@ -20,7 +23,7 @@ export async function connectMariaDB() {
     try {
         await sequelize.authenticate();
         // Sync Models with database
-        await RFIDLog.sync({ alter: config.PROD });
+        await RFIDLog.sync({ alter: config.DEV });
         await GraphValues.sync({ alter: config.DEV });
     } catch (e: any) {
         console.error(e);
