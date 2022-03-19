@@ -47,6 +47,10 @@ mqqtClient.on('error', (e) => {
     mqqtClient.reconnect(); //Reconnect to try resolving the issue
 });
 mqqtClient.on('end', () => {
-    console.log('Destroyed client');
+    console.log('Destroyed MQTT client');
+    setTimeout(() => {
+        //Stop server after 3 secons of destroyed client, weird bug idk
+        stop();
+    }, 3000);
     //process.exit(1);
 });
