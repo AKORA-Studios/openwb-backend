@@ -29,7 +29,7 @@ async function start() {
         //await register();
         server.listen(config.PORT, config.ADDRESS, (err, address) => {
             if (err) throw err;
-            console.log(`Server is now listening on ${address}`);
+            console.log(`Server is now listening on ${address} (${new Date()})`);
             console.log(server.printRoutes({ commonPrefix: false }));
         });
     } catch (e) {
