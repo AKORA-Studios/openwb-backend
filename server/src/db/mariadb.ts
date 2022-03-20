@@ -29,11 +29,11 @@ export async function connectMariaDB() {
         console.error(e);
         throw new Error('MariaDB unable to connect to ' + config.MARIADB_URL); //, {cause: e});
     }
-    console.log('Connected to MariaDB at', config.MARIADB_URL);
+    console.log(' - Connected to MariaDB at', config.MARIADB_URL);
 }
 
 //Disconnecting
 export async function disconnectMariaDB() {
     await sequelize.close();
-    console.log('Disconnected from MariaDB');
+    console.log(' - Disconnected from MariaDB');
 }

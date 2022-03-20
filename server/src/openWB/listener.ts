@@ -33,17 +33,18 @@ mqqtClient.on('reconnect', () => {
     count++;
     console.count('Reconnecting...');
 
-    console.log(mqqtClient.connected);
     setTimeout(() => {
-        console.log(mqqtClient.connected);
+        if (mqqtClient.connected) return;
+        //Stop client if stuck at reconnecting;
+        stop(`MQTT tried reconnect ${count} times and didn't reconnect`);
     }, 1000);
-    if (count === 5) stop();
+    if (count === 5) stop(`MQTT stopped reconnecting after ${count} times`);
 });
 
 // Handling error events
 mqqtClient.on('disconnect', (e) => console.log('MQTT disconnected:', e));
 mqqtClient.on('error', (e) => {
-    console.log('MQTT error: ' + e);
+    console.log(' - MQTTClient threw:', e);
     mqqtClient.reconnect(); //Reconnect to try resolving the issue
 });
 mqqtClient.on('end', () => {
