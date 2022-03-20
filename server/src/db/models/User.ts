@@ -40,5 +40,5 @@ export default User;
 
 if (config.PROD) {
 } else {
-    console.log('DEV MODE - Not saving GraphValues');
+    console.log('DEV MODE - Not saving Users');
 }

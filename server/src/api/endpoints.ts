@@ -10,41 +10,18 @@ import getRFID from '../lib/getRFID';
 import getVerbrauch from '../lib/getVerbrauch';
 
 export const loadEndpoints: FastifyPluginCallback = (server) => {
-    server.get('/ladepunkt', async (request, reply) => {
-        reply.type('application/json').code(200);
-        return await getLadepunkt();
-    });
+    function userRoute(path: string, func: () => Promise<any>) {
+        server.get(path, async (request, reply) => {
+            reply.type('application/json').code(200);
+            return await func();
+        });
+    }
 
-    server.get('/verbrauch', async (request, reply) => {
-        reply.type('application/json').code(200);
-        return await getVerbrauch();
-    });
-
-    server.get('/globals', async (request, reply) => {
-        reply.type('application/json').code(200);
-        return await getGlobals();
-    });
-
-    server.get('/rfid', async (request, reply) => {
-        reply.type('application/json').code(200);
-        const rfid = await getRFID();
-        return { ...rfid, date: rfid.date.getTime() };
-    });
-
-    server.get('/values', async (request, reply) => {
-        let values = await getLiveValues();
-        reply.type('application/json');
-        if (values) {
-            reply.code(200);
-            return values;
-        } else {
-            reply.code(404);
-            return {
-                code: 404,
-                message: 'too early',
-            };
-        }
-    });
+    userRoute('/ladepunkt', getLadepunkt);
+    userRoute('/verbrauch', getVerbrauch);
+    userRoute('/globals', getGlobals);
+    userRoute('/rfid', getRFID);
+    userRoute('/values', getLiveValues);
 
     server.get('/lademodus', async (req, reply) => {
         reply.type('application/json').code(200);
@@ -54,7 +31,7 @@ export const loadEndpoints: FastifyPluginCallback = (server) => {
         };
     });
 
-    server.all('/lademodus/:modus', async (request, reply) => {
+    server.post('/lademodus/:modus', async (request, reply) => {
         const { modus } = request.params as { modus: string };
         const modes = ['jetzt', 'minundpv', 'pvuberschuss', 'stop', 'standby'];
 
