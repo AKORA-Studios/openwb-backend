@@ -41,7 +41,7 @@ GraphValues.init(
     {
         sequelize,
         tableName: 'graph',
-        indexes: [{ unique: true, fields: ['timestamp'], name: 'Time' }],
+        indexes: [{ unique: false, fields: ['timestamp'], name: 'Time' }],
     }
 );
 

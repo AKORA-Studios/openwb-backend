@@ -3,6 +3,9 @@ import { carID } from '../lib/getRFID';
 import { createHash } from 'node:crypto';
 import { jwtVerify, SignJWT, JWTPayload } from 'jose';
 import config from '../config';
+import { generateKeyPair } from 'jose';
+
+const keyPair = generateKeyPair('ES256');
 
 export function hash(password: string) {
     return createHash('md5').update(password).digest('hex');
@@ -49,7 +52,7 @@ export interface UserJWTPayload extends JWTPayload {
     admin: boolean;
 }
 
-export function generateJWT(user: User) {
+export async function generateJWT(user: User) {
     return new SignJWT({
         username: user.username,
         tagName: user.tagName,
@@ -59,10 +62,10 @@ export function generateJWT(user: User) {
         .setProtectedHeader({ alg: 'ES256' })
         .setIssuedAt()
         .setExpirationTime('2h')
-        .sign(Buffer.from(config.JWT_SECRET));
+        .sign((await keyPair).privateKey);
 }
 
 export async function validateJWT(token: string) {
-    const { payload } = await jwtVerify(token, Buffer.from(config.JWT_SECRET));
+    const { payload } = await jwtVerify(token, (await keyPair).publicKey);
     return payload as UserJWTPayload;
 }

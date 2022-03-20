@@ -46,16 +46,4 @@ export default User;
 
 if (config.PROD) {
 } else {
-    console.log('DEV MODE - Not saving Users');
-    User.create({
-        admin: true,
-        username: 'admin',
-        password: hash('admin'),
-        tagName: 'A',
-        tagID: 0,
-        rfid: 123,
-    }).then((u) => {
-        const jwt = generateJWT(u);
-        jwt.then(console.log);
-    });
 }
