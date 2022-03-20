@@ -3,11 +3,7 @@ import { setKey } from '../db/redis';
 import mqttListener, { mqqtClient, mqqtReady } from './client';
 
 mqqtReady.then(async () => {
-    let sub = await mqqtClient.subscribe('#');
-    console.log(
-        'Topics:',
-        sub.map((s) => s.topic)
-    );
+    await mqqtClient.subscribe('#');
 
     mqqtClient.on('message', async (topicRaw, payload, packet) => {
         let topic = topicRaw.split('/').slice(1).join('/'),
@@ -51,7 +47,7 @@ mqqtClient.on('end', () => {
     console.log('Destroyed MQTT client');
     setTimeout(() => {
         //Stop server after 3 secons of destroyed client, weird bug idk
-        stop();
+        stop('Destroyed MQTT client');
     }, 3000);
     //process.exit(1);
 });
