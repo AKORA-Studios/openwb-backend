@@ -26,10 +26,10 @@ export const loadEndpoints: FastifyPluginCallback = (server) => {
         max: await getKey('openWB/config/get/global/maxEVSECurrentAllowed'),
     }));
 
-    server.route(keyRoute);
-    server.route(restRoute);
-    server.route(lademodusRoute);
-    server.route(lademodusSetRoute);
+    server.route(keyRoute(server));
+    server.route(restRoute(server));
+    server.route(lademodusRoute(server));
+    server.route(lademodusSetRoute(server));
 
     server.get('/ladelog', async (request, reply) => {
         reply.type('application/json').code(200);
