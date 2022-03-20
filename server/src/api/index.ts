@@ -2,7 +2,6 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import server from '..';
 import loadEndpoints from './endpoints';
 import { RouteGenericInterface } from 'fastify/types/route';
-import User from '../db/models/User';
 import { UserJWTPayload, validateJWT } from './auth';
 
 export type UserRequest = FastifyRequest<RouteGenericInterface & { Params: { user: UserJWTPayload } }>;
@@ -12,12 +11,12 @@ server.register(
         server.decorate('verifyJWT', async function (req: UserRequest, rpl: FastifyReply, done: any) {
             //verifyToken gives userId in case of successful decoding
             //gives err msg in case of error
-
             if (!req.headers.authorization) {
+                const message = 'Missing authorization header';
                 rpl.type('application/json').code(403).send({
-                    message: 'Missing authorization header',
+                    message,
                 });
-                done(new Error('Missing authorization header'));
+                return new Error(message);
             }
 
             try {
@@ -25,10 +24,12 @@ server.register(
                 req.params.user = user;
             } catch (e) {
                 console.log(e);
+                const message = 'Invalid token';
+
                 rpl.type('application/json').code(403).send({
-                    message: 'Invalid token',
+                    message,
                 });
-                done(new Error('Invalid Token'));
+                return new Error(message);
             }
 
             done();
@@ -44,16 +45,6 @@ server.register(
                 done(new Error('Missing Permissions'));
             }
 
-            done();
-        });
-
-        server.route({
-            method: 'GET',
-            url: '/as',
-            handler: () => {},
-        });
-
-        server.addHook('preValidation', (req, reply, done) => {
             done();
         });
 

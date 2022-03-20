@@ -29,6 +29,7 @@ export async function getLadelog() {
 
     return [...thisLog, ...lastLog];
 }
+export default getLadelog;
 
 /** Parse CSV String and return as 2D Array  */
 function parseCSV(str: string): Promise<Row[]> {

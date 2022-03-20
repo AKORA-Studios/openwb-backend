@@ -8,6 +8,6 @@ declare module 'fastify' {
         HttpResponse = ServerResponse
     > {
         verifyJWT(): void;
-        someOtherDecorator(rpl: any, userId: string): void;
+        verifyAdmin(): void;
     }
 }
