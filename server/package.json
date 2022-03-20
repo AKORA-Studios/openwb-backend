@@ -25,7 +25,7 @@
         "fast-csv": "^4.3.6",
         "fastify": "^3.27.0",
         "luxon": "^2.3.0",
-        "mariadb": "^2.5.5",
+        "mariadb": "^2.5.6",
         "mqtt": "^4.3.4",
         "redis": "^4.0.3",
         "sequelize": "^6.16.1"
