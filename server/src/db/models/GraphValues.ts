@@ -14,7 +14,10 @@ interface GraphValuesAttributes {
 }
 export interface GraphValuesInput extends GraphValuesAttributes {}
 
-class GraphValues extends Model<GraphValuesAttributes, GraphValuesInput> implements GraphValuesAttributes {
+class GraphValues
+    extends Model<GraphValuesAttributes, GraphValuesInput>
+    implements GraphValuesAttributes
+{
     declare timestamp: Date;
     declare evu: number;
     declare pv: number;
@@ -35,7 +38,11 @@ GraphValues.init(
         hausverbrauch: DataTypes.FLOAT,
         ladeleistung: DataTypes.FLOAT,
     },
-    { sequelize, tableName: 'graph' }
+    {
+        sequelize,
+        tableName: 'graph',
+        indexes: [{ unique: true, fields: ['timestamp'], name: 'Time' }],
+    }
 );
 
 export default GraphValues;

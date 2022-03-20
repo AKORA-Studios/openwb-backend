@@ -1,6 +1,7 @@
 import config from '../../config';
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
+import { generateJWT, hash } from '../../api/auth';
 
 interface UserAttributes {
     username: string;
@@ -31,7 +32,12 @@ User.init(
         rfid: DataTypes.BIGINT,
         admin: DataTypes.BOOLEAN,
     },
-    { sequelize, tableName: 'graph' }
+    {
+        sequelize,
+        tableName: 'users',
+
+        indexes: [{ unique: true, fields: ['username', 'password'], name: 'Authentication' }],
+    }
 );
 
 export default User;
@@ -41,4 +47,15 @@ export default User;
 if (config.PROD) {
 } else {
     console.log('DEV MODE - Not saving Users');
+    User.create({
+        admin: true,
+        username: 'admin',
+        password: hash('admin'),
+        tagName: 'A',
+        tagID: 0,
+        rfid: 123,
+    }).then((u) => {
+        const jwt = generateJWT(u);
+        jwt.then(console.log);
+    });
 }

@@ -34,7 +34,12 @@ RFIDLog.init(
         tagID: DataTypes.BIGINT,
         tagCode: DataTypes.INTEGER,
     },
-    { sequelize, tableName: 'rfid_log' }
+    {
+        sequelize,
+        tableName: 'rfid_log',
+
+        indexes: [{ unique: true, fields: ['timestamp'], name: 'Time' }],
+    }
 );
 
 export default RFIDLog;
