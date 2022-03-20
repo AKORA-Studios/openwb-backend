@@ -8,6 +8,7 @@
     "scripts": {
         "start": "node dist/index",
         "test": "echo \"no test specified\"",
+        "lint": "npx prettier -c ./src",
         "build": "npx tsc"
     },
     "keywords": [],
