@@ -2,7 +2,7 @@ import axios from 'axios';
 import { FastifyPluginCallback } from 'fastify';
 import config from '../config';
 import redisClient, { getKey } from '../db/redis';
-import getGlobals from './getGlobals';
+import getGlobals from '../lib/getGlobals';
 import { getLadelog } from './getLadelog';
 import getLadepunkt from './getLadepunkt';
 import getLiveValues from './getLiveValues';
