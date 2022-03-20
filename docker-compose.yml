@@ -11,7 +11,6 @@ services:
     depends_on:
       - redisDB
     environment:
-      INFLUX_URL: http://influxDB:8086
       REDISDB_URL: redis://redisDB:6379
     volumes:
       - ./test:/app/test

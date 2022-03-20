@@ -3,6 +3,7 @@ import { FastifyPluginCallback } from 'fastify';
 import config from '../config';
 import redisClient, { getKey } from '../db/redis';
 import getGlobals from './getGlobals';
+import { getLadelog } from './getLadelog';
 import getLadepunkt from './getLadepunkt';
 import getLiveValues from './getLiveValues';
 import getRFID from './getRFID';
@@ -106,6 +107,14 @@ export const api: FastifyPluginCallback = function (server, opts, done) {
         }
 
         return data;
+    });
+
+    server.get('/ladelog', async (request, reply) => {
+        reply.type('application/json').code(200);
+
+        return {
+            log: await getLadelog(),
+        };
     });
 
     done();

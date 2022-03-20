@@ -1,4 +1,3 @@
-import { DateTime, Zone } from 'luxon';
 import { getKey } from '../db/redis';
 
 export async function getLiveValues() {
@@ -25,6 +24,7 @@ export async function getLiveValues() {
     };
 
     return {
+        /** UTC */
         time: mapped.time,
         evu: mapped.evu,
         ladeleistung: mapped.ladeleistungGesamt,

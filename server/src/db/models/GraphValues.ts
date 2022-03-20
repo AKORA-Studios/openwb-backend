@@ -41,20 +41,26 @@ GraphValues.init(
 export default GraphValues;
 
 //Save Entry on changes
-if (config.PROD) {
-    mqttListener.on('openWB/system/lastlivevalues', async (str) => {
-        if (config.DEV) return;
+const interval = 1000 * 60; //1 Minute
 
+if (config.PROD) {
+    mqttListener.on('openWB/system/lastlivevalues', async (str) => {});
+
+    //MQTT values are provided 7 times per second
+    //Using this interval instead to save values every minute instead
+    setInterval(async () => {
         //Get new values from redis
         const values = await getLiveValues();
         if (!values) return;
 
         await GraphValues.create({
-            timestamp: new Date(values.time - 1000 * 60 * 60),
+            timestamp: new Date(values.time),
             evu: values.evu,
             hausverbrauch: values.hausverbrauch,
             ladeleistung: values.ladeleistung,
             pv: values.photovoltaik,
         });
-    });
+    }, interval);
+} else {
+    console.log('DEV MODE - Not saving GraphValues');
 }

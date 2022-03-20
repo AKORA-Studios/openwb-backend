@@ -22,6 +22,7 @@ server.get('/', async (request, reply) => {
 server.register(api, { prefix: '/api' });
 
 async function start() {
+    console.log(`Starting Server at ${new Date()}`);
     try {
         await connectRedisDB();
         await connectMariaDB();
@@ -40,18 +41,20 @@ async function start() {
 }
 start();
 
-export function stop() {
-    console.log('Closing http server.');
+export function stop(reason = 'stopped') {
+    console.log(`Stopping Server at ${new Date()}`);
+    console.log(` - Reason:`, reason);
     server.close(async () => {
-        console.log('Http server closed.');
+        console.log(' - Http server closed');
         await disconnectMQTTClient();
         await disconnectMariaDB();
         await disconnectRedisDB();
+        if (config.PROD) console.log('\n\n'); //More readable logs
         process.exit(0);
     });
 }
 
 process.on('SIGTERM', async () => {
     console.info('SIGTERM signal received.');
-    stop();
+    stop('SIGTERM');
 });
