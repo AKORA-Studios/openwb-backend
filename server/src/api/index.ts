@@ -3,11 +3,11 @@ import { FastifyPluginCallback } from 'fastify';
 import config from '../config';
 import redisClient, { getKey } from '../db/redis';
 import getGlobals from '../lib/getGlobals';
-import { getLadelog } from './getLadelog';
-import getLadepunkt from './getLadepunkt';
-import getLiveValues from './getLiveValues';
-import getRFID from './getRFID';
-import getVerbrauch from './getVerbrauch';
+import { getLadelog } from '../lib/getLadelog';
+import getLadepunkt from '../lib/getLadepunkt';
+import getLiveValues from '../lib/getLiveValues';
+import getRFID from '../lib/getRFID';
+import getVerbrauch from '../lib/getVerbrauch';
 
 export const api: FastifyPluginCallback = function (server, opts, done) {
     server.get('/ladepunkt', async (request, reply) => {

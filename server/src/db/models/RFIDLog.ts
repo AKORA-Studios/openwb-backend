@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
-import getRFID, { carID } from '../../api/getRFID';
+import getRFID, { carID } from '../../lib/getRFID';
 import config from '../../config';
 import mqttListener from '../../openWB/client';
 

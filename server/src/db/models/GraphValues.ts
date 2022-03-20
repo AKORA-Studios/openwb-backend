@@ -2,7 +2,7 @@ import config from '../../config';
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
 
-import getLiveValues from '../../api/getLiveValues';
+import getLiveValues from '../../lib/getLiveValues';
 import mqttListener from '../../openWB/client';
 
 interface GraphValuesAttributes {
