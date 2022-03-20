@@ -8,6 +8,8 @@ interface UserAttributes {
     tagName: string;
     tagID: number;
     rfid: number;
+
+    admin: boolean;
 }
 export interface UserInput extends UserAttributes {}
 
@@ -17,6 +19,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     declare tagName: string;
     declare tagID: number;
     declare rfid: number;
+    declare admin: boolean;
 }
 
 User.init(
@@ -26,6 +29,7 @@ User.init(
         tagName: DataTypes.STRING,
         tagID: DataTypes.INTEGER,
         rfid: DataTypes.BIGINT,
+        admin: DataTypes.BOOLEAN,
     },
     { sequelize, tableName: 'graph' }
 );
