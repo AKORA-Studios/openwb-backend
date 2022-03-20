@@ -13,7 +13,9 @@ if (config.MQTT_USERNAME && config.MQTT_PASSWORD) {
 export const mqttClient = connect(config.MQTT_URL, mqttOptions);
 export const mqttListener = new TopicListener(mqttClient);
 
-export const mqttReady: Promise<boolean> = new Promise((r) => mqttClient.on('connect', () => r(true)));
+export const mqttReady: Promise<boolean> = new Promise((r) =>
+    mqttClient.on('connect', () => r(true))
+);
 
 export async function connectMQTTClient() {
     await mqttReady;

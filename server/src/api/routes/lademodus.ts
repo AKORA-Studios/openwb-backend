@@ -10,7 +10,9 @@ export const lademodusRoute = (server: any) =>
             reply.type('application/json').code(200);
             const chargeModeInt = (await getKey('openWB/global/ChargeMode')) as number;
             return {
-                modus: ['Sofortladen', 'Min + PV', 'PV Überschuss', 'Stop', 'Standby'][chargeModeInt],
+                modus: ['Sofortladen', 'Min + PV', 'PV Überschuss', 'Stop', 'Standby'][
+                    chargeModeInt
+                ],
             };
         },
     } as RouteOptions);

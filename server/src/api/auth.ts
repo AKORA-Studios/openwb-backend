@@ -50,7 +50,12 @@ export interface UserJWTPayload extends JWTPayload {
 }
 
 export function generateJWT(user: User) {
-    return new SignJWT({ username: user.username, tagName: user.tagName, tagID: user.tagID, admin: user.admin })
+    return new SignJWT({
+        username: user.username,
+        tagName: user.tagName,
+        tagID: user.tagID,
+        admin: user.admin,
+    })
         .setProtectedHeader({ alg: 'ES256' })
         .setIssuedAt()
         .setExpirationTime('2h')
