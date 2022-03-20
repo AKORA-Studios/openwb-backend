@@ -2,27 +2,27 @@ import { connect, IClientOptions } from 'async-mqtt';
 import config from '../config';
 import { TopicListener } from './topicListener';
 
-const mqqtOptions: IClientOptions = {
+const mqttOptions: IClientOptions = {
     reconnectPeriod: 1000, //Intervall between attemps to reconnect
 };
 if (config.MQTT_USERNAME && config.MQTT_PASSWORD) {
-    mqqtOptions.username = config.MQTT_USERNAME;
-    mqqtOptions.password = config.MQTT_PASSWORD;
+    mqttOptions.username = config.MQTT_USERNAME;
+    mqttOptions.password = config.MQTT_PASSWORD;
 }
 
-export const mqqtClient = connect(config.MQTT_URL, mqqtOptions);
-export const mqttListener = new TopicListener(mqqtClient);
+export const mqttClient = connect(config.MQTT_URL, mqttOptions);
+export const mqttListener = new TopicListener(mqttClient);
 
-export const mqqtReady: Promise<boolean> = new Promise((r) => mqqtClient.on('connect', () => r(true)));
+export const mqttReady: Promise<boolean> = new Promise((r) => mqttClient.on('connect', () => r(true)));
 
 export async function connectMQTTClient() {
-    await mqqtReady;
-    console.log(' - Connected to MQQT Broker at', config.MQTT_URL);
+    await mqttReady;
+    console.log(' - Connected to MQTT Broker at', config.MQTT_URL);
 }
 
 export async function disconnectMQTTClient() {
-    await mqqtClient.end();
-    console.log(' - Disconnected from MQQT Broker');
+    await mqttClient.end();
+    console.log(' - Disconnected from MQTT Broker');
 }
 
 export default mqttListener;
