@@ -60,7 +60,7 @@ if (config.PROD) {
         if (!values.tagName || !values.enabled) return;
 
         await RFIDLog.create({
-            timestamp: values.date,
+            timestamp: new Date(values.date),
             tagName: values.tagName as any,
             tagID: carID[values.tagName as any] as any,
             tagCode: values.tagCode,
