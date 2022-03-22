@@ -33,12 +33,23 @@ export const loadEndpoints: FastifyPluginCallback = (server) => {
     server.route(lademodusRoute(server));
     server.route(lademodusSetRoute(server));
 
-    server.get('/ladelog', async (request, reply) => {
-        reply.type('application/json').code(200);
+    server.route({
+        url: '/ladelog',
+        method: 'GET',
+        preHandler: server.auth([server.verifyJWT]),
+        handler: async (req: UserRequest, reply) => {
+            reply.type('application/json').code(200);
 
-        return {
-            log: await getLadelog(),
-        };
+            if (req.params.user.admin) {
+                return {
+                    log: await getLadelog(),
+                };
+            } else {
+                return {
+                    log: (await getLadelog()).filter((e) => e.tag === req.params.user.tagName),
+                };
+            }
+        },
     });
 
     //Authentication
