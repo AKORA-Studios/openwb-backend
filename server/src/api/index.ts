@@ -27,7 +27,7 @@ server.register(
                     const user = await validateJWT(req.headers.authorization!);
                     req.params.user = user;
                 } catch (e) {
-                    console.log(e);
+                    console.log('Failed login attempt by', req.ip);
                     const message = 'Invalid token';
 
                     rpl.type('application/json').code(403).send({
