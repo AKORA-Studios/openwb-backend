@@ -55,7 +55,7 @@ LadeLog.init(
         kW: DataTypes.INTEGER,
         ladepunkt: DataTypes.DATE,
         modus: DataTypes.DATE,
-        tag: DataTypes.DATE,
+        tag: DataTypes.STRING,
         tagID: DataTypes.BIGINT,
         tagCode: DataTypes.INTEGER,
     },
