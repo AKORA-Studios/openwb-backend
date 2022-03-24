@@ -16,6 +16,7 @@ export const sequelize = new Sequelize({
 export default sequelize;
 
 import GraphValues from './models/GraphValues';
+import LadeLog from './models/Ladelog';
 import RFIDLog from './models/RFIDLog';
 import User from './models/User';
 
@@ -27,6 +28,7 @@ export async function connectMariaDB() {
         await RFIDLog.sync({ alter: !config.PROD });
         await GraphValues.sync({ alter: !config.PROD });
         await User.sync({ alter: !config.PROD });
+        await LadeLog.sync({ alter: !config.PROD });
     } catch (e: any) {
         console.error(e);
         throw new Error('MariaDB unable to connect to ' + config.MARIADB_URL); //, {cause: e});

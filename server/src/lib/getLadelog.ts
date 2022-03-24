@@ -16,6 +16,8 @@ type Row = {
     ladepunkt: any;
     modus: number;
     tag: keyof typeof carID;
+    tagID: number;
+    tagCode: number;
 };
 
 export async function getLadelog() {
@@ -51,6 +53,8 @@ function parseCSV(str: string): Promise<Row[]> {
                     ladepunkt: row[6],
                     modus: Number(row[7]),
                     tag: carID[row[8]] as any,
+                    tagID: row[8] as any,
+                    tagCode: carID[row[8]].charCodeAt(0) - 65,
                 });
             })
             .on('end', () => res(arr));
