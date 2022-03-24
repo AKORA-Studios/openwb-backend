@@ -1,8 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
-import getRFID, { carID } from '../../lib/getRFID';
+import { carID } from '../../lib/getRFID';
 import config from '../../config';
-import mqttListener from '../../openWB/client';
 import { getLadelog } from '../../lib';
 
 interface LadeLogAttributes {
@@ -62,9 +61,12 @@ LadeLog.init(
     },
     {
         sequelize,
-        tableName: 'rfid_log',
+        tableName: 'lade_log',
 
-        indexes: [{ unique: true, fields: ['timestamp'], name: 'Time' }],
+        indexes: [
+            { unique: true, fields: ['start', 'ende'], name: 'Time' },
+            { unique: false, fields: ['tag', 'tagID', 'tagCode'], name: 'Tag' },
+        ],
     }
 );
 
@@ -79,7 +81,10 @@ if (config.PROD) {
             ende: new Date(l.ende),
         }));
 
-        for (let log in logEntrys) {
+        for (let log of logEntrys) {
+            if (!(await LadeLog.findOne({ where: { start: log.start, ende: log.ende } }))) {
+                await LadeLog.create(log);
+            }
         }
     }, 1000 * 60); //Every Minute
 } else {
