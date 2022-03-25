@@ -2,10 +2,9 @@ import config from './config';
 import Fastify from 'fastify';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
-import { connectMariaDB, disconnectMariaDB } from './db/typeorm';
+import { connectMariaDB, disconnectMariaDB } from './db/mariadb';
 import api from './api';
-import { register } from './api/metrics';
-import { connectTimeSeries, disconnectTimeSeries } from './db/gateways/timeseries';
+//import { register } from './api/metrics';
 
 const server = Fastify({
     logger: {
@@ -22,16 +21,14 @@ server.get('/', async (request, reply) => {
 
 server.register(api, { prefix: '/api' });
 
-//fastify.all('/api');
-
 async function start() {
+    console.log(`Starting Server at ${new Date()}`);
     try {
         await connectRedisDB();
         await connectMariaDB();
-        await connectTimeSeries();
         await connectMQTTClient();
-        await register();
-        server.listen(config.PORT, '0.0.0.0', (err, address) => {
+        //await register();
+        server.listen(config.PORT, config.ADDRESS, (err, address) => {
             if (err) throw err;
             console.log(`Server is now listening on ${address}`);
             console.log(server.printRoutes({ commonPrefix: false }));
@@ -44,19 +41,20 @@ async function start() {
 }
 start();
 
-export function stop() {
-    console.log('Closing http server.');
+export function stop(reason = 'stopped') {
+    console.log(`Stopping Server at ${new Date()}`);
+    console.log(` - Reason:`, reason);
     server.close(async () => {
-        console.log('Http server closed.');
+        console.log(' - Http server closed');
         await disconnectMQTTClient();
-        await disconnectTimeSeries();
         await disconnectMariaDB();
         await disconnectRedisDB();
+        if (config.PROD) console.log('\n\n'); //More readable logs
         process.exit(0);
     });
 }
 
 process.on('SIGTERM', async () => {
     console.info('SIGTERM signal received.');
-    stop();
+    stop('SIGTERM');
 });
