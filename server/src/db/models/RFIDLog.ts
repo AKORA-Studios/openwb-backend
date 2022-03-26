@@ -1,6 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
-import getRFID, { carID } from '../../api/getRFID';
+import getRFID, { carID } from '../../lib/getRFID';
 import config from '../../config';
 import mqttListener from '../../openWB/client';
 
@@ -34,7 +34,12 @@ RFIDLog.init(
         tagID: DataTypes.BIGINT,
         tagCode: DataTypes.INTEGER,
     },
-    { sequelize, tableName: 'rfid_log' }
+    {
+        sequelize,
+        tableName: 'rfid_log',
+
+        indexes: [{ unique: true, fields: ['timestamp'], name: 'Time' }],
+    }
 );
 
 export default RFIDLog;
@@ -55,7 +60,7 @@ if (config.PROD) {
         if (!values.tagName || !values.enabled) return;
 
         await RFIDLog.create({
-            timestamp: values.date,
+            timestamp: new Date(values.date),
             tagName: values.tagName as any,
             tagID: carID[values.tagName as any] as any,
             tagCode: values.tagCode,

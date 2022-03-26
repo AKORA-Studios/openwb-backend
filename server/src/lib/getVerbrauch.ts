@@ -31,9 +31,7 @@ export async function getVerbrauch() {
         pv: {
             W: await getKey('openWB/pv/W'),
             WhCounter: await getKey('openWB/pv/WhCounter'),
-            CounterTillStartPvCharging: await getKey(
-                'openWB/pv/CounterTillStartPvCharging'
-            ),
+            CounterTillStartPvCharging: await getKey('openWB/pv/CounterTillStartPvCharging'),
         },
         housebattery: {
             W: await getKey('openWB/housebattery/W'),

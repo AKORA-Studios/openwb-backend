@@ -37,10 +37,23 @@ mqttClient.on('reconnect', () => {
     if (count === 5) stop(`MQTT stopped reconnecting after ${count} times`);
 });
 
+declare class ConnectionError extends Error {
+    constructor();
+    errno: number;
+    code: string;
+    syscall: string;
+    address: string;
+    port: number;
+}
+
 // Handling error events
 mqttClient.on('disconnect', (e) => console.log('MQTT disconnected:', e));
-mqttClient.on('error', (e) => {
-    console.log(' - MQTTClient threw:', e);
+mqttClient.on('error', (e: ConnectionError) => {
+    if (e.code === 'ECONNREFUSED') {
+        console.log(` - MQTTClient threw: Connection Error - ${e}`);
+    } else {
+        console.log(' - MQTTClient threw:', e);
+    }
     mqttClient.reconnect(); //Reconnect to try resolving the issue
 });
 mqttClient.on('end', () => {

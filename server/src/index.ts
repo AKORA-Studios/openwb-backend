@@ -1,25 +1,24 @@
 import config from './config';
 import Fastify from 'fastify';
+import fastifyAuth from 'fastify-auth';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectRedisDB, disconnectRedisDB } from './db/redis';
 import { connectMariaDB, disconnectMariaDB } from './db/mariadb';
-import api from './api';
-//import { register } from './api/metrics';
 
-const server = Fastify({
+export const server = Fastify({
     logger: {
         level: 'error',
     },
-});
+}).register(fastifyAuth);
+export default server;
 
-//console.log(config);
-
+//Define Endpoints
 server.get('/', async (request, reply) => {
     reply.type('application/json').code(200);
     return { hello: 'world' };
 });
 
-server.register(api, { prefix: '/api' });
+import './api';
 
 async function start() {
     console.log(`Starting Server at ${new Date()}`);

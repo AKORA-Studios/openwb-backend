@@ -19,6 +19,8 @@ export default {
 
     OPENWB_URL: process.env.OPENWB_URL!,
 
+    JWT_SECRET: process.env.JWT_SECRET!,
+
     PORT: process.env.PORT ?? 3000,
     ADDRESS: isDev ? '127.0.0.1' : '0.0.0.0',
 

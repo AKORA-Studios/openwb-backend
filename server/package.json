@@ -8,6 +8,7 @@
     "scripts": {
         "start": "node dist/index",
         "test": "echo \"no test specified\"",
+        "lint": "npx prettier -c ./src",
         "build": "npx tsc"
     },
     "keywords": [],
@@ -24,6 +25,8 @@
         "dotenv": "^14.3.2",
         "fast-csv": "^4.3.6",
         "fastify": "^3.27.2",
+        "fastify-auth": "^1.1.0",
+        "jose": "^4.6.0",
         "luxon": "^2.3.0",
         "mariadb": "^2.5.6",
         "mqtt": "^4.3.4",

@@ -51,10 +51,7 @@ export declare interface TopicListener {
         listener: (message: any[]) => any
     ): this;
 
-    emit<K extends keyof SubscribeEvents>(
-        event: K,
-        message: SubscribeEvents[K]
-    ): boolean;
+    emit<K extends keyof SubscribeEvents>(event: K, message: SubscribeEvents[K]): boolean;
     emit<S extends string | symbol>(
         event: Exclude<S, keyof SubscribeEvents>,
         message: unknown[]
@@ -70,14 +67,9 @@ export declare interface TopicListener {
     ): this;
 
     removeAllListeners<K extends keyof SubscribeEvents>(event?: K): this;
-    removeAllListeners<S extends string | symbol>(
-        event?: Exclude<S, keyof SubscribeEvents>
-    ): this;
+    removeAllListeners<S extends string | symbol>(event?: Exclude<S, keyof SubscribeEvents>): this;
 
-    publish<K extends keyof PublishEvents>(
-        event: K,
-        message: PublishEvents[K]
-    ): Promise<void>;
+    publish<K extends keyof PublishEvents>(event: K, message: PublishEvents[K]): Promise<void>;
 
     destroy(): Promise<void>;
 }

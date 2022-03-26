@@ -2,7 +2,7 @@ import config from '../../config';
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
 
-import getLiveValues from '../../api/getLiveValues';
+import getLiveValues from '../../lib/getLiveValues';
 import mqttListener from '../../openWB/client';
 
 interface GraphValuesAttributes {
@@ -14,7 +14,10 @@ interface GraphValuesAttributes {
 }
 export interface GraphValuesInput extends GraphValuesAttributes {}
 
-class GraphValues extends Model<GraphValuesAttributes, GraphValuesInput> implements GraphValuesAttributes {
+class GraphValues
+    extends Model<GraphValuesAttributes, GraphValuesInput>
+    implements GraphValuesAttributes
+{
     declare timestamp: Date;
     declare evu: number;
     declare pv: number;
@@ -35,7 +38,11 @@ GraphValues.init(
         hausverbrauch: DataTypes.FLOAT,
         ladeleistung: DataTypes.FLOAT,
     },
-    { sequelize, tableName: 'graph' }
+    {
+        sequelize,
+        tableName: 'graph',
+        indexes: [{ unique: false, fields: ['timestamp'], name: 'Time' }],
+    }
 );
 
 export default GraphValues;
