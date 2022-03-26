@@ -2,3 +2,6 @@
 
 ---
 
+![JWT](https://jwt.io/img/logo-asset.svg)
+
+A open-source backend server that provides a more intuitive API for the OpenWB.
