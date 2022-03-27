@@ -16,6 +16,14 @@ services:
       - ./test:/app/test
     env_file:
       - ./.env
+  broker:
+    image: eclipse-mosquitto
+    ports:
+      - 9001:9001
+      - 1883:1883
+      - 1884:1884
+    volumes:
+      - ./broker/:/mosquitto/config/
   redisDB:
     image: redis:alpine
     container_name: openwb_redis
