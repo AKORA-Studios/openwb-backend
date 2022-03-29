@@ -44,9 +44,9 @@ export const loadEndpoints: FastifyPluginCallback = (server) => {
             let limit = 25;
             if ((req.query as any)['limit']) {
                 console.log(req.query);
-                console.log(req.query as any['limit']);
-                if (isNaN(req.query as any['limit'])) throw new Error('Invalid Limit');
-                limit = Number(req.query as any['limit']);
+                console.log((req.query as any)['limit']);
+                if (isNaN((req.query as any)['limit'])) throw new Error('Invalid Limit');
+                limit = Number((req.query as any)['limit']);
                 console.log(limit);
             }
 
