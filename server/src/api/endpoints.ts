@@ -43,11 +43,8 @@ export const loadEndpoints: FastifyPluginCallback = (server) => {
             let tagName = req.params.user.admin ? undefined : req.params.user.tagName;
             let limit = 25;
             if ((req.query as any)['limit']) {
-                console.log(req.query);
-                console.log((req.query as any)['limit']);
                 if (isNaN((req.query as any)['limit'])) throw new Error('Invalid Limit');
                 limit = Number((req.query as any)['limit']);
-                console.log(limit);
             }
 
             const where = tagName
