@@ -45,7 +45,8 @@ export const loadEndpoints: FastifyPluginCallback = (server) => {
             if ((req.query as any)['limit']) {
                 console.log(req.query);
                 if (isNaN(req.query as any['limit'])) throw new Error('Invalid Limit');
-                limit = Number(req.query as any['limit'] as number);
+                limit = Number(req.query as any['limit']);
+                console.log(limit);
             }
 
             const where = tagName
