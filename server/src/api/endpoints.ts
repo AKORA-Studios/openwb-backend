@@ -40,7 +40,7 @@ export const loadEndpoints: FastifyPluginCallback = (server) => {
         preHandler: server.auth([server.verifyJWT]),
         handler: async (req: UserRequest, reply) => {
             reply.type('application/json').code(200);
-            let tagName = req.params.user.admin ? req.params.user.tagName : undefined;
+            let tagName = req.params.user.admin ? undefined : req.params.user.tagName;
             let limit = 25;
             if ((req.params as any)['limit']) {
                 if (isNaN(req.params as any['limit'])) throw new Error('Invalid Limit');
