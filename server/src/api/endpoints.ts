@@ -1,5 +1,6 @@
 import { FastifyPluginCallback } from 'fastify';
 import { UserRequest } from '.';
+import LadeLog from '../db/models/Ladelog';
 import { getKey } from '../db/redis';
 import { getGlobals, getLadelog, getLadepunkt, getLiveValues, getRFID, getVerbrauch } from '../lib';
 import { findUser, generateJWT } from './auth';
@@ -39,16 +40,23 @@ export const loadEndpoints: FastifyPluginCallback = (server) => {
         preHandler: server.auth([server.verifyJWT]),
         handler: async (req: UserRequest, reply) => {
             reply.type('application/json').code(200);
-
-            if (req.params.user.admin) {
-                return {
-                    log: await getLadelog(),
-                };
-            } else {
-                return {
-                    log: (await getLadelog()).filter((e) => e.tag === req.params.user.tagName),
-                };
+            let tagName = req.params.user.admin ? req.params.user.tagName : undefined;
+            let limit = 25;
+            if ((req.params as any)['limit']) {
+                if (isNaN(req.params as any['limit'])) throw new Error('Invalid Limit');
+                limit = Number(req.params as any['limit'] as number);
             }
+
+            const entries = await LadeLog.findAll({
+                where: {
+                    tag: tagName,
+                },
+                limit,
+            });
+
+            return {
+                log: entries,
+            };
         },
     });
 
