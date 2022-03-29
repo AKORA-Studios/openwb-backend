@@ -10,22 +10,25 @@ export enum carID {
 'A'.charCodeAt(0);
 
 export async function getRFID() {
-    let value = (await getKey('openWB/system/lastRfId')) as string;
-    if (!value)
+    try {
+        let value = (await getKey('openWB/system/lastRfId')) as string;
+
+        let [lastID, millies] = value.split(','),
+            tagName = carID[lastID as any];
+        return {
+            enabled: (await getKey('openWB/global/rfidConfigured')) !== '0',
+            tagName,
+            tagCode: tagName.charCodeAt(0) - 65,
+            date: Number(millies) * 1000,
+        };
+    } catch (e) {
+        console.log(e);
         return {
             enabled: true,
             tagName: null,
             date: new Date(),
         };
-
-    let [lastID, millies] = value.split(','),
-        tagName = carID[lastID as any];
-    return {
-        enabled: (await getKey('openWB/global/rfidConfigured')) !== '0',
-        tagName,
-        tagCode: tagName.charCodeAt(0) - 65,
-        date: Number(millies) * 1000,
-    };
+    }
 }
 
 export default getRFID;
