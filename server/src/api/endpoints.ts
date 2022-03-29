@@ -47,10 +47,13 @@ export const loadEndpoints: FastifyPluginCallback = (server) => {
                 limit = Number(req.params as any['limit'] as number);
             }
 
+            const where = tagName
+                ? {
+                      tag: tagName,
+                  }
+                : {};
             const entries = await LadeLog.findAll({
-                where: {
-                    tag: tagName,
-                },
+                where,
                 limit,
             });
 
