@@ -2,7 +2,6 @@ import User from '../db/models/User';
 import { carID } from '../lib/getRFID';
 import { createHash } from 'node:crypto';
 import { jwtVerify, SignJWT, JWTPayload } from 'jose';
-import config from '../config';
 import { generateKeyPair } from 'jose';
 
 const keyPair = generateKeyPair('ES256');
