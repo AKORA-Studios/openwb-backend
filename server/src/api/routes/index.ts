@@ -1,3 +1,27 @@
-export import './keys' as keyoru ;
-export * from './lademodus';
-export * from './rest';
+import { UserRequest } from '..';
+import { MyServer } from '../endpoints';
+import globalsRoute from './globals';
+import keyRoute from './keys';
+import ladelogRoute from './ladelog';
+import lademodusRoute from './lademodus';
+import ladepunktRoute from './ladepunkt';
+import ladestromRoute from './ladestrom';
+import loginRoute from './login';
+import restRoute from './rest';
+import rfidRoute from './rfid';
+import valuesRoute from './values';
+import verbrauchRoute from './verbrauch';
+
+export default (server: MyServer) => {
+    globalsRoute(server);
+    keyRoute(server);
+    ladelogRoute(server);
+    lademodusRoute(server);
+    ladepunktRoute(server);
+    ladestromRoute(server);
+    loginRoute(server);
+    restRoute(server);
+    rfidRoute(server);
+    valuesRoute(server);
+    verbrauchRoute(server);
+};

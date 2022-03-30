@@ -1,7 +1,7 @@
 import { UserRequest } from '../..';
 import { MyServer } from '../../endpoints';
 
-export default (server: MyServer) => {
+export const meRoute = (server: MyServer) => {
     server.route({
         url: '/@me',
         method: 'GET',
@@ -12,3 +12,4 @@ export default (server: MyServer) => {
         },
     });
 };
+export default meRoute;
