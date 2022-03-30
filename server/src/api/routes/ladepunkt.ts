@@ -1,4 +1,5 @@
 import { UserRequest } from '..';
+import { getLadepunkt } from '../../lib';
 import { MyServer } from '../endpoints';
 
 export const ladepunktRoute = (server: MyServer) => {
@@ -6,7 +7,9 @@ export const ladepunktRoute = (server: MyServer) => {
         url: '/ladepunkt',
         method: 'GET',
         preHandler: server.auth([server.verifyJWT]),
-        handler: async (req: UserRequest, reply) => {},
+        handler: async (req: UserRequest, reply) => {
+            return await getLadepunkt();
+        },
     });
 };
 export default ladepunktRoute;
