@@ -13,6 +13,7 @@ export async function getGlobals() {
         boolEvuSmoothedActive: await getKey('openWB/boolEvuSmoothedActive'),
         boolDisplayHouseBatteryPriority: await getKey('openWB/boolDisplayHouseBatteryPriority'),
         strLastmanagementActive: await getKey('openWB/strLastmanagementActive'),
+        kWhPrice: Number(await getKey('openWB/system/priceForKWh')),
     };
 }
 
