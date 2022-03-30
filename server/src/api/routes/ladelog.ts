@@ -32,6 +32,7 @@ export const ladelogRoute = (server: MyServer) => {
                     e.start = e.start.getTime();
                     //@ts-ignore
                     e.ende = e.ende.getTime();
+                    return e;
                 }),
             };
         },
