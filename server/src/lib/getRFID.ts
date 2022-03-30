@@ -16,7 +16,7 @@ export async function getRFID() {
             return {
                 enabled: true,
                 tagName: null,
-                date: new Date(),
+                date: new Date().getTime(),
             };
         }
 
@@ -33,7 +33,7 @@ export async function getRFID() {
         return {
             enabled: true,
             tagName: null,
-            date: new Date(),
+            date: new Date().getTime(),
         };
     }
 }
