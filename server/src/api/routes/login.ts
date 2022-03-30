@@ -4,7 +4,7 @@ import S from 'fluent-json-schema';
 
 const bodyJsonSchema = S.object()
     .prop('username', S.string().required())
-    .prop('password', S.number().required());
+    .prop('password', S.string().required());
 
 // Note that there is no need to call `.valueOf()`!
 const schema = {
