@@ -11,6 +11,7 @@ import restRoute from './rest';
 import rfidRoute from './rfid';
 import valuesRoute from './values';
 import verbrauchRoute from './verbrauch';
+import registerUserRoutes from './user';
 
 export default (server: MyServer) => {
     globalsRoute(server);
@@ -24,4 +25,6 @@ export default (server: MyServer) => {
     rfidRoute(server);
     valuesRoute(server);
     verbrauchRoute(server);
+
+    registerUserRoutes(server);
 };
