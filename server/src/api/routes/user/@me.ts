@@ -1,8 +1,8 @@
 import { UserRequest } from '../..';
 import { MyServer } from '../../endpoints';
-import S from 'fluent-json-schema';
 import User from '../../../db/models/User';
 import { hash, UserJWTPayload } from '../../auth';
+import S from 'fluent-json-schema';
 
 export default (server: MyServer) => {
     server.route({
