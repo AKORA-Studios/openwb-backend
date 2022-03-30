@@ -12,6 +12,13 @@ export enum carID {
 export async function getRFID() {
     try {
         let value = (await getKey('openWB/system/lastRfId')) as string;
+        if (value === '0') {
+            return {
+                enabled: true,
+                tagName: null,
+                date: new Date(),
+            };
+        }
 
         let [lastID, millies] = value.split(','),
             tagName = carID[lastID as any];
