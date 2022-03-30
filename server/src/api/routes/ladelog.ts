@@ -28,11 +28,11 @@ export const ladelogRoute = (server: MyServer) => {
 
             return {
                 log: entries.map((e) => {
-                    //@ts-ignore
-                    e.start = e.start.getTime();
-                    //@ts-ignore
-                    e.ende = e.ende.getTime();
-                    return e;
+                    return {
+                        ...e,
+                        start: e.start.getTime(),
+                        ende: e.ende.getTime(),
+                    };
                 }),
             };
         },
