@@ -27,7 +27,7 @@ export async function connectMariaDB() {
         // Sync Models with database
         await RFIDLog.sync({ alter: !config.PROD });
         await GraphValues.sync({ alter: !config.PROD });
-        await User.sync({ alter: config.PROD });
+        await User.sync({ alter: !config.PROD });
         await LadeLog.sync({ alter: !config.PROD });
     } catch (e: any) {
         console.error(e);
