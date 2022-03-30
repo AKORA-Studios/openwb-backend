@@ -41,6 +41,7 @@ export default (server: MyServer) => {
             if (!user) throw new Error('User not found');
 
             user.password = hash(req.body.password);
+            await user.save();
 
             repl.type('application/json').code(200);
             return req.params.user;
