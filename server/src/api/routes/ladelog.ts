@@ -27,7 +27,12 @@ export const ladelogRoute = (server: MyServer) => {
             });
 
             return {
-                log: entries,
+                log: entries.map((e) => {
+                    //@ts-ignore
+                    e.start = e.start.getTime();
+                    //@ts-ignore
+                    e.ende = e.ende.getTime();
+                }),
             };
         },
     });
