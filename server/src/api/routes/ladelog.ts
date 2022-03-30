@@ -28,10 +28,11 @@ export const ladelogRoute = (server: MyServer) => {
 
             return {
                 log: entries.map((e) => {
+                    const json = e.toJSON();
                     return {
-                        ...e,
-                        start: e.start.getTime(),
-                        ende: e.ende.getTime(),
+                        ...json,
+                        start: json.start.getTime(),
+                        ende: json.ende.getTime(),
                     };
                 }),
             };
