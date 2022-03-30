@@ -25,12 +25,12 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
 
 User.init(
     {
-        username: DataTypes.STRING,
-        password: DataTypes.STRING,
-        tagName: DataTypes.STRING,
-        tagID: DataTypes.INTEGER,
-        rfid: DataTypes.BIGINT,
-        admin: DataTypes.BOOLEAN,
+        username: { type: DataTypes.STRING, primaryKey: true, allowNull: false },
+        password: { type: DataTypes.STRING, allowNull: false },
+        tagName: { type: DataTypes.STRING, allowNull: false },
+        tagID: { type: DataTypes.INTEGER, allowNull: false },
+        rfid: { type: DataTypes.BIGINT, allowNull: false },
+        admin: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
     },
     {
         sequelize,
