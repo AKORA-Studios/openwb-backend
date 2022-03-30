@@ -26,6 +26,7 @@
         "fast-csv": "^4.3.6",
         "fastify": "^3.27.2",
         "fastify-auth": "^1.1.0",
+        "fluent-json-schema": "^3.1.0",
         "jose": "^4.6.0",
         "luxon": "^2.3.0",
         "mariadb": "^2.5.6",

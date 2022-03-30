@@ -1,4 +1,3 @@
-export * from './keys';
+export import './keys' as keyoru ;
 export * from './lademodus';
-export * from './lademodus-modus';
 export * from './rest';

@@ -1,8 +1,8 @@
-import { RouteOptions } from 'fastify';
 import redisClient, { getKey } from '../../db/redis';
+import { MyServer } from '../endpoints';
 
-export const keyRoute = (server: any) =>
-    ({
+export const keyRoute = (server: MyServer) => {
+    server.route({
         url: '/keys',
         method: 'GET',
         preHandler: server.auth([server.verifyJWT]),
@@ -20,6 +20,6 @@ export const keyRoute = (server: any) =>
 
             return obj;
         },
-    } as RouteOptions);
-
+    });
+};
 export default keyRoute;

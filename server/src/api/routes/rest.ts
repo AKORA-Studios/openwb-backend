@@ -1,9 +1,9 @@
 import axios from 'axios';
 import config from '../../config';
-import { RouteOptions } from 'fastify';
+import { MyServer } from '../endpoints';
 
-export const restRoute = (server: any) =>
-    ({
+export const restRoute = (server: MyServer) =>
+    server.route({
         url: '/rest',
         method: 'GET',
         preHandler: server.auth([server.verifyJWT]),
@@ -19,6 +19,6 @@ export const restRoute = (server: any) =>
 
             return data;
         },
-    } as RouteOptions);
+    });
 
 export default restRoute;
