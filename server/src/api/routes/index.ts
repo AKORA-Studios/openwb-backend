@@ -1,11 +1,10 @@
-import { UserRequest } from '..';
 import { MyServer } from '../endpoints';
 import globalsRoute from './globals';
 import keyRoute from './keys';
 import ladelogRoute from './ladelog';
 import lademodusRoute from './lademodus';
 import ladepunktRoute from './ladepunkt';
-import ladestromRoute from './ladestrom';
+//import ladestromRoute from './ladestrom';
 import loginRoute from './login';
 import restRoute from './rest';
 import rfidRoute from './rfid';
@@ -19,7 +18,7 @@ export default (server: MyServer) => {
     ladelogRoute(server);
     lademodusRoute(server);
     ladepunktRoute(server);
-    ladestromRoute(server);
+    //ladestromRoute(server);
     loginRoute(server);
     restRoute(server);
     rfidRoute(server);
