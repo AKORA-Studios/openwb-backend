@@ -1,14 +1,7 @@
-import {
-    FastifyInstance,
-    FastifyLoggerInstance,
-    FastifyPluginCallback,
-    FastifySchema,
-    RouteOptions,
-} from 'fastify';
+import { FastifyInstance, FastifyLoggerInstance, FastifySchema, RouteOptions } from 'fastify';
 import { RouteGenericInterface } from 'fastify/types/route';
 import { Server as HTTPServer, IncomingMessage, ServerResponse } from 'node:http';
 import { UserJWTPayload } from './auth';
-import loadRoutes from './routes';
 
 export type RouteType = RouteOptions<
     HTTPServer,
@@ -32,9 +25,3 @@ export type MyServer = FastifyInstance<
     IncomingMessage,
     ServerResponse
 >;
-
-export const loadEndpoints: FastifyPluginCallback = (server) => {
-    loadRoutes(server);
-};
-
-export default loadEndpoints;

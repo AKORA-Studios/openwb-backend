@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import server from '..';
-import loadEndpoints from './endpoints';
 import { RouteGenericInterface } from 'fastify/types/route';
 import { UserJWTPayload, validateJWT } from './auth';
+import loadRoutes from './routes';
 
 export type UserRequest = FastifyRequest<
     RouteGenericInterface & { Params: { user: UserJWTPayload } }
@@ -53,7 +53,7 @@ server.register(
             done();
         });
 
-        loadEndpoints(server, opts, done);
+        loadRoutes(server);
 
         done();
     },
