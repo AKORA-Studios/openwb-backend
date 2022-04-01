@@ -40,14 +40,27 @@ async function start() {
 }
 start();
 
+function sleep(time: number) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+}
 export function stop(reason = 'stopped') {
     console.log(`Stopping Server at ${new Date()}`);
     console.log(` - Reason:`, reason);
     server.close(async () => {
         console.log(' - Http server closed');
-        await disconnectMQTTClient();
-        await disconnectMariaDB();
-        await disconnectRedisDB();
+        await Promise.race([
+            (async () => {
+                //Stop all services
+                await disconnectMQTTClient();
+                await disconnectMariaDB();
+                await disconnectRedisDB();
+            })(),
+            (async () => {
+                sleep(5000); //Wait 5 seconds
+                console.log(' - Timed out after 5 seconds');
+            })(),
+        ]);
+
         if (config.PROD) console.log('\n\n'); //More readable logs
         process.exit(0);
     });
