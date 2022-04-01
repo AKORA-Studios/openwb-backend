@@ -1,11 +1,11 @@
-import redisClient, { getKey } from '../../db/redis';
-import { MyServer } from '../endpoints';
+import redisClient, { getKey } from '../../../db/redis';
+import { MyServer } from '../../endpoints';
 
-export const keyRoute = (server: MyServer) => {
+export default (server: MyServer) => {
     server.route({
         url: '/keys',
         method: 'GET',
-        preHandler: server.auth([server.verifyJWT]),
+        preHandler: server.auth([server.verifyJWT, server.verifyAdmin]),
         handler: async (request, reply) => {
             reply.type('application/json').code(200);
 
@@ -22,4 +22,3 @@ export const keyRoute = (server: MyServer) => {
         },
     });
 };
-export default keyRoute;

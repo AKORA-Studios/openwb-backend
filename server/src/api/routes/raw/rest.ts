@@ -1,12 +1,12 @@
 import axios from 'axios';
-import config from '../../config';
-import { MyServer } from '../endpoints';
+import config from '../../../config';
+import { MyServer } from '../../endpoints';
 
-export const restRoute = (server: MyServer) =>
+export default (server: MyServer) => {
     server.route({
         url: '/rest',
         method: 'GET',
-        preHandler: server.auth([server.verifyJWT]),
+        preHandler: server.auth([server.verifyJWT, server.verifyAdmin]),
         handler: async (request, reply) => {
             reply.type('application/json').code(200);
             const data = (await axios(config.OPENWB_URL + '/openWB/web/api.php?get=all')).data;
@@ -20,5 +20,4 @@ export const restRoute = (server: MyServer) =>
             return data;
         },
     });
-
-export default restRoute;
+};
