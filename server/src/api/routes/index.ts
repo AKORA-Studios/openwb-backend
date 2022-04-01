@@ -10,6 +10,7 @@ import verbrauchRoute from './details/verbrauch';
 //Registe subroutes
 import registerUserRoutes from './user';
 import registerRawRoutes from './raw';
+import registerDetailRoutes from './details';
 
 export default (server: MyServer) => {
     globalsRoute(server);
@@ -24,4 +25,6 @@ export default (server: MyServer) => {
     registerUserRoutes(server);
     // - /raw
     registerRawRoutes(server);
+    // - /details
+    registerDetailRoutes(server);
 };
