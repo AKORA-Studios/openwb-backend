@@ -15,11 +15,6 @@ export default (server: MyServer) => {
         },
     });
 
-    const bodyJsonSchema = S.object().prop('password', S.string().required());
-    const schema = {
-        body: bodyJsonSchema,
-    };
-
     server.route<{
         Body: {
             password: string;
@@ -30,7 +25,9 @@ export default (server: MyServer) => {
     }>({
         url: '/@me',
         method: 'PATCH',
-        schema,
+        schema: {
+            body: S.object().prop('password', S.string().required()),
+        },
         preHandler: server.auth([server.verifyJWT]),
         handler: async (req, repl) => {
             const user = await User.findOne({
