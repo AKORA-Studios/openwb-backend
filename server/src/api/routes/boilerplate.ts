@@ -1,5 +1,5 @@
 import { UserRequest } from '..';
-import { MyServer } from '../endpoints';
+import { MyServer } from '../types';
 
 export const keyRoute = (server: MyServer) => {
     server.route({

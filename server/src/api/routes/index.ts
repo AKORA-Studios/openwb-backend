@@ -1,4 +1,4 @@
-import { MyServer } from '../endpoints';
+import { MyServer } from '../types';
 import globalsRoute from './globals';
 import ladelogRoute from './ladelog';
 import lademodusRoute from './lademodus';

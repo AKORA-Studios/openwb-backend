@@ -1,4 +1,4 @@
-import User from '../db/models/User';
+import User from '@db/models/User';
 import { createHash } from 'node:crypto';
 import { jwtVerify, SignJWT, JWTPayload } from 'jose';
 import { generateKeyPair } from 'jose';

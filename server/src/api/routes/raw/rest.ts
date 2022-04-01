@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../../../config';
-import { MyServer } from '../../endpoints';
+import { MyServer } from '../../types';
 
 export default (server: MyServer) => {
     server.route({

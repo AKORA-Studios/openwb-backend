@@ -1,6 +1,6 @@
-import RFIDLog from '../../db/models/RFIDLog';
+import RFIDLog from '@db/models/RFIDLog';
 import { UserRequest } from '..';
-import { MyServer } from '../endpoints';
+import { MyServer } from '../types';
 
 export const rfidRoute = (server: MyServer) => {
     server.route({

@@ -1,6 +1,6 @@
 import { UserRequest } from '..';
-import LadeLog from '../../db/models/Ladelog';
-import { MyServer } from '../endpoints';
+import LadeLog from '@db/models/Ladelog';
+import { MyServer } from '../types';
 
 export const ladelogRoute = (server: MyServer) => {
     server.route({

@@ -1,5 +1,5 @@
 import { findUser, generateJWT } from '../auth';
-import { MyServer } from '../endpoints';
+import { MyServer } from '../types';
 import S from 'fluent-json-schema';
 
 const bodyJsonSchema = S.object()

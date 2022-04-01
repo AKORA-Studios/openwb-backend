@@ -1,6 +1,6 @@
 import { UserRequest } from '../..';
-import User from '../../../db/models/User';
-import { MyServer } from '../../endpoints';
+import User from '@db/models/User';
+import { MyServer } from '../../types';
 
 export default (server: MyServer) => {
     server.route({

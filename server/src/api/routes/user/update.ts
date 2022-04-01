@@ -1,5 +1,5 @@
-import { MyServer } from '../../endpoints';
-import User from '../../../db/models/User';
+import { MyServer } from '../../types';
+import User from '@db/models/User';
 import { hash } from '../../auth';
 import S from 'fluent-json-schema';
 

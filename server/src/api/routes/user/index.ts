@@ -1,4 +1,4 @@
-import { MyServer } from '../../endpoints';
+import { MyServer } from '../../types';
 import meRoute from './@me';
 import allRoute from './all';
 import updateRoute from './update';

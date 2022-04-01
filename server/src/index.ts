@@ -1,9 +1,10 @@
+import 'module-alias/register';
 import config from './config';
 import Fastify from 'fastify';
 import fastifyAuth from 'fastify-auth';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
-import { connectRedisDB, disconnectRedisDB } from './db/redis';
-import { connectMariaDB, disconnectMariaDB } from './db/mariadb';
+import { connectRedisDB, disconnectRedisDB } from '@db/redis';
+import { connectMariaDB, disconnectMariaDB } from '@db/mariadb';
 
 export const server = Fastify({
     logger: {

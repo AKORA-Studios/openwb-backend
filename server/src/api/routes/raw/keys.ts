@@ -1,5 +1,5 @@
-import redisClient, { getKey } from '../../../db/redis';
-import { MyServer } from '../../endpoints';
+import redisClient, { getKey } from '@db/redis';
+import { MyServer } from '../../types';
 
 export default (server: MyServer) => {
     server.route({

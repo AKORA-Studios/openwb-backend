@@ -1,5 +1,5 @@
 import { stop } from '..';
-import { setKey } from '../db/redis';
+import { setKey } from '@db/redis';
 import mqttListener, { mqttClient, mqttReady } from './client';
 
 mqttReady.then(async () => {

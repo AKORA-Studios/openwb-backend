@@ -1,4 +1,4 @@
-import { MyServer } from '../../endpoints';
+import { MyServer } from '../../types';
 import keysRoute from './keys';
 import RESTRoute from './rest';
 

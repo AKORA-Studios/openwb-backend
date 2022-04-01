@@ -1,4 +1,4 @@
-import { getKey } from '../db/redis';
+import { getKey } from '@db/redis';
 
 export async function getLadepunkt() {
     return {

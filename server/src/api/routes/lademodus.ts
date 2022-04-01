@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../../config';
-import { getKey } from '../../db/redis';
-import { MyServer } from '../endpoints';
+import { getKey } from '@db/redis';
+import { MyServer } from '../types';
 
 export const lademodusRoute = (server: MyServer) => {
     server.route({

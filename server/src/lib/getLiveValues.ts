@@ -1,4 +1,4 @@
-import { getKey } from '../db/redis';
+import { getKey } from '@db/redis';
 
 export async function getLiveValues() {
     let str = (await getKey('openWB/system/lastlivevalues')) as string;

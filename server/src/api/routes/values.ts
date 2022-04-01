@@ -1,6 +1,6 @@
 import { UserRequest } from '..';
 import { getLiveValues } from '../../lib';
-import { MyServer } from '../endpoints';
+import { MyServer } from '../types';
 
 export const valuesRoute = (server: MyServer) => {
     server.route({

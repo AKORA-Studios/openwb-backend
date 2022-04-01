@@ -1,12 +1,10 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyReply } from 'fastify';
 import server from '..';
-import { RouteGenericInterface } from 'fastify/types/route';
-import { UserJWTPayload, validateJWT } from './auth';
+import { validateJWT } from './auth';
 import loadRoutes from './routes';
+import { UserRequest } from './types';
 
-export type UserRequest = FastifyRequest<
-    RouteGenericInterface & { Params: { user: UserJWTPayload } }
->;
+export * from './types';
 
 server.register(
     (server, opts, done) => {
