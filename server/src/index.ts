@@ -56,7 +56,7 @@ export function stop(reason = 'stopped') {
                 await disconnectRedisDB();
             })(),
             (async () => {
-                sleep(5000); //Wait 5 seconds
+                await sleep(5000); //Wait 5 seconds
                 console.log(' - Timed out after 5 seconds');
             })(),
         ]);
