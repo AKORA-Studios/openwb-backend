@@ -7,7 +7,7 @@ export const valuesRoute = (server: MyServer) => {
         url: '/values',
         method: 'GET',
         preHandler: server.auth([server.verifyJWT]),
-        handler: async (req: UserRequest, reply) => {
+        handler: async () => {
             return await getLiveValues();
         },
     });

@@ -1,14 +1,14 @@
 import axios from 'axios';
 import config from '../../config';
 import { getKey } from '@db/redis';
-import { MyServer } from '../types';
+import { MyServer, UserReply, UserRequest } from '../types';
 
 export const lademodusRoute = (server: MyServer) => {
     server.route({
         url: '/lademodus',
         method: 'GET',
         preHandler: server.auth([server.verifyJWT]),
-        handler: async (req, reply) => {
+        handler: async (req: UserRequest, reply: UserReply) => {
             reply.type('application/json').code(200);
             const chargeModeInt = (await getKey('openWB/global/ChargeMode')) as number;
             return {
@@ -23,8 +23,8 @@ export const lademodusRoute = (server: MyServer) => {
         url: '/lademodus/:modus',
         method: 'POST',
         preHandler: server.auth([server.verifyJWT, server.verifyAdmin]),
-        handler: async (request, reply) => {
-            const { modus } = request.params as { modus: string };
+        handler: async (req: UserRequest, reply: UserReply) => {
+            const { modus } = req.params as any as { modus: string };
             const modes = ['jetzt', 'minundpv', 'pvuberschuss', 'stop', 'standby'];
 
             reply.type('application/json');

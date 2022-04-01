@@ -1,5 +1,5 @@
 import { findUser, generateJWT } from '../auth';
-import { MyServer } from '../types';
+import { MyServer, UserReply, UserRequest } from '../types';
 import S from 'fluent-json-schema';
 
 const bodyJsonSchema = S.object()
@@ -16,7 +16,7 @@ export const loginRoute = (server: MyServer) => {
         url: '/login',
         method: 'POST',
         schema,
-        handler: async (req, repl) => {
+        handler: async (req: UserRequest, repl: UserReply) => {
             const muser = await findUser((req.body as any).username, (req.body as any).password);
 
             if (!muser) {

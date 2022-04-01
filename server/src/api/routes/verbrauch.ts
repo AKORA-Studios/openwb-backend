@@ -7,7 +7,7 @@ export const verbrauchRoute = (server: MyServer) => {
         url: '/verbrauch',
         method: 'GET',
         preHandler: server.auth([server.verifyJWT]),
-        handler: async (req: UserRequest, reply) => {
+        handler: async () => {
             return {
                 evu: {
                     W: await getKey('openWB/evu/W'),

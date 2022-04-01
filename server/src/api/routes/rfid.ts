@@ -1,13 +1,13 @@
 import RFIDLog from '@db/models/RFIDLog';
 import { UserRequest } from '..';
-import { MyServer } from '../types';
+import { MyServer, UserReply } from '../types';
 
 export const rfidRoute = (server: MyServer) => {
     server.route({
         url: '/rfid',
         method: 'GET',
         preHandler: server.auth([server.verifyJWT]),
-        handler: async (req: UserRequest, reply) => {
+        handler: async (req: UserRequest, reply: UserReply) => {
             reply.type('application/json');
 
             const entry = await RFIDLog.findOne({
