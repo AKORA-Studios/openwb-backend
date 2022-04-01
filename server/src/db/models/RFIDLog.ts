@@ -1,43 +1,37 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
-import getRFID, { carID } from '../../lib/getRFID';
+import getRFID from '../../lib/getRFID';
 import config from '../../config';
 import mqttListener from '../../openWB/client';
+import { Tag } from '../../lib/';
 
 interface RFIDLogAttributes {
     timestamp: Date;
-    tagName: keyof typeof carID;
-    tagID: number;
-    tagCode: number;
+    tagName: Tag.tagName;
+    tagCode: Tag.tagCode;
+    tagID: Tag.tagID;
 }
 export interface RFIDLogInput extends Omit<RFIDLogAttributes, 'tagName'> {
     tagName: string;
 }
 
-type Tag = 'A' | 'B' | 'C' | 'D' | 'E';
 class RFIDLog extends Model<RFIDLogAttributes, RFIDLogInput> implements RFIDLogAttributes {
     declare timestamp: Date;
-    declare tagName: Tag;
-    declare tagID: number;
-    declare tagCode: number;
-
-    // timestamps!
-    // public readonly createdAt!: Date;
-    // public readonly updatedAt!: Date;
-    // public readonly deletedAt!: Date;
+    declare tagName: Tag.tagName;
+    declare tagCode: Tag.tagCode;
+    declare tagID: Tag.tagID;
 }
 
 RFIDLog.init(
     {
-        timestamp: DataTypes.DATE,
-        tagName: DataTypes.STRING,
-        tagID: DataTypes.BIGINT,
-        tagCode: DataTypes.INTEGER,
+        timestamp: { type: DataTypes.DATE, allowNull: false, primaryKey: true },
+        tagName: { type: DataTypes.STRING, allowNull: false },
+        tagID: { type: DataTypes.BIGINT, allowNull: false },
+        tagCode: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
         sequelize,
         tableName: 'rfid_log',
-
         indexes: [{ unique: true, fields: ['timestamp'], name: 'Time' }],
     }
 );
@@ -61,9 +55,9 @@ if (config.PROD) {
 
         await RFIDLog.create({
             timestamp: new Date(values.date),
-            tagName: values.tagName as any,
-            tagID: carID[values.tagName as any] as any,
+            tagName: values.tagName,
             tagCode: values.tagCode,
+            tagID: values.tagID,
         });
     });
 } else {

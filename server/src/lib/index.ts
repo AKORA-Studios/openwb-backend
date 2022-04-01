@@ -3,4 +3,5 @@ export * from './getLadelog';
 export * from './getLadepunkt';
 export * from './getLiveValues';
 export * from './getRFID';
+export * from './rfid';
 export * from './getVerbrauch';

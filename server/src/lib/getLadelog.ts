@@ -1,8 +1,8 @@
 import axios from 'axios';
 import config from '../config';
 import { parseString } from 'fast-csv';
-import { carID } from './getRFID';
 import { DateTime } from 'luxon';
+import { Tag } from './rfid';
 
 type Row = {
     /** Date in millis */
@@ -15,9 +15,9 @@ type Row = {
     dauer: any;
     ladepunkt: any;
     modus: number;
-    tag: keyof typeof carID;
-    tagID: number;
-    tagCode: number;
+    tagName: Tag.tagName;
+    tagCode: Tag.tagCode;
+    tagID: Tag.tagID;
 };
 
 export async function getLadelog() {
@@ -52,9 +52,9 @@ function parseCSV(str: string): Promise<Row[]> {
                     dauer: row[5],
                     ladepunkt: row[6],
                     modus: Number(row[7]),
-                    tag: carID[row[8]] as any,
-                    tagID: row[8] as any,
-                    tagCode: carID[row[8]].charCodeAt(0) - 65,
+                    tagName: Tag.getName(Number(row[8])),
+                    tagCode: Tag.getCode(Number(row[8])),
+                    tagID: Tag.getID(Number(row[8])),
                 });
             })
             .on('end', () => res(arr));

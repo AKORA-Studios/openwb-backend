@@ -1,8 +1,8 @@
 import User from '../db/models/User';
-import { carID } from '../lib/getRFID';
 import { createHash } from 'node:crypto';
 import { jwtVerify, SignJWT, JWTPayload } from 'jose';
 import { generateKeyPair } from 'jose';
+import { Tag } from '../lib/rfid';
 
 const keyPair = generateKeyPair('ES256');
 
@@ -11,15 +11,15 @@ export function hash(password: string) {
 }
 
 export async function createUser(username: string, password: string, tagName: string) {
-    const rfid = carID[tagName as any] as any as number;
-    const tagCode = tagName.charCodeAt(0) - 65;
+    const tagID = Tag.getID(tagName);
+    const tagCode = Tag.getCode(tagName);
 
     await User.create({
         username,
         password: hash(password),
-        rfid,
-        tagID: tagCode,
         tagName,
+        tagCode,
+        tagID,
         admin: false,
     });
 }
@@ -47,7 +47,7 @@ export function findUser(username: string, password: string) {
 export interface UserJWTPayload extends JWTPayload {
     username: string;
     tagName: string;
-    tagID: number;
+    tagCode: number;
     admin: boolean;
 }
 
@@ -55,7 +55,7 @@ export async function generateJWT(user: User) {
     return new SignJWT({
         username: user.username,
         tagName: user.tagName,
-        tagID: user.tagID,
+        tagCode: user.tagCode,
         admin: user.admin,
     })
         .setProtectedHeader({ alg: 'ES256' })

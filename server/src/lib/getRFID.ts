@@ -1,13 +1,5 @@
 import { getKey } from '../db/redis';
-
-export enum carID {
-    A = 3038948522,
-    B = 3038331354,
-    C = 3041372218,
-    D = 3038576810,
-    E = 3039829114,
-}
-'A'.charCodeAt(0);
+import { Tag } from './rfid';
 
 export async function getRFID() {
     try {
@@ -20,12 +12,13 @@ export async function getRFID() {
             };
         }
 
-        let [lastID, millies] = value.split(','),
-            tagName = carID[lastID as any];
+        let [lastIDstr, millies] = value.split(',');
+        let lastID = Number(lastIDstr);
         return {
             enabled: (await getKey('openWB/global/rfidConfigured')) !== '0',
-            tagName,
-            tagCode: tagName.charCodeAt(0) - 65,
+            tagName: Tag.getName(lastID),
+            tagCode: Tag.getCode(lastID),
+            tagID: lastID,
             date: Number(millies) * 1000,
         };
     } catch (e) {
@@ -33,6 +26,8 @@ export async function getRFID() {
         return {
             enabled: true,
             tagName: null,
+            tagCode: null,
+            tagID: null,
             date: new Date().getTime(),
         };
     }

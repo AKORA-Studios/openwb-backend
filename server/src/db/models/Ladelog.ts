@@ -1,8 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
-import { carID } from '../../lib/getRFID';
 import config from '../../config';
-import { getLadelog } from '../../lib';
+import { getLadelog, Tag } from '../../lib';
 
 interface LadeLogAttributes {
     /** Date in UTC */
@@ -14,18 +13,16 @@ interface LadeLogAttributes {
     kW: number;
     ladepunkt: string;
     modus: number;
-    tag: keyof typeof carID;
-    tagID: number;
-    tagCode: number;
+    tagName: Tag.tagName;
+    tagCode: Tag.tagCode;
+    tagID: Tag.tagID;
 }
-export interface LadeLogInput extends Omit<LadeLogAttributes, 'tag'> {
-    tag: string;
+export interface LadeLogInput extends Omit<LadeLogAttributes, 'tagName'> {
+    tagName: string;
 }
 
-type Tag = 'A' | 'B' | 'C' | 'D' | 'E';
 class LadeLog extends Model<LadeLogAttributes, LadeLogInput> implements LadeLogAttributes {
     declare timestamp: Date;
-    declare tagName: Tag;
 
     /** Date in UTC */
     declare start: Date;
@@ -36,9 +33,9 @@ class LadeLog extends Model<LadeLogAttributes, LadeLogInput> implements LadeLogA
     declare kW: number;
     declare ladepunkt: string;
     declare modus: number;
-    declare tag: keyof typeof carID;
-    declare tagID: number;
-    declare tagCode: number;
+    declare tagName: Tag.tagName;
+    declare tagCode: Tag.tagCode;
+    declare tagID: Tag.tagID;
 
     // timestamps!
     // public readonly createdAt!: Date;
@@ -55,9 +52,9 @@ LadeLog.init(
         kW: DataTypes.FLOAT,
         ladepunkt: DataTypes.STRING,
         modus: DataTypes.INTEGER,
-        tag: DataTypes.STRING,
-        tagID: DataTypes.BIGINT,
+        tagName: DataTypes.STRING,
         tagCode: DataTypes.INTEGER,
+        tagID: DataTypes.BIGINT,
     },
     {
         sequelize,
@@ -65,7 +62,7 @@ LadeLog.init(
 
         indexes: [
             { unique: true, fields: ['start', 'ende'], name: 'Time' },
-            { unique: false, fields: ['tag', 'tagID', 'tagCode'], name: 'Tag' },
+            { unique: false, fields: ['tagName', 'tagID', 'tagCode'], name: 'Tag' },
         ],
     }
 );
