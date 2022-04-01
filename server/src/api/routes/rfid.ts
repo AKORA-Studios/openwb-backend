@@ -1,4 +1,4 @@
-import RFIDLog from '@models/RFIDLog';
+import RFIDLog from '../../db/models/RFIDLog';
 import { UserRequest } from '..';
 import { MyServer } from '../endpoints';
 
