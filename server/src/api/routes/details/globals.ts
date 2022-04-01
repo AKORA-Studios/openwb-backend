@@ -1,8 +1,8 @@
 import { getKey } from '@db/redis';
-import { UserRequest } from '../types';
-import { MyServer } from '../types';
+import { UserRequest } from '../../types';
+import { MyServer } from '../../types';
 
-export const globalsRoute = (server: MyServer) => {
+export default (server: MyServer) => {
     server.route({
         url: '/globals',
         method: 'GET',
@@ -20,4 +20,3 @@ export const globalsRoute = (server: MyServer) => {
         },
     });
 };
-export default globalsRoute;

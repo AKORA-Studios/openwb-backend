@@ -1,8 +1,8 @@
 import { getKey } from '@db/redis';
-import { UserRequest } from '..';
-import { MyServer } from '../types';
+import { UserRequest } from '../..';
+import { MyServer } from '../../types';
 
-export const verbrauchRoute = (server: MyServer) => {
+export default (server: MyServer) => {
     server.route({
         url: '/verbrauch',
         method: 'GET',
@@ -52,4 +52,3 @@ export const verbrauchRoute = (server: MyServer) => {
         },
     });
 };
-export default verbrauchRoute;
