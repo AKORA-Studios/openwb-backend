@@ -1,5 +1,5 @@
+import RFIDLog from '@models/RFIDLog';
 import { UserRequest } from '..';
-import { getRFID } from '../../lib';
 import { MyServer } from '../endpoints';
 
 export const rfidRoute = (server: MyServer) => {
@@ -8,7 +8,27 @@ export const rfidRoute = (server: MyServer) => {
         method: 'GET',
         preHandler: server.auth([server.verifyJWT]),
         handler: async (req: UserRequest, reply) => {
-            return await getRFID();
+            reply.type('application/json');
+
+            const entry = await RFIDLog.findOne({
+                order: [['timestamp', 'DESC']],
+            });
+
+            if (!entry) {
+                reply.code(404);
+                return {
+                    code: 404,
+                    message: 'No entr found',
+                };
+            }
+
+            const json = entry.toJSON();
+            reply.code(200);
+            return {
+                timestamp: json.timestamp,
+                tagName: json.tagName,
+                tagCode: json.tagCode,
+            };
         },
     });
 };

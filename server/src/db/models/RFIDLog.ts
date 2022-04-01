@@ -1,6 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
-import getRFID from '../../lib/getRFID';
 import config from '../../config';
 import mqttListener from '../../openWB/client';
 import { Tag } from '../../lib/';
@@ -41,23 +40,24 @@ export default RFIDLog;
 //Save Entry on changes
 if (config.PROD) {
     let first = true;
-    mqttListener.on('openWB/system/lastRfId', async (str) => {
+    mqttListener.on('openWB/system/lastRfId', async (value) => {
         if (config.DEV) return;
         if (first) {
             first = false;
             return;
         }
 
-        //Get new values from redis
-        const values = await getRFID();
-        if (!values) return;
-        if (!values.tagName || !values.enabled) return;
+        if (!value) return;
+        if (value[0] === '0') return;
+
+        let [lastIDstr, millies] = value[0].split(',');
+        let lastID = Number(lastIDstr);
 
         await RFIDLog.create({
-            timestamp: new Date(values.date),
-            tagName: values.tagName,
-            tagCode: values.tagCode,
-            tagID: values.tagID,
+            tagName: Tag.getName(lastID),
+            tagCode: Tag.getCode(lastID),
+            tagID: lastID,
+            timestamp: new Date(Number(millies) * 1000),
         });
     });
 } else {
