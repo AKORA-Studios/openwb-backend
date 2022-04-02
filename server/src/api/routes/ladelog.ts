@@ -16,13 +16,12 @@ export const ladelogRoute = (server: MyServer) => {
                 limit = Number((req.query as any)['limit']);
             }
 
-            const where = tagName
-                ? {
-                      tag: tagName,
-                  }
-                : {};
             const entries = await LadeLog.findAll({
-                where,
+                where: tagName
+                    ? {
+                          tagName: tagName,
+                      }
+                    : {},
                 limit,
             });
 
