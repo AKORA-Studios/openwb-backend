@@ -25,7 +25,7 @@ export const rfidRoute = (server: MyServer) => {
             const json = entry.toJSON();
             reply.code(200);
             return {
-                timestamp: json.timestamp,
+                timestamp: json.timestamp.getTime(),
                 tagName: json.tagName,
                 tagCode: json.tagCode,
             };
