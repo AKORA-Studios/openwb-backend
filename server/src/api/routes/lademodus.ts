@@ -12,7 +12,7 @@ export const lademodusRoute = (server: MyServer) => {
             reply.type('application/json').code(200);
             const chargeModeInt = (await getKey('openWB/global/ChargeMode')) as number;
             return {
-                modusName: ['Sofortladen', 'Min + PV', 'PV Überschuss', 'Stop', 'Standby'][
+                modusName: ['Sofortladen', 'PV Überschuss', 'Min + PV', 'Standby', 'Stop'][
                     chargeModeInt
                 ],
                 modus: chargeModeInt,
@@ -27,7 +27,7 @@ export const lademodusRoute = (server: MyServer) => {
         handler: async (req: UserRequest, reply: UserReply) => {
             const { modus } = req.params as any as { modus: string | number };
 
-            const modes = ['jetzt', 'minundpv', 'pvuberschuss', 'stop', 'standby'];
+            const modes = ['jetzt', 'pvuberschuss', 'minundpv', 'standby', 'stop'];
             let setMode: string;
 
             if (!isNaN(Number(modus))) {
