@@ -46,9 +46,9 @@ server.register(
                     message: 'Missing Permissions',
                 });
                 done(new Error('Missing Permissions'));
+            } else {
+                done();
             }
-
-            done();
         });
 
         loadRoutes(server);
