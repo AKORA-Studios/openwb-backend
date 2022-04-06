@@ -45,10 +45,9 @@ server.register(
                 rpl.type('application/json').code(403).send({
                     message: 'Missing Permissions',
                 });
-                done(new Error('Missing Permissions'));
-            } else {
-                done();
+                return new Error('Missing Permissions');
             }
+            done();
         });
 
         loadRoutes(server);
