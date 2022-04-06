@@ -21,7 +21,9 @@ export default (server: MyServer) => {
         schema: {
             body: bodyJsonSchema,
         },
-        preHandler: server.auth([server.verifyJWT, server.verifyAdmin]),
+        preHandler: server.auth([server.verifyJWT, server.verifyAdmin], {
+            relation: 'and',
+        }),
         handler: async (req, repl) => {
             const { body } = req;
             const user = await User.findOne({

@@ -6,7 +6,9 @@ export default (server: MyServer) => {
     server.route({
         url: '/rest',
         method: 'GET',
-        preHandler: server.auth([server.verifyJWT, server.verifyAdmin]),
+        preHandler: server.auth([server.verifyJWT, server.verifyAdmin], {
+            relation: 'and',
+        }),
         handler: async (request, reply) => {
             reply.type('application/json').code(200);
             const data = (await axios(config.OPENWB_URL + '/openWB/web/api.php?get=all')).data;

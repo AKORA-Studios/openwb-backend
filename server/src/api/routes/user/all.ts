@@ -6,7 +6,9 @@ export default (server: MyServer) => {
     server.route({
         url: '/all',
         method: 'GET',
-        preHandler: server.auth([server.verifyJWT, server.verifyAdmin]),
+        preHandler: server.auth([server.verifyJWT, server.verifyAdmin], {
+            relation: 'and',
+        }),
         handler: async (req: UserRequest, repl) => {
             repl.type('application/json').code(200);
             return (await User.findAll()).map((u) => ({
