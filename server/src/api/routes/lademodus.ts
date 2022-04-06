@@ -7,7 +7,9 @@ export const lademodusRoute = (server: MyServer) => {
     server.route({
         url: '/lademodus',
         method: 'GET',
-        preHandler: server.auth([server.verifyJWT, server.verifyAdmin]),
+        preHandler: server.auth([server.verifyJWT, server.verifyAdmin], {
+            relation: 'and',
+        }),
         handler: async (req: UserRequest, reply: UserReply) => {
             reply.type('application/json').code(200);
             const chargeModeInt = (await getKey('openWB/global/ChargeMode')) as number;
@@ -23,7 +25,9 @@ export const lademodusRoute = (server: MyServer) => {
     server.route({
         url: '/lademodus/:modus',
         method: 'POST',
-        preHandler: server.auth([server.verifyJWT, server.verifyAdmin]),
+        preHandler: server.auth([server.verifyJWT, server.verifyAdmin], {
+            relation: 'and',
+        }),
         handler: async (req: UserRequest, reply: UserReply) => {
             const { modus } = req.params as any as { modus: string | number };
 
