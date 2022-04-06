@@ -12,9 +12,10 @@ export const lademodusRoute = (server: MyServer) => {
             reply.type('application/json').code(200);
             const chargeModeInt = (await getKey('openWB/global/ChargeMode')) as number;
             return {
-                modus: ['Sofortladen', 'Min + PV', 'PV Überschuss', 'Stop', 'Standby'][
+                modusName: ['Sofortladen', 'Min + PV', 'PV Überschuss', 'Stop', 'Standby'][
                     chargeModeInt
                 ],
+                modus: chargeModeInt,
             };
         },
     });
@@ -24,19 +25,38 @@ export const lademodusRoute = (server: MyServer) => {
         method: 'POST',
         preHandler: server.auth([server.verifyJWT, server.verifyAdmin]),
         handler: async (req: UserRequest, reply: UserReply) => {
-            const { modus } = req.params as any as { modus: string };
+            const { modus } = req.params as any as { modus: string | number };
+
             const modes = ['jetzt', 'minundpv', 'pvuberschuss', 'stop', 'standby'];
+            let setMode: string;
+
+            if (!isNaN(Number(modus))) {
+                //Integer 0-4
+                const modusInt = Number(modus);
+                if (![0, 1, 2, 3, 4].includes(modusInt)) {
+                    reply.status(400);
+                    return { message: `${modus} is not a valid lademodus` };
+                }
+                setMode = modes[modusInt];
+            } else {
+                //String
+                if (!modes.includes(modus as string)) {
+                    reply.status(400);
+                    return { message: `${modus} is not a valid lademodus` };
+                }
+                setMode = modus as string;
+            }
 
             reply.type('application/json');
-            if (!modes.includes(modus)) {
-                reply.status(400);
-                return { message: `${modus} is not a valid lademodus` };
+
+            if (!modes.includes(setMode)) {
+                throw new Error(`${modus} or ${setMode} is not a valid lademodus`);
             }
 
             return {
                 response: (
                     await axios({
-                        url: config.OPENWB_URL + '/openWB/web/api.php?lademodus=' + modus,
+                        url: config.OPENWB_URL + '/openWB/web/api.php?lademodus=' + setMode,
                     })
                 ).data,
             };
