@@ -40,6 +40,6 @@
         "module-alias": "^2.2.2",
         "mqtt": "^4.3.4",
         "redis": "^4.0.3",
-        "sequelize": "^6.17.0"
+        "sequelize": "^6.18.0"
     }
 }
