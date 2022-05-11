@@ -5,3 +5,11 @@
 ![JWT](https://jwt.io/img/logo-asset.svg)
 
 A open-source backend server that provides a more intuitive API for the OpenWB.
+
+# TODO
+- Users
+  - Own Chargemode setting
+    - Wallbox Chargemode well be set on scanned RFID
+  - Own max Current
+- Export funktion (maybe E-Mail)
+  - export PDF with Checksome -> validation
