@@ -34,7 +34,7 @@
         "fastify": "^3.28.0",
         "fastify-auth": "^1.1.0",
         "fluent-json-schema": "^3.1.0",
-        "jose": "^4.7.0",
+        "jose": "^4.8.0",
         "luxon": "^2.3.2",
         "mariadb": "^2.5.6",
         "module-alias": "^2.2.2",
