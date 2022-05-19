@@ -32,7 +32,7 @@
         "dotenv": "^14.3.2",
         "fast-csv": "^4.3.6",
         "fastify": "^3.28.0",
-        "fastify-auth": "^1.1.0",
+        "fastify-auth": "^1.2.0",
         "fluent-json-schema": "^3.1.0",
         "jose": "^4.8.0",
         "luxon": "^2.3.2",
