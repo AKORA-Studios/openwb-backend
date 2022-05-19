@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "async-mqtt": "^2.6.2",
-        "axios": "^0.26.1",
+        "axios": "^0.27.2",
         "dotenv": "^14.3.2",
         "fast-csv": "^4.3.6",
         "fastify": "^3.28.0",
