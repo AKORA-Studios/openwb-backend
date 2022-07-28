@@ -2,6 +2,7 @@ import 'module-alias/register';
 import config from './config';
 import Fastify from 'fastify';
 import fastifyAuth from 'fastify-auth';
+import socketIOPlugin from 'fastify-socket.io';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectRedisDB, disconnectRedisDB } from '@db/redis';
 import { connectMariaDB, disconnectMariaDB } from '@db/mariadb';
@@ -10,7 +11,10 @@ export const server = Fastify({
     logger: {
         level: 'error',
     },
-}).register(fastifyAuth);
+})
+    .register(fastifyAuth)
+    .register(socketIOPlugin);
+
 export default server;
 
 //Define Endpoints
@@ -27,11 +31,21 @@ async function start() {
         await connectRedisDB();
         await connectMariaDB();
         await connectMQTTClient();
+
+        //Start emitting values events on the websocket
+        await import('api/socket');
+
         //await register();
         server.listen(config.PORT, config.ADDRESS, (err, address) => {
             if (err) throw err;
             console.log(`Server is now listening on ${address}`);
             console.log(server.printRoutes({ commonPrefix: false }));
+
+            console.log(`WebSocket ready`);
+            server.io.on('connection', (socket) => {
+                //Do something with the connection
+                //Auth and stuff
+            });
         });
     } catch (e) {
         console.log('Error while connecting');

@@ -51,8 +51,6 @@ export default GraphValues;
 const interval = 1000 * 60; //1 Minute
 
 if (config.PROD) {
-    mqttListener.on('openWB/system/lastlivevalues', async (str) => {});
-
     //MQTT values are provided 7 times per second
     //Using this interval instead to save values every minute instead
     setInterval(async () => {
