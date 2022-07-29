@@ -1,13 +1,15 @@
 import 'module-alias/register';
 import config from './config';
-import Fastify from 'fastify';
-import fastifyAuth from 'fastify-auth';
+import { fastify } from 'fastify';
+import fastifyAuth from '@fastify/auth';
 import socketIOPlugin from 'fastify-socket.io';
 import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectRedisDB, disconnectRedisDB } from '@db/redis';
 import { connectMariaDB, disconnectMariaDB } from '@db/mariadb';
 
-export const server = Fastify({
+import './types/fastify';
+
+export const server = fastify({
     logger: {
         level: 'error',
     },
@@ -24,6 +26,8 @@ server.get('/', async (request, reply) => {
 });
 
 import './api';
+import { setupSocketIO } from 'api/socket';
+import { Server } from 'socket.io';
 
 async function start() {
     console.log(`Starting Server at ${new Date()}`);
@@ -32,21 +36,16 @@ async function start() {
         await connectMariaDB();
         await connectMQTTClient();
 
-        //Start emitting values events on the websocket
-        await import('api/socket');
-
-        //await register();
-        server.listen(config.PORT, config.ADDRESS, (err, address) => {
-            if (err) throw err;
-            console.log(`Server is now listening on ${address}`);
-            console.log(server.printRoutes({ commonPrefix: false }));
-
-            console.log(`WebSocket ready`);
-            server.io.on('connection', (socket) => {
-                //Do something with the connection
-                //Auth and stuff
-            });
+        let address = await server.listen({
+            port: config.PORT,
+            host: config.ADDRESS,
         });
+
+        console.log(`Server is now listening on ${address}`);
+        console.log(server.printRoutes({ commonPrefix: false }));
+
+        setupSocketIO();
+        console.log(`WebSocket ready`);
     } catch (e) {
         console.log('Error while connecting');
         console.log(e);

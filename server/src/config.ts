@@ -21,7 +21,7 @@ export default {
 
     JWT_SECRET: process.env.JWT_SECRET!,
 
-    PORT: process.env.PORT ?? 3000,
+    PORT: Number(process.env.PORT) ?? 3000,
     ADDRESS: isDev ? '127.0.0.1' : '0.0.0.0',
 
     NODE_ENV: process.env.NODE_ENV,
