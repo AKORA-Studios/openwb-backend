@@ -1,6 +1,6 @@
 import getLiveValues from '@lib/getLiveValues';
-import server from 'index';
-import mqttListener from 'openWB/client';
+import server from '../index';
+import mqttListener from '../openWB/client';
 import { validateJWT } from './auth';
 
 export function setupSocketIO() {
