@@ -23,7 +23,7 @@ services:
     container_name: "openwb_ngnix"
     restart: unless-stopped
     volumes:
-      - /etc/ssl/:/etc/ssl/
+      - ./certs:/etc/ssl/
     ports:
       - 3000:3000
     networks:
