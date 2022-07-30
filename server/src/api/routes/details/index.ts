@@ -5,7 +5,7 @@ import verbrauchRoute from './verbrauch';
 
 export default (server: MyServer) => {
     server.register(
-        (server, opts, done) => {
+        (server: any, opts, done) => {
             globalsRoute(server);
             ladepunktRoute(server);
             verbrauchRoute(server);

@@ -50,7 +50,7 @@ server.register(
             done();
         });
 
-        loadRoutes(server);
+        loadRoutes(server as any);
 
         done();
     },

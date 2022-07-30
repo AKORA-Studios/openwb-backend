@@ -7,6 +7,7 @@ import {
     RouteOptions,
 } from 'fastify';
 import { RouteGenericInterface } from 'fastify/types/route';
+import server from 'index';
 import { Server as HTTPServer, IncomingMessage, ServerResponse, Server } from 'node:http';
 import { UserJWTPayload } from './auth';
 
@@ -23,16 +24,7 @@ export type RouteType = RouteOptions<
     FastifySchema
 >;
 
-export type MyServer = FastifyInstance<
-    HTTPServer,
-    IncomingMessage,
-    ServerResponse,
-    FastifyLoggerInstance,
-    HTTPServer,
-    IncomingMessage,
-    ServerResponse
->;
-
+export type MyServer = typeof server;
 export type UserRequest = FastifyRequest<
     RouteGenericInterface & { Params: { user: UserJWTPayload } }
 >;

@@ -1,5 +1,4 @@
 import { getKey } from '@db/redis';
-import { UserRequest } from '../..';
 import { MyServer } from '../../types';
 
 export default (server: MyServer) => {

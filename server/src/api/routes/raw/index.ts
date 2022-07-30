@@ -4,7 +4,7 @@ import RESTRoute from './rest';
 
 export default (server: MyServer) => {
     server.register(
-        (server, opts, done) => {
+        (server: any, opts, done) => {
             keysRoute(server);
             RESTRoute(server);
 

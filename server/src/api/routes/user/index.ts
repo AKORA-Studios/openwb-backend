@@ -5,7 +5,7 @@ import updateRoute from './update';
 
 export default (server: MyServer) => {
     server.register(
-        (server, opts, done) => {
+        (server: any, opts, done) => {
             meRoute(server);
             allRoute(server);
             updateRoute(server);
