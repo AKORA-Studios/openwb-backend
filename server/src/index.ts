@@ -24,8 +24,7 @@ server.get('/', async (request, reply) => {
 });
 
 import './api';
-import { setupSocketIO } from 'api/socket';
-import { Server } from 'socket.io';
+import { setupSocketIO } from './api/socket';
 
 async function start() {
     console.log(`Starting Server at ${new Date()}`);
