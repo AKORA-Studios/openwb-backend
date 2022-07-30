@@ -13,7 +13,7 @@
     },
     "_moduleAliases": {
         "@routes": "dist/api/routes/",
-        "@lib": "dist/lib/*",
+        "@lib": "dist/lib/",
         "@models": "dist/db/models/",
         "@db": "dist/db/"
     },
