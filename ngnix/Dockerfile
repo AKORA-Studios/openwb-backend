@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 # Create a group and user
-RUN addgroup -S www-data && adduser -S www-data -G www-data
+RUN addgroup -S appgroup && adduser -S www-data -G appgroup
 
 USER www-data
 
