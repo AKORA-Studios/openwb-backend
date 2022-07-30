@@ -7,8 +7,6 @@ import { connectMQTTClient, disconnectMQTTClient } from './openWB/client';
 import { connectRedisDB, disconnectRedisDB } from '@db/redis';
 import { connectMariaDB, disconnectMariaDB } from '@db/mariadb';
 
-import './types/fastify';
-
 export const server = fastify({
     logger: {
         level: 'error',
