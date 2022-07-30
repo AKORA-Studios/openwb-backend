@@ -1,21 +1,33 @@
 version: '3.4'
 services:
   server:
-    build: ./server
-    container_name: openwb_server
+    build: 
+      context: "./server"
+      dockerfile: "Dockerfile"
+    container_name: "openwb_server"
     restart: unless-stopped
     networks:
       - internal
-    ports:
-      - 3000:3000
     depends_on:
       - redisDB
     environment:
-      REDISDB_URL: redis://redisDB:6379
+      REDISDB_URL: "redis://redisDB:6379"
     volumes:
       - ./test:/app/test
     env_file:
       - ./.env
+  nginx:
+    build:
+      context: "./ngnix"
+      dockerfile: "Dockerfile"
+    container_name: "openwb_ngnix"
+    restart: unless-stopped
+    volumes:
+      - ./certs:/etc/ssl/
+    ports:
+      - 3000:3000
+    networks:
+      - internal
   redisDB:
     image: redis:alpine
     container_name: openwb_redis
