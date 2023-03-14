@@ -35,8 +35,8 @@ export async function getLiveValues() {
         ladeleistung_lp3: mapped.LadeleistungLP3,
         speicherleistung: mapped.Speicherleistung,
         speicher_soc: mapped.SpeicherSoC,
-        soc_lp1: mapped.SpeicherSoC,
-        soc_lp2: mapped.SpeicherSoC,
+        soc_lp1: mapped.SoCLp1,
+        soc_lp2: mapped.SoCLp2,
         vb1: mapped.VB1,
         vb2: mapped.VB2,
     };
