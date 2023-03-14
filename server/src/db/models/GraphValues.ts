@@ -11,6 +11,15 @@ interface GraphValuesAttributes {
     pv: number;
     hausverbrauch: number;
     ladeleistung: number;
+
+    ladeleistung_lp2: number;
+    ladeleistung_lp3: number;
+    speicherleistung: number;
+    speicher_soc: number;
+    soc_lp1: number;
+    soc_lp2: number;
+    vb1: number;
+    vb2: number;
 }
 export interface GraphValuesInput extends GraphValuesAttributes {}
 
@@ -23,6 +32,14 @@ class GraphValues
     declare pv: number;
     declare hausverbrauch: number;
     declare ladeleistung: number;
+    declare ladeleistung_lp2: number;
+    declare ladeleistung_lp3: number;
+    declare speicherleistung: number;
+    declare speicher_soc: number;
+    declare soc_lp1: number;
+    declare soc_lp2: number;
+    declare vb1: number;
+    declare vb2: number;
 
     // timestamps!
     // public readonly createdAt!: Date;
@@ -37,6 +54,14 @@ GraphValues.init(
         pv: DataTypes.FLOAT,
         hausverbrauch: DataTypes.FLOAT,
         ladeleistung: DataTypes.FLOAT,
+        ladeleistung_lp2: DataTypes.FLOAT,
+        ladeleistung_lp3: DataTypes.FLOAT,
+        speicherleistung: DataTypes.FLOAT,
+        speicher_soc: DataTypes.FLOAT,
+        soc_lp1: DataTypes.FLOAT,
+        soc_lp2: DataTypes.FLOAT,
+        vb1: DataTypes.FLOAT,
+        vb2: DataTypes.FLOAT,
     },
     {
         sequelize,
@@ -64,6 +89,15 @@ if (config.PROD) {
             hausverbrauch: values.hausverbrauch,
             ladeleistung: values.ladeleistung,
             pv: values.photovoltaik,
+
+            ladeleistung_lp2: values.ladeleistung_lp2,
+            ladeleistung_lp3: values.ladeleistung_lp2,
+            speicherleistung: values.speicherleistung,
+            speicher_soc: values.speicher_soc,
+            soc_lp1: values.soc_lp1,
+            soc_lp2: values.soc_lp2,
+            vb1: values.vb1,
+            vb2: values.vb2,
         });
     }, interval);
 } else {

@@ -27,9 +27,18 @@ export async function getLiveValues() {
         /** UTC */
         time: mapped.time,
         evu: mapped.evu,
-        ladeleistung: mapped.ladeleistungGesamt,
         photovoltaik: mapped.PV,
         hausverbrauch: mapped.VB1,
+        ladeleistung: mapped.ladeleistungGesamt,
+
+        ladeleistung_lp2: mapped.LadeleistungLP2,
+        ladeleistung_lp3: mapped.LadeleistungLP3,
+        speicherleistung: mapped.Speicherleistung,
+        speicher_soc: mapped.SpeicherSoC,
+        soc_lp1: mapped.SpeicherSoC,
+        soc_lp2: mapped.SpeicherSoC,
+        vb1: mapped.VB1,
+        vb2: mapped.VB2,
     };
 }
 
