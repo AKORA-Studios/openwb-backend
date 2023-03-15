@@ -12,8 +12,8 @@ interface GraphValuesAttributes {
     hausverbrauch: number;
     ladeleistung: number;
 
+    ladeleistung_lp1: number;
     ladeleistung_lp2: number;
-    ladeleistung_lp3: number;
     speicherleistung: number;
     speicher_soc: number;
     soc_lp1: number;
@@ -32,8 +32,8 @@ class GraphValues
     declare pv: number;
     declare hausverbrauch: number;
     declare ladeleistung: number;
+    declare ladeleistung_lp1: number;
     declare ladeleistung_lp2: number;
-    declare ladeleistung_lp3: number;
     declare speicherleistung: number;
     declare speicher_soc: number;
     declare soc_lp1: number;
@@ -54,8 +54,8 @@ GraphValues.init(
         pv: DataTypes.FLOAT,
         hausverbrauch: DataTypes.FLOAT,
         ladeleistung: DataTypes.FLOAT,
+        ladeleistung_lp1: DataTypes.FLOAT,
         ladeleistung_lp2: DataTypes.FLOAT,
-        ladeleistung_lp3: DataTypes.FLOAT,
         speicherleistung: DataTypes.FLOAT,
         speicher_soc: DataTypes.FLOAT,
         soc_lp1: DataTypes.FLOAT,
@@ -90,8 +90,8 @@ if (config.PROD) {
             ladeleistung: values.ladeleistung,
             pv: values.photovoltaik,
 
+            ladeleistung_lp1: values.ladeleistung_lp1,
             ladeleistung_lp2: values.ladeleistung_lp2,
-            ladeleistung_lp3: values.ladeleistung_lp2,
             speicherleistung: values.speicherleistung,
             speicher_soc: values.speicher_soc,
             soc_lp1: values.soc_lp1,
