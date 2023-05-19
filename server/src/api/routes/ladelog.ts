@@ -19,10 +19,11 @@ export const ladelogRoute = (server: MyServer) => {
             const entries = await LadeLog.findAll({
                 where: tagName
                     ? {
-                          tagName: tagName,
-                      }
+                        tagName: tagName,
+                    }
                     : {},
                 limit,
+                order: [['start', 'DESC']]
             });
 
             return {
