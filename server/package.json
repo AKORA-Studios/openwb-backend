@@ -39,7 +39,7 @@
         "mariadb": "^2.5.6",
         "module-alias": "^2.2.2",
         "mqtt": "^4.3.4",
-        "redis": "^4.2.0",
+        "redis": "^4.6.7",
         "sequelize": "^6.21.2"
     }
 }
