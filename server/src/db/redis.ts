@@ -1,7 +1,6 @@
 import { createClient } from 'redis';
 import config from '../config';
 
-// @ts-ignore
 export const redisClient = createClient({
     url: config.REDISDB_URL,
 });
