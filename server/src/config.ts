@@ -6,9 +6,9 @@ config();
 const isDev = process.env.NODE_ENV !== 'production';
 
 export default {
-    MQTT_URL: process.env.MQTT_URL!,
-    MQTT_USERNAME: process.env.MQTT_USERNAME!,
-    MQTT_PASSWORD: process.env.MQTT_PASSWORD!,
+    MQTT_URL: process.env.MQTT_URL ?? 'mqtt://mosquitto-bridge:1883',
+    MQTT_USERNAME: process.env.MQTT_USERNAME,
+    MQTT_PASSWORD: process.env.MQTT_PASSWORD,
 
     MARIADB_URL: process.env.MARIADB_URL!,
     MARIADB_PORT: Number(process.env.MARIADB_PORT!),

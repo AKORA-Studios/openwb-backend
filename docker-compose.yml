@@ -1,47 +1,56 @@
 version: '3.4'
 services:
-  server:
-    build: 
-      context: "./server"
-      dockerfile: "Dockerfile"
-    container_name: "openwb_server"
-    restart: unless-stopped
-    networks:
-      - internal
-    depends_on:
-      - redisDB
-    environment:
-      REDISDB_URL: "redis://redisDB:6379"
-    volumes:
-      - ./test:/app/test
-    env_file:
-      - ./.env
-  nginx:
-    build:
-      context: "./ngnix"
-      dockerfile: "Dockerfile"
-    container_name: "openwb_ngnix"
-    restart: unless-stopped
-    volumes:
-      - ./certs:/etc/ssl/
-    ports:
-      - 3000:3000
-    networks:
-      - internal
-  redisDB:
-    image: redis:alpine
-    container_name: openwb_redis
-    command: redis-server --save 60 1 --loglevel warning
-    restart: always
-    ports:
-      - 6379:6379
-    networks:
-      - internal
-    volumes:
-      - redisDB:/data
+    server:
+        build:
+            context: './server'
+            dockerfile: 'Dockerfile'
+        container_name: 'openwb_server'
+        restart: unless-stopped
+        networks:
+            - internal
+        depends_on:
+            - redisDB
+        environment:
+            REDISDB_URL: 'redis://redisDB:6379'
+        volumes:
+            - ./test:/app/test
+        env_file:
+            - ./.env
+    nginx:
+        build:
+            context: './ngnix'
+            dockerfile: 'Dockerfile'
+        container_name: 'openwb_ngnix'
+        restart: unless-stopped
+        volumes:
+            - ./certs:/etc/ssl/
+        ports:
+            - 3000:3000
+        networks:
+            - internal
+    mosquitto-bridge:
+        image: eclipse-mosquitto:2.0.18
+        container_name: 'openwb_mqtt-bridge'
+        restart: unless-stopped
+        networks:
+            - internal
+        volumes:
+            - ./mosquitto/:/mosquitto/config/:r
+    redisDB:
+        image: redis:7-alpine
+        container_name: openwb_redis
+        command: redis-server --save 60 1 --loglevel warning
+        restart: always
+        # For debugging
+        ports:
+            - 6379:6379
+        networks:
+            - internal
+        volumes:
+            - redisDB:/data
 networks:
- internal:
+    internal:
 volumes:
-  redisDB: 
-    external: true
-    name: redis
+    redisDB:
+        external: true
+        name: redis

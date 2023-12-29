@@ -6,8 +6,8 @@ mqttReady.then(async () => {
     await mqttClient.subscribe('#');
 
     mqttClient.on('message', async (topicRaw, payload, packet) => {
-        let topic = topicRaw.split('/').slice(1).join('/'),
-            str = payload.toString();
+        let topic = topicRaw; // topicRaw.split('/').slice(1).join('/'),
+        let str = payload.toString();
 
         let isNumber = !isNaN(Number(str)),
             val: any = str;
