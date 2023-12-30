@@ -50,10 +50,9 @@ if (config.PROD) {
             return;
         }
 
-        if (!value) return;
-        if (value[0] === '0') return;
+        if (!value || value === '') return;
 
-        let [lastIDstr, millies] = value[0].split(',');
+        let [lastIDstr, millies] = value.split(',');
         let lastID = Number(lastIDstr);
 
         await RFIDLog.create({

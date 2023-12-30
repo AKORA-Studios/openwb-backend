@@ -88,6 +88,8 @@ export namespace topics {
         'openWB/evu/WPhase3': Units.Watt; //Leistung in Watt am Hausübergabepunkt
         'openWB/strLastmanagementActive': Units.LMStatus; //Gibt an ob das Lastmanagement aktiv bzw. den String zur Ausgabe dafür
 
+        'openWB/system/lastRfId': string;
+
         //Jeweils für alle Ladepunkte verfügbar ######
         'openWB/lp/4/ADirectModeAmps': Units.Ampere; //Sofort laden Soll Stromstärke
         'openWB/lp/4/boolChargePointConfigured': Units.bool; //Gibt an ob ein zweiter Ladepunkt konfiguriert ist
