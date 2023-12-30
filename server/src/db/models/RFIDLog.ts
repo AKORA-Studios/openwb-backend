@@ -18,7 +18,12 @@ class RFIDLog extends Model<RFIDLogAttributes, RFIDLogInput> implements RFIDLogA
 
 RFIDLog.init(
     {
-        timestamp: { type: DataTypes.DATE, allowNull: false, primaryKey: true },
+        timestamp: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            primaryKey: true,
+            defaultValue: DataTypes.NOW,
+        },
         tagID: { type: DataTypes.BIGINT, allowNull: false },
     },
     {
