@@ -41,7 +41,7 @@ console.log(config.PROD);
 if (config.PROD) {
     let first = true;
     mqttListener.on('openWB/system/lastRfId', async (value) => {
-        console.log('Tag scanned');
+        console.log('Tag scanned', value);
 
         if (config.DEV) return;
         // Ignore the first value that will get send when the client connects for the first time
