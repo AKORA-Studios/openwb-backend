@@ -10,6 +10,11 @@ interface UserAttributes {
     tagName: Tag.name;
     tagID: Tag.id;
     admin: boolean;
+    chargeMode?: number;
+    subMode: number;
+    chargeSoc: number;
+    chargeAmps: number;
+    chargeKwh: number;
 }
 
 export interface UserInput extends Omit<UserAttributes, 'tagName'> {
@@ -22,6 +27,11 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
     declare tagName: Tag.name;
     declare tagID: Tag.id;
     declare admin: boolean;
+    declare chargeMode?: number;
+    declare subMode: number;
+    declare chargeSoc: number;
+    declare chargeAmps: number;
+    declare chargeKwh: number;
 }
 
 User.init(
@@ -31,6 +41,11 @@ User.init(
         tagName: { type: DataTypes.STRING, allowNull: false },
         tagID: { type: DataTypes.BIGINT, allowNull: false },
         admin: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+        chargeMode: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 0 },
+        subMode: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        chargeSoc: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        chargeAmps: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+        chargeKwh: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
     },
     {
         sequelize,
