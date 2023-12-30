@@ -30,10 +30,14 @@ RFIDLog.init(
 
 export default RFIDLog;
 
+console.log(config.PROD);
+
 //Save Entry on changes
 if (config.PROD) {
     let first = true;
     mqttListener.on('openWB/system/lastRfId', async (value) => {
+        console.log('Tag scanned');
+
         if (config.DEV) return;
         // Ignore the first value that will get send when the client connects for the first time
         if (first) {
@@ -52,6 +56,8 @@ if (config.PROD) {
             timestamp: new Date(Number(millies) * 1000),
         });
 
+        console.log('Log entry created');
+
         let user = await User.findOne({
             where: {
                 tagID: lastID,
@@ -59,6 +65,8 @@ if (config.PROD) {
         });
         // check if we have a user and charge mode settings
         if (!user || user.chargeMode == null) return;
+
+        console.log('Charge mode found:', user.chargeMode);
 
         // Change to user specified settings
         // 0 = Sofort Laden (Direct), 1 = Min und PV, 2 = Nur PV, 3 = Stop, 4 = Standby
