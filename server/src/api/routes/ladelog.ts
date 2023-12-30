@@ -1,6 +1,7 @@
 import { UserRequest } from '..';
 import LadeLog from '@db/models/Ladelog';
 import { MyServer, UserReply } from '../types';
+import User from '@db/models/User';
 
 export const ladelogRoute = (server: MyServer) => {
     server.route({
@@ -16,16 +17,29 @@ export const ladelogRoute = (server: MyServer) => {
                 limit = Number((req.query as any)['limit']);
             }
 
-            const entries = await LadeLog.findAll({
-                where: tagName
-                    ? {
-                        tagName: tagName,
-                    }
-                    : {},
-                limit,
-                order: [['start', 'DESC']]
+            const associatedUser = await User.findOne({
+                where: {
+                    username: req.params.user.username,
+                },
             });
 
+            if (!associatedUser)
+                throw new Error("Couldn't identify user, please report this incident");
+
+            // @ts-ignore
+            const entries: (LadeLog & { Users: User[] })[] = await LadeLog.findAll({
+                where: tagName
+                    ? {
+                          tagID: associatedUser.tagID,
+                      }
+                    : {},
+                limit,
+                // This will add the user data
+                // include: User,
+                order: [['start', 'DESC']],
+            });
+
+            // TODO CHECK IF THIS RETURNS PASSWORDS
             return {
                 log: entries.map((e) => {
                     const json = e.toJSON();

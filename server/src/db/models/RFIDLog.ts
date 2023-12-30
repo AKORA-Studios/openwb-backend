@@ -6,27 +6,19 @@ import { Tag } from '../../lib/';
 
 interface RFIDLogAttributes {
     timestamp: Date;
-    tagName: Tag.tagName;
-    tagCode: Tag.tagCode;
-    tagID: Tag.tagID;
+    tagID: Tag.id;
 }
-export interface RFIDLogInput extends Omit<RFIDLogAttributes, 'tagName'> {
-    tagName: string;
-}
+export interface RFIDLogInput extends RFIDLogAttributes {}
 
 class RFIDLog extends Model<RFIDLogAttributes, RFIDLogInput> implements RFIDLogAttributes {
     declare timestamp: Date;
-    declare tagName: Tag.tagName;
-    declare tagCode: Tag.tagCode;
-    declare tagID: Tag.tagID;
+    declare tagID: Tag.id;
 }
 
 RFIDLog.init(
     {
         timestamp: { type: DataTypes.DATE, allowNull: false, primaryKey: true },
-        tagName: { type: DataTypes.STRING, allowNull: false },
         tagID: { type: DataTypes.BIGINT, allowNull: false },
-        tagCode: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
         sequelize,
@@ -54,8 +46,6 @@ if (config.PROD) {
         let lastID = Number(lastIDstr);
 
         await RFIDLog.create({
-            tagName: Tag.getName(lastID),
-            tagCode: Tag.getCode(lastID),
             tagID: lastID,
             timestamp: new Date(Number(millies) * 1000),
         });

@@ -3,7 +3,7 @@ import globalsRoute from './details/globals';
 import ladelogRoute from './ladelog';
 import lademodusRoute from './lademodus';
 import loginRoute from './login';
-import rfidRoute from './rfid';
+//import rfidRoute from './rfid';
 import valuesRoute from './values';
 import verbrauchRoute from './details/verbrauch';
 
@@ -17,7 +17,7 @@ export default (server: MyServer) => {
     ladelogRoute(server);
     lademodusRoute(server);
     loginRoute(server);
-    rfidRoute(server);
+    //rfidRoute(server);
     valuesRoute(server);
     verbrauchRoute(server);
 
