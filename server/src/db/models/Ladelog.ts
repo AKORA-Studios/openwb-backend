@@ -60,7 +60,7 @@ LadeLog.init(
     }
 );
 // Add relation for include option
-LadeLog.belongsTo(User);
+// LadeLog.belongsTo(User);
 
 export default LadeLog;
 

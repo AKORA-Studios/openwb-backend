@@ -54,6 +54,6 @@ User.init(
         indexes: [{ unique: true, fields: ['username', 'password'], name: 'Authentication' }],
     }
 );
-User.hasMany(LadeLog);
+// User.hasMany(LadeLog);
 
 export default User;
