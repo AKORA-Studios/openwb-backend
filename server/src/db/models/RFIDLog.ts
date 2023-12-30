@@ -9,7 +9,7 @@ interface RFIDLogAttributes {
     timestamp: Date;
     tagID: Tag.id;
 }
-export interface RFIDLogInput extends RFIDLogAttributes {}
+export interface RFIDLogInput extends Omit<RFIDLogAttributes, 'timestamp'> {}
 
 class RFIDLog extends Model<RFIDLogAttributes, RFIDLogInput> implements RFIDLogAttributes {
     declare timestamp: Date;
@@ -53,7 +53,7 @@ if (config.PROD) {
 
         await RFIDLog.create({
             tagID: lastID,
-            timestamp: new Date(Number(millies) * 1000),
+            //timestamp: new Date(Number(millies) * 1000),
         });
 
         console.log('Log entry created');
