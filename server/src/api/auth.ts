@@ -22,6 +22,11 @@ export async function createUser(
         tagName,
         tagID: rfid,
         admin: false,
+        // Radom defaults
+        subMode: 0,
+        chargeAmps: 16,
+        chargeSoc: 80,
+        chargeKwh: 40,
     });
 }
 
