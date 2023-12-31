@@ -112,7 +112,7 @@ export namespace topics {
         'openWB/global/ChargeMode': Units.ChargeMode; //Lademodus, 0 = Sofort Laden (Direct), 1 = Min und PV, 2 = Nur PV, 3 = Stop, 4 = Standby
     }
     export interface SCHREIBEND {
-        'openWB/set/Lademodus': Units.ChargeMode; //0 = Sofort Laden (Direct), 1 = Min und PV, 2 = Nur PV, 3 = Stop, 4 = Standby
+        'openWB/set/ChargeMode': Units.ChargeMode; //0 = Sofort Laden (Direct), 1 = Min und PV, 2 = Nur PV, 3 = Stop, 4 = Standby
         'openWB/set/lp1/DirectChargeSubMode': Units.ChargeSubMode; //Setzt den Sofort Laden (Direct) Untermodus, Int 0 = Aus, 1 = kWh Laden, 2 = SoC Laden
         'openWB/set/lp2/DirectChargeSubMode': Units.ChargeSubMode; //Setzt den Sofort Laden (Direct) Untermodus, Int 0 = Aus, 1 = kWh Laden, 2 = SoC Laden
         'openWB/set/lp1/DirectChargeSoc': Units.SoC; //Setzt den Sofort Laden (Direct) Untermodus SoC Wert bis zu dem geladen werden soll, Int 1 - 100
