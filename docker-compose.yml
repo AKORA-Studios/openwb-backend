@@ -28,14 +28,6 @@ services:
             - 3000:3000
         networks:
             - internal
-    mosquitto-bridge:
-        image: eclipse-mosquitto:2.0.18
-        container_name: 'openwb_mqtt-bridge'
-        restart: unless-stopped
-        networks:
-            - internal
-        volumes:
-            - ./mosquitto/:/mosquitto/config/:r
     redisDB:
         image: redis:7-alpine
         container_name: openwb_redis
