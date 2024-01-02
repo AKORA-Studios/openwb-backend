@@ -1,12 +1,20 @@
 This project is aiming to build a better usable REST API for the openWB project that can be securely exposed to the public internet to then be used by mobile applications.
 
-# Structure
+## Features
+
+ - Saves charging statistics in a database
+ - Exposes a easy to use JSON api that allows limited access to the wallbox from the public internet
+ - Allows setting up user profiles for rfid tags which will automatically apply charging presets
+
+## Structure
 
 ![Diagram1](./assets/Diagram_1.png)
-The application is split into 3 services. Firstly a ngnix instance running as a reverse proxy that encrypts the traffic. Then a redis instance that is used to temporarely buffer values, and the actual web server parsing and answering request but also saving the values to an external database. There are two external services required, a OpenWB instance running in the same network, and a MariaDB instance that is used to save the values permanently.
+The application is split into 3 services. Firstly a nginx instance running as a reverse proxy that encrypts the traffic. Then a redis instance that is used to temporarely buffer values, and the actual web server parsing and answering request but also saving the values to an external database. There are two external services required, a OpenWB instance running in the same network, and a MariaDB instance that is used to save the values permanently.
 
 ![Diagram2](./assets/Diagram_2.png)
-The first and most obvious event loop is of course the webserver itself handling api requests that get forwarded by the ngnix server. But besides the REST API there is another event loop, the service listens to the MQTT values published by the OpenWB and saves them on the redis instance. This is done to decouple the rest of the service from the MQTT connection. The API then request all the values it needs from the redis instance which only holds the latest values for each topic. The service also saves some values to an external database in a contant interval. Again the redis instance allows this process to be decoupled from the MQTT connection, this way the interval of the datapoints in the database can be guaranteed to always have a contant user chosen time offset between them.
+The first and most obvious event loop is of course the webserver itself handling api requests that get forwarded by the nginx server. But besides the REST API there is another event loop, the service listens to the MQTT values published by the OpenWB and saves them on the redis instance. This is done to decouple the rest of the service from the MQTT connection. The API then request all the values it needs from the redis instance which only holds the latest values for each topic. The service also saves some values to an external database in a contant interval. Again the redis instance allows this process to be decoupled from the MQTT connection, this way the interval of the datapoints in the database can be guaranteed to always have a contant user chosen time offset between them.
+
+
 
 # Future goals
 

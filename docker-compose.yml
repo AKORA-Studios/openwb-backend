@@ -16,9 +16,9 @@ services:
             - ./.env
     nginx:
         build:
-            context: './ngnix'
+            context: './nginx'
             dockerfile: 'Dockerfile'
-        container_name: 'openwb_ngnix'
+        container_name: 'openwb_nginx'
         restart: unless-stopped
         volumes:
             - ./certs:/etc/ssl/
