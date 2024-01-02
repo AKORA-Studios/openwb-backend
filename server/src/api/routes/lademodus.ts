@@ -1,7 +1,6 @@
-import axios from 'axios';
-import config from '../../config';
 import { getKey } from '@db/redis';
 import { MyServer, UserReply, UserRequest } from '../types';
+import { mqttClient } from 'openWB/client';
 
 export const lademodusRoute = (server: MyServer) => {
     server.route({
@@ -28,38 +27,33 @@ export const lademodusRoute = (server: MyServer) => {
             const { modus } = req.params as any as { modus: string | number };
 
             const modes = ['jetzt', 'minundpv', 'pvuberschuss', 'standby', 'stop'];
-            let setMode: string;
+            let setMode: number;
 
-            if (!isNaN(Number(modus))) {
-                //Integer 0-4
-                const modusInt = Number(modus);
-                if (![0, 1, 2, 3, 4].includes(modusInt)) {
+            // must be an integer 0-4
+            const modusInt = Number(modus);
+            if (!isNaN(modusInt)) {
+                if ([0, 1, 2, 3, 4].includes(modusInt)) {
+                    setMode = modusInt;
+                } else {
                     reply.status(400);
                     return { message: `${modus} is not a valid lademodus` };
                 }
-                setMode = modes[modusInt];
             } else {
-                //String
-                if (!modes.includes(modus as string)) {
+                const modusStr = modus as string;
+                if (modes.includes(modusStr)) {
+                    setMode = modes.indexOf(modusStr);
+                } else {
                     reply.status(400);
                     return { message: `${modus} is not a valid lademodus` };
                 }
-                setMode = modus as string;
             }
 
             reply.type('application/json');
 
-            if (!modes.includes(setMode)) {
-                throw new Error(`${modus} or ${setMode} is not a valid lademodus`);
-            }
+            await mqttClient.publish('openWB/set/ChargeMode', setMode + '');
+            await mqttClient.publish('openWB/global/ChargeMode', setMode + '');
 
-            return {
-                response: (
-                    await axios({
-                        url: config.OPENWB_URL + '/openWB/web/api.php?lademodus=' + setMode,
-                    })
-                ).data,
-            };
+            return {};
         },
     });
 };
