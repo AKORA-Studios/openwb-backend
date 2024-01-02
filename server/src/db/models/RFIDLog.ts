@@ -57,7 +57,7 @@ if (config.PROD) {
             //timestamp: new Date(Number(millies) * 1000),
         });
 
-        console.log('Log entry created');
+        console.log('RfID log entry created');
 
         let user = await User.findOne({
             where: {
