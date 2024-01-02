@@ -2,6 +2,7 @@ import { DataTypes, Model } from 'sequelize';
 import sequelize from '../mariadb';
 import config from '../../config';
 import { getLadelog, Tag } from '../../lib';
+import User from './User';
 
 interface LadeLogAttributes {
     /** Date in UTC */
@@ -13,13 +14,9 @@ interface LadeLogAttributes {
     kW: number;
     ladepunkt: string;
     modus: number;
-    tagName: Tag.tagName;
-    tagCode: Tag.tagCode;
-    tagID: Tag.tagID;
+    tagID: Tag.id;
 }
-export interface LadeLogInput extends Omit<LadeLogAttributes, 'tagName'> {
-    tagName: string;
-}
+export interface LadeLogInput extends LadeLogAttributes {}
 
 class LadeLog extends Model<LadeLogAttributes, LadeLogInput> implements LadeLogAttributes {
     declare timestamp: Date;
@@ -33,9 +30,7 @@ class LadeLog extends Model<LadeLogAttributes, LadeLogInput> implements LadeLogA
     declare kW: number;
     declare ladepunkt: string;
     declare modus: number;
-    declare tagName: Tag.tagName;
-    declare tagCode: Tag.tagCode;
-    declare tagID: Tag.tagID;
+    declare tagID: Tag.id;
 
     // timestamps!
     // public readonly createdAt!: Date;
@@ -52,8 +47,6 @@ LadeLog.init(
         kW: DataTypes.FLOAT,
         ladepunkt: DataTypes.STRING,
         modus: DataTypes.INTEGER,
-        tagName: DataTypes.STRING,
-        tagCode: DataTypes.INTEGER,
         tagID: DataTypes.BIGINT,
     },
     {
@@ -66,6 +59,8 @@ LadeLog.init(
         ],
     }
 );
+// Add relation for include option
+// LadeLog.belongsTo(User);
 
 export default LadeLog;
 

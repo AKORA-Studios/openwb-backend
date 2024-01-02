@@ -10,17 +10,23 @@ export function hash(password: string) {
     return createHash('md5').update(password).digest('hex');
 }
 
-export async function createUser(username: string, password: string, tagName: string) {
-    const tagID = Tag.getID(tagName);
-    const tagCode = Tag.getCode(tagName);
-
+export async function createUser(
+    username: string,
+    password: string,
+    tagName: string,
+    rfid: number
+) {
     await User.create({
         username,
         password: hash(password),
         tagName,
-        tagCode,
-        tagID,
+        tagID: rfid,
         admin: false,
+        // Radom defaults
+        subMode: 0,
+        chargeAmps: 16,
+        chargeSoc: 80,
+        chargeKwh: 40,
     });
 }
 
@@ -47,7 +53,6 @@ export function findUser(username: string, password: string) {
 export interface UserJWTPayload extends JWTPayload {
     username: string;
     tagName: string;
-    tagCode: number;
     admin: boolean;
 }
 
@@ -55,7 +60,6 @@ export async function generateJWT(user: User) {
     return new SignJWT({
         username: user.username,
         tagName: user.tagName,
-        tagCode: user.tagCode,
         admin: user.admin,
     })
         .setProtectedHeader({ alg: 'ES256' })

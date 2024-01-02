@@ -15,9 +15,9 @@ type Row = {
     dauer: any;
     ladepunkt: any;
     modus: number;
-    tagName: Tag.tagName;
-    tagCode: Tag.tagCode;
-    tagID: Tag.tagID;
+    // tagName: Tag.tagName;
+    // tagCode: Tag.tagCode;
+    tagID: Tag.id;
 };
 
 export async function getLadelog() {
@@ -52,9 +52,9 @@ function parseCSV(str: string): Promise<Row[]> {
                     dauer: row[5],
                     ladepunkt: row[6],
                     modus: Number(row[7]),
-                    tagName: Tag.getName(Number(row[8])),
-                    tagCode: Tag.getCode(Number(row[8])),
-                    tagID: Tag.getID(Number(row[8])),
+                    //tagName: Tag.getName(Number(row[8])),
+                    //tagCode: Tag.getCode(Number(row[8])),
+                    tagID: Number(row[8]),
                 });
             })
             .on('end', () => res(arr));

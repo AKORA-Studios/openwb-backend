@@ -2,6 +2,8 @@ import RFIDLog from '@db/models/RFIDLog';
 import { UserRequest } from '..';
 import { MyServer, UserReply } from '../types';
 
+/*
+// What is the use case?
 export const rfidRoute = (server: MyServer) => {
     server.route({
         url: '/rfid',
@@ -33,3 +35,4 @@ export const rfidRoute = (server: MyServer) => {
     });
 };
 export default rfidRoute;
+*/
