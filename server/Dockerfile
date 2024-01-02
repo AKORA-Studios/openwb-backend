@@ -47,9 +47,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 EXPOSE 3001
 ENV PORT 3001
 
-RUN mkdir /app/test
-VOLUME [ "/app/test" ]
-
 # Show current folder structure in logs
 #RUN ls -al -R -I "node_modules" -I "maps"  -I "dists"
 USER nextjs

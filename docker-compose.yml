@@ -12,8 +12,6 @@ services:
             - redisDB
         environment:
             REDISDB_URL: 'redis://redisDB:6379'
-        volumes:
-            - ./test:/app/test
         env_file:
             - ./.env
     nginx:
