@@ -38,8 +38,11 @@ export default RFIDLog;
 //Save Entry on changes
 if (config.PROD) {
     let first = true;
-    mqttListener.on('openWB/system/lastRfId', async (value) => {
-        console.log('Tag scanned', value);
+    mqttListener.on('openWB/chargepoint/4/get/rfid', async (rawValue) => {
+        let value = (rawValue + '').replace('"', '');
+        if (value == 'null') return;
+
+        console.log('Tag scanned', value, 'at', new Date());
 
         // Ignore the first value that will get send when the client connects for the first time
         if (first) {
@@ -47,10 +50,7 @@ if (config.PROD) {
             return;
         }
 
-        if (!value) return;
-
-        let [lastIDstr, _millies] = value.split(',');
-        let lastID = Number(lastIDstr);
+        let lastID = Number(value);
 
         await RFIDLog.create({
             tagID: lastID,

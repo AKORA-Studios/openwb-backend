@@ -11,6 +11,8 @@ export default (server: MyServer) => {
         }),
         handler: async (request, reply) => {
             reply.type('application/json').code(200);
+            return 'NO';
+
             const data = (await axios(config.OPENWB_URL + '/openWB/web/api.php?get=all')).data;
 
             for (let key in data) {

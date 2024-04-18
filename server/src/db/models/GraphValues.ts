@@ -73,7 +73,7 @@ GraphValues.init(
 export default GraphValues;
 
 //Save Entry on changes
-const interval = 1000 * 60; //1 Minute
+const interval = 1000 * 1; //1 Minute
 
 if (config.PROD) {
     //MQTT values are provided 7 times per second

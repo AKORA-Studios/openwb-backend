@@ -26,39 +26,30 @@ export async function getLiveValues() {
     . . . 
      */
 
-    const mapped = {
-        time: ((await getKey('openWB/system/Timestamp')) as number) * 1000,
-        evu: arr[1] as number,
-        Ladeleistung: arr[2] as number,
-        pv: arr[3] as number,
-        LadeleistungLP1: arr[4] as number,
-        LadeleistungLP2: arr[5] as number,
-        Ladeleistung2: arr[6] as number,
-        Speicherleistung: arr[7] as number,
-        SpeicherSoC: arr[8] as number,
-        SoC: arr[9] as number,
-        SoC1: arr[10] as number,
-        hausverbrauch: arr[11] as number,
-        VB1: arr[12] as number,
-        VB2: arr[13] as number,
-    };
+    let time = Math.round(((await getKey('openWB/system/time')) as number) * 1000);
+    let speicher_soc = Number(await getKey('openWB/bat/get/soc'));
+    let speicherleistung = Number(await getKey('openWB/bat/get/power'));
+    let ladeleistung = Number(await getKey('openWB/chargepoint/4/get/power'));
+    let photovoltaik = Number(await getKey('openWB/pv/get/power'));
+    let evu = Number(await getKey('openWB/counter/0/get/power'));
+    let soc_lp1 = Number(await getKey('openWB/vehicle/1/get/soc'));
 
     return {
         /** UTC */
-        time: mapped.time,
-        evu: mapped.evu,
-        photovoltaik: mapped.pv,
-        hausverbrauch: mapped.hausverbrauch,
-        ladeleistung: mapped.Ladeleistung,
+        time: time,
+        evu: evu,
+        photovoltaik,
+        hausverbrauch: 0,
+        ladeleistung,
 
-        ladeleistung_lp1: mapped.LadeleistungLP1,
-        ladeleistung_lp2: mapped.LadeleistungLP2,
-        speicherleistung: mapped.Speicherleistung,
-        speicher_soc: mapped.SpeicherSoC,
-        soc_lp1: mapped.SoC,
-        soc_lp2: mapped.SoC1,
-        vb1: mapped.VB1,
-        vb2: mapped.VB2,
+        ladeleistung_lp1: ladeleistung,
+        ladeleistung_lp2: 0,
+        speicherleistung,
+        speicher_soc,
+        soc_lp1,
+        soc_lp2: 0,
+        vb1: 0,
+        vb2: 0,
     };
 }
 

@@ -65,6 +65,11 @@ function parseCSV(str: string): Promise<Row[]> {
 async function downloadCSV(date: Date): Promise<string> {
     const filename = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}`;
     const url = `${config.OPENWB_URL}/openWB/web/logging/data/ladelog/${filename}.csv`;
-    const r = await axios(url);
-    return r.data;
+    try {
+        const r = await axios(url);
+        return r.data;
+    } catch (e) {
+        console.log('what??');
+    }
+    return '';
 }

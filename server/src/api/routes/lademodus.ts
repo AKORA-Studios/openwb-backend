@@ -1,6 +1,6 @@
 import { getKey } from '@db/redis';
 import { MyServer, UserReply, UserRequest } from '../types';
-import { mqttClient } from 'openWB/client';
+import { mqttClient } from '../../openWB/client';
 
 export const lademodusRoute = (server: MyServer) => {
     server.route({

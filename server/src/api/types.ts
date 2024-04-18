@@ -7,7 +7,7 @@ import {
     RouteOptions,
 } from 'fastify';
 import { RouteGenericInterface } from 'fastify/types/route';
-import server from 'index';
+import server from '../index';
 import { Server as HTTPServer, IncomingMessage, ServerResponse, Server } from 'node:http';
 import { UserJWTPayload } from './auth';
 
