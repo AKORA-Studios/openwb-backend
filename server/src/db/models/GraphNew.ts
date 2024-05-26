@@ -58,6 +58,10 @@ GraphNew.init(
     },
 );
 
+GraphNew.removeAttribute('id');
+GraphNew.removeAttribute('createdAt');
+GraphNew.removeAttribute('updatedAt');
+
 export default GraphNew;
 
 //Save Entry on changes
