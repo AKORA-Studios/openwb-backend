@@ -57,7 +57,7 @@ LadeLog.init(
             { unique: true, fields: ['start', 'ende'], name: 'Time' },
             { unique: false, fields: ['tagName', 'tagID', 'tagCode'], name: 'Tag' },
         ],
-    }
+    },
 );
 // Add relation for include option
 // LadeLog.belongsTo(User);
@@ -66,19 +66,22 @@ export default LadeLog;
 
 //Save Entry on changes
 if (config.PROD) {
-    setInterval(async () => {
-        const logEntrys = (await getLadelog()).map((l) => ({
-            ...l,
-            start: new Date(l.start),
-            ende: new Date(l.ende),
-        }));
+    setInterval(
+        async () => {
+            const logEntrys = (await getLadelog()).map((l) => ({
+                ...l,
+                start: new Date(l.start),
+                ende: new Date(l.ende),
+            }));
 
-        for (let log of logEntrys) {
-            if (!(await LadeLog.findOne({ where: { start: log.start, ende: log.ende } }))) {
-                await LadeLog.create(log);
+            for (let log of logEntrys) {
+                if (!(await LadeLog.findOne({ where: { start: log.start, ende: log.ende } }))) {
+                    await LadeLog.create(log);
+                }
             }
-        }
-    }, 1000 * 60); //Every Minute
+        },
+        1000 * 60 * 60,
+    ); //Every Hour
 } else {
     console.log('DEV MODE - Not saving LadeLog');
 }
