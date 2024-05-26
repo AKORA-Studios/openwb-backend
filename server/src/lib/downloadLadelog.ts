@@ -69,7 +69,7 @@ async function downloadCSV(date: Date): Promise<string> {
         const r = await axios(url);
         return r.data;
     } catch (e) {
-        console.log('what??');
+        console.error('Downloading CSV failed', e);
     }
     return '';
 }
