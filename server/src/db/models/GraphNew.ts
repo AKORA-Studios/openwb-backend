@@ -54,13 +54,14 @@ GraphNew.init(
     {
         sequelize,
         tableName: 'graph_new',
+        createdAt: false,
+        updatedAt: false,
+        timestamps: false,
         // indexes: [{ unique: false, fields: ['timestamp'], name: 'Time' }],
     },
 );
 
 GraphNew.removeAttribute('id');
-GraphNew.removeAttribute('createdAt');
-GraphNew.removeAttribute('updatedAt');
 
 export default GraphNew;
 
