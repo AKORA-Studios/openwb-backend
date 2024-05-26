@@ -1,6 +1,7 @@
 import { getKey } from '@db/redis';
 
 export async function getLiveValues() {
+    /**
     let str = (await getKey('openWB/system/lastlivevalues')) as string;
     if (!str) str = (await getKey('openWB/system/alllivevalues')) as string;
     if (!str) return null;
@@ -8,7 +9,6 @@ export async function getLiveValues() {
     let arr = str.split(',').map((s: any) => (isNaN(Number(s)) ? s : Number(s)));
 
     // mapping von www\html\openWB\graphing.sh:69
-    /**
     [0] $(date +%H:%M:%S)
     [1] $wattbezugint
     [2] $ladeleistung
@@ -23,7 +23,7 @@ export async function getLiveValues() {
     [11] $hausverbrauch
     [12] $verbraucher1_watt
     [13] $verbraucher2_watt
-    . . . 
+    . . .
      */
 
     let time = Math.round(((await getKey('openWB/system/time')) as number) * 1000);
