@@ -67,17 +67,17 @@ GraphValues.init(
         sequelize,
         tableName: 'graph',
         indexes: [{ unique: false, fields: ['timestamp'], name: 'Time' }],
-    }
+    },
 );
 
 export default GraphValues;
 
 //Save Entry on changes
-const interval = 1000 * 1; //1 Minute
+const interval = 1000 * 60 * 5; //5 minutes
 
 if (config.PROD) {
     //MQTT values are provided 7 times per second
-    //Using this interval instead to save values every minute instead
+    //Using this interval instead
     setInterval(async () => {
         //Get new values from redis
         const values = await getLiveValues();
